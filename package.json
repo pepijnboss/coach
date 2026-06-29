@@ -11,7 +11,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "seed": "node scripts/seed.js",
-    "test": "node --test"
+    "preview:build": "node scripts/build-preview.mjs",
+    "test": "node scripts/e2e.mjs"
   },
   "keywords": [
     "grief",

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A gentle check-in · RouwKompas</title>
+  <meta name="description" content="Warm, calm support after loss. A free, no-obligation conversation with a certified grief coach.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="A gentle check-in · RouwKompas">
+  <meta property="og:description" content="Warm, calm support after loss. A free, no-obligation conversation with a certified grief coach.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c9885'/><text x='50' y='66' font-size='52' text-anchor='middle' fill='white' font-family='Georgia'>R</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class=""><div style="background:#7c9885;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Static preview — the interactive quiz submit, emails and admin need the live server (run <code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>
+  <header class="site-header"><div class="container"><a class="brand" href="index.html">Rouw<span>Kompas</span></a><a href="index.html" class="nav-link muted" style="text-decoration:none;font-size:.9rem;">Save &amp; exit</a></div></header>
+  <main>
+    <section class="section-pad">
+      <div class="container">
+        <div class="quiz-wrap">
+          <noscript>
+            <div class="notice notice-warn">This check-in needs JavaScript. You can still
+              <a href="booking.html">book a free conversation</a> directly.</div>
+          </noscript>
+          <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+          <div id="quizRoot" aria-live="polite">
+            <div class="step center">
+              <h1 class="q-title">A gentle check-in</h1>
+              <p class="q-help">Six short questions. Around two minutes. Whatever you feel is okay here.</p>
+              <button class="btn btn-primary" id="startBtn">Begin</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script id="quizData" type="application/json">{"id":"rouwkompas-intake-v1","steps":[{"id":"recency","type":"single","question":"When did your loss happen?","help":"There is no right or wrong timing for grief.","options":[{"value":"recent","label":"Within the last few weeks"},{"value":"months","label":"A few months ago"},{"value":"year","label":"About a year ago"},{"value":"long","label":"More than a year ago"},{"value":"ongoing","label":"It is ongoing / hard to say"}]},{"id":"kind","type":"single","question":"What kind of loss are you carrying?","help":"Loss takes many forms. Choose what fits best.","options":[{"value":"death","label":"The death of someone I love"},{"value":"divorce","label":"A divorce or the end of a relationship"},{"value":"trauma","label":"A trauma or sudden life change"},{"value":"health","label":"A loss of health or independence"},{"value":"other","label":"Something else"}]},{"id":"intensity","type":"scale","question":"How intense does your emotional distress feel right now?","help":"Drag to the number that feels closest. 1 is gentle, 10 is overwhelming.","min":1,"max":10,"minLabel":"Gentle","maxLabel":"Overwhelming"},{"id":"struggles","type":"multi","question":"What do you struggle with most at the moment?","help":"Choose as many as feel true for you.","options":[{"value":"sleep","label":"Sleep"},{"value":"sadness","label":"Waves of sadness"},{"value":"isolation","label":"Feeling alone or isolated"},{"value":"guilt","label":"Guilt or regret"},{"value":"anger","label":"Anger or frustration"},{"value":"meaning","label":"Finding meaning again"},{"value":"focus","label":"Concentration or daily tasks"},{"value":"numbness","label":"Feeling numb or disconnected"}]},{"id":"talkedBefore","type":"single","question":"Have you talked to someone about it before?","help":"There is no wrong answer here.","options":[{"value":"no","label":"No, not really"},{"value":"friends","label":"A little, with friends or family"},{"value":"professional","label":"Yes, with a professional"}]},{"id":"supported","type":"single","question":"Do you feel supported right now?","help":"However you answer, you are welcome here.","options":[{"value":"yes","label":"Mostly, yes"},{"value":"somewhat","label":"Somewhat"},{"value":"no","label":"Not really"}]}]}</script>
+  </main>
+  
+    <footer class="site-footer">
+      <div class="container">
+        <div class="cols">
+          <div>
+            <a class="brand" href="index.html" style="font-size:1.1rem;">Rouw<span>Kompas</span></a>
+            <p class="muted" style="margin-top:10px;font-size:.92rem;max-width:34ch;">A calm, supportive space for anyone living with grief or loss. Coaching, not medical treatment.</p>
+          </div>
+          <div>
+            <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Explore</strong>
+            <a href="quiz.html">Start the check-in</a>
+            <a href="booking.html">Book a conversation</a>
+            <a href="about.html">About the coach</a>
+          </div>
+          <div>
+            <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Trust</strong>
+            <a href="privacy.html">Privacy &amp; GDPR</a>
+            <a href="mailto:anna@rouwkompas.nl">anna@rouwkompas.nl</a>
+          </div>
+        </div>
+        <div class="crisis-line">
+          If you are in immediate crisis or thinking about harming yourself, please contact your local emergency number or a crisis helpline now. RouwKompas is grief coaching and is not a crisis or emergency service.
+        </div>
+        <p class="legal">© 2026 RouwKompas. Grief coaching is not medical, psychological, or psychiatric treatment. Your data is handled in line with the GDPR — see our <a href="privacy.html" style="display:inline;">privacy statement</a>.</p>
+      </div>
+    </footer>
+  <script src="quiz.js" defer></script>
+</body>
+</html>

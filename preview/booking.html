@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a free conversation · RouwKompas</title>
+  <meta name="description" content="Warm, calm support after loss. A free, no-obligation conversation with a certified grief coach.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="Book a free conversation · RouwKompas">
+  <meta property="og:description" content="Warm, calm support after loss. A free, no-obligation conversation with a certified grief coach.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c9885'/><text x='50' y='66' font-size='52' text-anchor='middle' fill='white' font-family='Georgia'>R</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class=""><div style="background:#7c9885;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Static preview — the interactive quiz submit, emails and admin need the live server (run <code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>
+  <header class="site-header">
+        <div class="container">
+          <a class="brand" href="index.html">Rouw<span>Kompas</span></a>
+          <nav class="nav">
+            <a href="index.html#how">How it works</a>
+            <a href="about.html">About Anna</a>
+            <a href="privacy.html">Privacy</a>
+            <a class="btn btn-primary nav-cta" href="quiz.html">Start check-in</a>
+          </nav>
+        </div>
+      </header>
+  <main>
+    <section class="section-pad">
+      <div class="container" style="max-width:680px;">
+        <span class="eyebrow">A free 30-minute conversation</span>
+        <h1>Schedule your free consultation</h1>
+        <p class="muted">Whenever you feel ready, Marieke, choose a time that suits you. There is no obligation, and you can change it later.</p>
+        <div class="notice notice-info">This conversation is free and confidential. It is supportive grief coaching, not medical treatment.</div>
+        
+      <form id="bookingForm" class="card" novalidate>
+        <input type="hidden" name="leadId" value="example">
+        <div class="field">
+          <label for="bk-name">Your name</label>
+          <input type="text" id="bk-name" name="name" value="Marieke Jansen" autocomplete="name" required>
+          <div class="err">Please let us know your name.</div>
+        </div>
+        <div class="field">
+          <label for="bk-email">Email</label>
+          <input type="email" id="bk-email" name="email" value="marieke@example.com" autocomplete="email" required>
+          <div class="err">Please enter a valid email.</div>
+        </div>
+        <div class="field">
+          <label for="bk-pref">Which times tend to suit you best? <span class="hint">(optional)</span></label>
+          <select id="bk-pref" name="preference">
+            <option value="">No preference</option>
+            <option value="weekday-morning">Weekday mornings</option>
+            <option value="weekday-afternoon">Weekday afternoons</option>
+            <option value="weekday-evening">Weekday evenings</option>
+            <option value="weekend">Weekends</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bk-note">Anything you would like Anna to know beforehand? <span class="hint">(optional)</span></label>
+          <textarea id="bk-note" name="note" rows="3" placeholder="Only if you feel like sharing."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="bk-submit">Request my free conversation</button>
+        <p class="muted" style="font-size:.85rem;margin:14px 0 0;text-align:center;">
+          Anna will personally reply to confirm a time. No payment, no obligation.
+        </p>
+      </form>
+      <div id="bookingDone" class="card center" style="display:none;">
+        <div style="font-size:2.4rem;">🌿</div>
+        <h2 style="margin-top:8px;">Thank you — your request is in.</h2>
+        <p class="muted">Anna de Vries will reply personally to your email very soon to confirm a time that works for you. There is nothing more you need to do right now.</p>
+        <a class="btn btn-secondary" href="index.html">Return home</a>
+      </div>
+    
+      </div>
+    </section>
+  </main>
+  
+    <footer class="site-footer">
+      <div class="container">
+        <div class="cols">
+          <div>
+            <a class="brand" href="index.html" style="font-size:1.1rem;">Rouw<span>Kompas</span></a>
+            <p class="muted" style="margin-top:10px;font-size:.92rem;max-width:34ch;">A calm, supportive space for anyone living with grief or loss. Coaching, not medical treatment.</p>
+          </div>
+          <div>
+            <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Explore</strong>
+            <a href="quiz.html">Start the check-in</a>
+            <a href="booking.html">Book a conversation</a>
+            <a href="about.html">About the coach</a>
+          </div>
+          <div>
+            <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Trust</strong>
+            <a href="privacy.html">Privacy &amp; GDPR</a>
+            <a href="mailto:anna@rouwkompas.nl">anna@rouwkompas.nl</a>
+          </div>
+        </div>
+        <div class="crisis-line">
+          If you are in immediate crisis or thinking about harming yourself, please contact your local emergency number or a crisis helpline now. RouwKompas is grief coaching and is not a crisis or emergency service.
+        </div>
+        <p class="legal">© 2026 RouwKompas. Grief coaching is not medical, psychological, or psychiatric treatment. Your data is handled in line with the GDPR — see our <a href="privacy.html" style="display:inline;">privacy statement</a>.</p>
+      </div>
+    </footer>
+  <script src="booking.js" defer></script>
+</body>
+</html>
