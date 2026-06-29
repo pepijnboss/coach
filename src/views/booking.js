@@ -20,13 +20,16 @@ export function bookingPage({ lead } = {}) {
     ? `<p class="muted">Wanneer je er klaar voor bent, ${esc(firstName)}, kies je een moment dat jou past. Vrijblijvend, en je kunt het altijd wijzigen.</p>`
     : `<p class="muted">Kies een moment dat jou past voor een vrijblijvend kennismakingsgesprek. Geen verplichting, en je kunt het altijd verzetten.</p>`;
 
+  const wa = C.contact.whatsapp
+    ? `<br>💬 <a href="https://wa.me/${esc(C.contact.whatsapp.replace(/\D/g, ''))}" target="_blank" rel="noopener">WhatsApp Petra</a>`
+    : '';
   const contactBlock = `
     <div class="card" style="margin-bottom:18px;">
       <h3 style="margin-top:0;">Liever direct contact?</h3>
-      <p class="muted" style="margin-bottom:8px;">Je bent van harte welkom om te bellen of te mailen.</p>
+      <p class="muted" style="margin-bottom:8px;">Je bent van harte welkom om te bellen, te mailen of te appen.</p>
       <p style="margin:0;">
         📞 <a href="tel:${esc(C.contact.phone.replace(/\s|-/g, ''))}">${esc(C.contact.phone)}</a><br>
-        ✉️ <a href="mailto:${esc(C.contact.email)}">${esc(C.contact.email)}</a><br>
+        ✉️ <a href="mailto:${esc(C.contact.email)}">${esc(C.contact.email)}</a>${wa}<br>
         <span class="muted" style="font-size:.9rem;">${esc(C.contact.region)} · ${esc(C.contact.workArea)}</span>
       </p>
     </div>`;

@@ -64,5 +64,5 @@ export function resultPage({ lead }) {
     </section>
   `;
 
-  return layout({ title: 'Jouw persoonlijke spiegeling', body, minimal: true });
+  return layout({ title: 'Jouw persoonlijke spiegeling', body, minimal: true, noindex: true });
 }

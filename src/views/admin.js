@@ -25,7 +25,7 @@ function adminLayout(inner) {
     </div>
     <section class="section-pad"><div class="container" style="max-width:1000px;">${inner}</div></section>
   `;
-  return layout({ title: 'Dashboard', body, minimal: true });
+  return layout({ title: 'Dashboard', body, minimal: true, noindex: true });
 }
 
 export function adminLoginPage({ error } = {}) {
@@ -50,7 +50,7 @@ export function adminLoginPage({ error } = {}) {
       </div>
     </section>
   `;
-  return layout({ title: 'Inloggen', body, minimal: true });
+  return layout({ title: 'Inloggen', body, minimal: true, noindex: true });
 }
 
 function badge(status, hasBooking) {

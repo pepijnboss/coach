@@ -80,6 +80,22 @@ async function route(req, res, url) {
   if (m('GET') && legacy[pathname]) return redirect(res, legacy[pathname], 301);
   if (m('GET') && pathname.startsWith('/result/')) return redirect(res, '/resultaat/' + pathname.slice('/result/'.length), 301);
 
+  // ── SEO: robots.txt + sitemap.xml ──
+  if (m('GET') && pathname === '/robots.txt') {
+    const txt = `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /resultaat/\n\nSitemap: ${config.publicBaseUrl}/sitemap.xml\n`;
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end(txt);
+  }
+  if (m('GET') && pathname === '/sitemap.xml') {
+    const pages = ['/', '/check-in', '/wie-ben-ik', '/aanbod', '/afspraak', '/privacy'];
+    const urls = pages
+      .map((p) => `  <url><loc>${config.publicBaseUrl}${p}</loc><changefreq>monthly</changefreq></url>`)
+      .join('\n');
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+    res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
+    return res.end(xml);
+  }
+
   // ── Public API ──
   if (m('POST') && pathname === '/api/lead') return handleCreateLead(req, res);
   if (m('POST') && pathname === '/api/booking-request') return handleBookingRequest(req, res);

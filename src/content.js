@@ -29,6 +29,9 @@ export const content = {
   contact: {
     email: 'info@ob-audire.nl',
     phone: '06 - 12 34 56 78',
+    // WhatsApp is een laagdrempelig leadkanaal in NL. Vul het nummer in
+    // internationaal formaat in (bijv. 31612345678) om de knop te tonen; leeg = verborgen.
+    whatsapp: '',
     region: 'Regio Gemert-Bakel & Laarbeek (Noord-Brabant)',
     workArea: 'Online en op locatie',
     website: 'https://ob-audire.nl',
@@ -68,6 +71,7 @@ export const content = {
     heroLede:
       'Sta je op een kruispunt, draag je een verlies, of verlang je naar meer verbinding met jezelf? Doe de korte check-in. Je ontvangt een persoonlijke spiegeling — en we brengen je in contact met Petra Mollet van Ob-Audire.',
     heroNote: 'Vrijblijvend · Vertrouwelijk · In jouw tempo · Ongeveer 2 minuten',
+    freeOffer: 'Het kennismakingsgesprek van 30 minuten is gratis en vrijblijvend.',
 
     // Maakt expliciet dat dit een opstap is naar Petra's praktijk.
     referralTitle: 'Wat is deze pagina?',
@@ -253,7 +257,40 @@ export const content = {
     ],
   },
 
-  // ── E-mails (in Petra's toon) ──────────────────────────────────────────────
+  // ── Vertrouwen: kwalificaties (feitelijk, uit Petra's achtergrond) ──────────
+  credentials: [
+    'Opgeleid rouw- en verliesbegeleider (Land van Rouw)',
+    'Registeropleiding Loopbaancoach',
+    '20+ jaar ervaring in HR & mensgericht werk',
+    'Werkt online en op locatie · regio Gemert-Bakel & Laarbeek',
+  ],
+
+  // ── Sociale bewijskracht ───────────────────────────────────────────────────
+  // BELANGRIJK: vervang deze door ECHTE ervaringen van cliënten, mét hun
+  // toestemming. Verzonnen reviews zijn niet toegestaan (en niet eerlijk).
+  testimonials: {
+    title: 'Wat mensen ervaren',
+    note: 'Voorbeeldcitaten — vervang door echte ervaringen (met toestemming).',
+    items: [
+      { quote: 'Eindelijk iemand die echt luistert, zonder te oordelen of te haasten. Ik voelde me gezien.', name: 'Cliënt, persoonlijke begeleiding' },
+      { quote: 'Petra hielp me rust en richting te vinden op een moment dat alles onduidelijk was.', name: 'Cliënt, loopbaanvraag' },
+      { quote: 'Een veilige plek om mijn verdriet er te laten zijn. Dat heeft me enorm geholpen.', name: 'Cliënt, rouwbegeleiding' },
+    ],
+  },
+
+  // ── Veelgestelde vragen (neemt drempels weg) ───────────────────────────────
+  faq: {
+    title: 'Veelgestelde vragen',
+    items: [
+      { q: 'Is dit therapie of een medische behandeling?', a: 'Nee. Ob-Audire biedt begeleiding: een veilige, ondersteunende ruimte. Het is geen therapie of medische behandeling, en vervangt die ook niet.' },
+      { q: 'Wat kost het kennismakingsgesprek?', a: 'Het eerste kennismakingsgesprek van ongeveer 30 minuten is gratis en vrijblijvend. Je zit nergens aan vast.' },
+      { q: 'Is mijn informatie vertrouwelijk?', a: 'Ja. Wat je deelt is vertrouwelijk en wordt alleen door Petra gezien. Je gegevens worden verwerkt volgens de AVG en je kunt altijd om verwijdering vragen.' },
+      { q: 'Hoe verloopt een gesprek?', a: 'Rustig en zonder druk. Je hoeft niets voor te bereiden. We gaan in jouw tempo, met jouw verhaal als kompas.' },
+      { q: 'Online of op locatie?', a: 'Allebei kan. Petra werkt online en op locatie in de regio Gemert-Bakel & Laarbeek.' },
+    ],
+  },
+
+
   emails: {
     // Email 1 — direct
     welcomeSubject: 'Welkom bij Ob-Audire — fijn dat je er bent',

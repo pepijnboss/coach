@@ -216,3 +216,32 @@ table.leads tr:last-child td { border-bottom: none; }
 .table-scroll { overflow-x: auto; }
 
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+/* ── Free offer pill ── */
+.free-offer { display:inline-block; margin: 18px 0 0; font-size:.95rem; font-weight:600; color: var(--sage-dark); background: var(--sage-soft); padding: 8px 16px; border-radius: 999px; }
+
+/* ── Trust badges bar ── */
+.badges-bar { background: var(--beige-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.badge-pill { font-size: .85rem; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+.badge-pill::before { content: "✓ "; color: var(--sage-dark); font-weight: 700; }
+
+/* ── Testimonials ── */
+.testimonials { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 720px) { .testimonials { grid-template-columns: repeat(3, 1fr); } }
+.testimonial { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.testimonial blockquote { margin: 0 0 12px; font-family: var(--serif); font-size: 1.05rem; line-height: 1.6; color: var(--ink); }
+.testimonial figcaption { font-size: .85rem; color: var(--ink-faint); }
+
+/* ── FAQ ── */
+.faq { display: grid; gap: 10px; }
+.faq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4px 18px; }
+.faq-item summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; position: relative; padding-right: 28px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-size: 1.3rem; color: var(--sage-dark); transition: transform .2s; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-a { padding: 0 0 16px; color: var(--ink-soft); }
+
+/* ── WhatsApp button ── */
+.btn-whatsapp { background: #25d366; color: #fff; }
+.btn-whatsapp:hover { background: #1da851; }

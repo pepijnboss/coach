@@ -14,11 +14,17 @@ const R = content.routes;
  * @param {string} [opts.bodyClass]
  * @param {string[]} [opts.scripts]
  * @param {boolean} [opts.minimal]  verberg nav (gefocuste check-in-flow)
+ * @param {boolean} [opts.noindex]  zet robots op noindex (admin/resultaat)
+ * @param {string} [opts.head]      extra <head>-HTML (bijv. JSON-LD)
  */
-export function layout({ title, body, description, bodyClass = '', scripts = [], minimal = false }) {
+export function layout({ title, body, description, bodyClass = '', scripts = [], minimal = false, noindex = false, head = '' }) {
   const fullTitle = `${title} · ${content.brand.name}`;
   const desc = description || content.brand.essence;
   const year = new Date().getFullYear();
+  const robots = noindex ? 'noindex,nofollow' : 'index,follow';
+  const analytics = config.plausibleDomain
+    ? `<script defer data-domain="${esc(config.plausibleDomain)}" src="https://plausible.io/js/script.js"></script>`
+    : '';
 
   const header = minimal
     ? `<header class="site-header"><div class="container"><a class="brand" href="${R.home}">Ob<span>-Audire</span></a><a href="${R.home}" class="muted" style="text-decoration:none;font-size:.9rem;">Sluiten</a></div></header>`
@@ -72,13 +78,15 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${esc(fullTitle)}</title>
   <meta name="description" content="${esc(desc)}">
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="${robots}">
   <meta property="og:title" content="${esc(fullTitle)}">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="nl_NL">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c8a5a'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>Ob</text></svg>">
   <link rel="stylesheet" href="/styles.css">
+  ${analytics}
+  ${head}
 </head>
 <body class="${esc(bodyClass)}">
   ${header}

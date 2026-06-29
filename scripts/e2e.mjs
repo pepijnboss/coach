@@ -57,6 +57,18 @@ try {
   r = await get('/quiz');
   ok('Oude /quiz redirect naar /check-in', r.status === 301 && r.headers.get('location') === '/check-in');
 
+  // SEO + conversie
+  r = await get('/');
+  ok('Landing toont trust-badges', r.text.includes('Land van Rouw') && r.text.includes('badge-pill'));
+  ok('Landing toont testimonials + FAQ', r.text.includes(content.testimonials.title) && r.text.includes(content.faq.title));
+  ok('Landing bevat structured data (JSON-LD)', r.text.includes('ProfessionalService') && r.text.includes('application/ld+json'));
+
+  r = await get('/robots.txt');
+  ok('robots.txt blokkeert /admin + verwijst sitemap', r.status === 200 && r.text.includes('Disallow: /admin') && r.text.includes('Sitemap:'));
+
+  r = await get('/sitemap.xml');
+  ok('sitemap.xml bevat publieke paden', r.status === 200 && r.text.includes('/check-in') && r.text.includes('<urlset'));
+
   // 2. Lead-capture API (de conversie)
   const leadPayload = {
     name: 'Test Persoon',
@@ -80,6 +92,7 @@ try {
   ok('Resultaatpagina toont persoonlijke inhoud', r.status === 200 && r.text.includes('result-body') && /Veel om te dragen|Iets dat merkbaar meeweegt|Een zacht moment/.test(r.text));
   ok('Resultaat toont boek-CTA', r.text.includes(content.cta.book) && r.text.includes(`/afspraak?lead=${leadId}`));
   ok('Resultaat verwijst door naar ob-audire.nl', r.text.includes(content.externalSite.url));
+  ok('Resultaatpagina is noindex (privacy)', r.text.includes('noindex'));
   ok('Resultaat toont het e-mailadres', r.text.includes('test.persoon@example.com'));
 
   // 5. Welkomstmail + melding aan coach, opvolging gepland

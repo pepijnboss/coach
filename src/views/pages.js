@@ -31,6 +31,27 @@ export function landingPage() {
       </div>`)
     .join('');
   const focus = C.about.teaserFocus.map((f) => `<li>${esc(f)}</li>`).join('');
+  const badges = C.credentials.map((c) => `<span class="badge-pill">${esc(c)}</span>`).join('');
+  const testimonials = C.testimonials.items
+    .map((t) => `<figure class="testimonial"><blockquote>“${esc(t.quote)}”</blockquote><figcaption>— ${esc(t.name)}</figcaption></figure>`)
+    .join('');
+  const faq = C.faq.items
+    .map((f) => `<details class="faq-item"><summary>${esc(f.q)}</summary><div class="faq-a">${esc(f.a)}</div></details>`)
+    .join('');
+
+  // Structured data voor lokale vindbaarheid (Google).
+  const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: C.brand.name,
+    description: C.brand.essence,
+    founder: { '@type': 'Person', name: C.brand.coach },
+    url: C.externalSite.url,
+    email: C.contact.email,
+    telephone: C.contact.phone,
+    areaServed: C.contact.region,
+    knowsAbout: ['rouwbegeleiding', 'verliesbegeleiding', 'loopbaanbegeleiding', 'persoonlijke ontwikkeling'],
+  })}</script>`;
 
   const body = `
     <section class="hero">
@@ -42,8 +63,13 @@ export function landingPage() {
           <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
           ${extLink(C.cta.visitSite, { btn: 'btn-secondary' })}
         </div>
-        <p class="muted" style="margin-top:18px;font-size:.9rem;">${esc(L.heroNote)}</p>
+        <p class="free-offer">✓ ${esc(L.freeOffer)}</p>
+        <p class="muted" style="margin-top:6px;font-size:.9rem;">${esc(L.heroNote)}</p>
       </div>
+    </section>
+
+    <section class="badges-bar">
+      <div class="container"><div class="badges">${badges}</div></div>
     </section>
 
     <section class="section-pad">
@@ -76,6 +102,13 @@ export function landingPage() {
 
     <section class="section-pad">
       <div class="container">
+        <h2 class="center">${esc(C.testimonials.title)}</h2>
+        <div class="testimonials">${testimonials}</div>
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="container">
         <div class="card coach-card">
           <div class="coach-photo">${esc(coachInitial)}</div>
           <div style="flex:1;min-width:240px;">
@@ -90,6 +123,13 @@ export function landingPage() {
     </section>
 
     <section class="section-pad">
+      <div class="container" style="max-width:640px;">
+        <h2 class="center">${esc(C.faq.title)}</h2>
+        <div class="faq">${faq}</div>
+      </div>
+    </section>
+
+    <section class="section-pad">
       <div class="container center">
         <div class="result-invite" style="max-width:560px;margin:0 auto;">
           <h2 style="margin-top:0;">${esc(L.closingTitle)}</h2>
@@ -99,7 +139,7 @@ export function landingPage() {
       </div>
     </section>
   `;
-  return layout({ title: C.brand.tagline, body });
+  return layout({ title: C.brand.tagline, body, head: jsonLd });
 }
 
 // ── Check-in (quiz) ─────────────────────────────────────────────────────────

@@ -225,6 +225,35 @@ table.leads tr:last-child td { border-bottom: none; }
 
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
+/* ── Free offer pill ── */
+.free-offer { display:inline-block; margin: 18px 0 0; font-size:.95rem; font-weight:600; color: var(--sage-dark); background: var(--sage-soft); padding: 8px 16px; border-radius: 999px; }
+
+/* ── Trust badges bar ── */
+.badges-bar { background: var(--beige-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.badge-pill { font-size: .85rem; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+.badge-pill::before { content: "✓ "; color: var(--sage-dark); font-weight: 700; }
+
+/* ── Testimonials ── */
+.testimonials { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 720px) { .testimonials { grid-template-columns: repeat(3, 1fr); } }
+.testimonial { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.testimonial blockquote { margin: 0 0 12px; font-family: var(--serif); font-size: 1.05rem; line-height: 1.6; color: var(--ink); }
+.testimonial figcaption { font-size: .85rem; color: var(--ink-faint); }
+
+/* ── FAQ ── */
+.faq { display: grid; gap: 10px; }
+.faq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4px 18px; }
+.faq-item summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; position: relative; padding-right: 28px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-size: 1.3rem; color: var(--sage-dark); transition: transform .2s; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-a { padding: 0 0 16px; color: var(--ink-soft); }
+
+/* ── WhatsApp button ── */
+.btn-whatsapp { background: #25d366; color: #fff; }
+.btn-whatsapp:hover { background: #1da851; }
+
 
     .rk-banner{background:#7c8a5a;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;}
     .rk-banner code{background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;}
@@ -260,8 +289,13 @@ table.leads tr:last-child td { border-bottom: none; }
           <a class="btn btn-primary" href="/check-in">Doe de korte check-in</a>
           <a class="btn btn-secondary" href="https://ob-audire.nl" target="_blank" rel="noopener">Bekijk de praktijk van Petra ↗</a>
         </div>
-        <p class="muted" style="margin-top:18px;font-size:.9rem;">Vrijblijvend · Vertrouwelijk · In jouw tempo · Ongeveer 2 minuten</p>
+        <p class="free-offer">✓ Het kennismakingsgesprek van 30 minuten is gratis en vrijblijvend.</p>
+        <p class="muted" style="margin-top:6px;font-size:.9rem;">Vrijblijvend · Vertrouwelijk · In jouw tempo · Ongeveer 2 minuten</p>
       </div>
+    </section>
+
+    <section class="badges-bar">
+      <div class="container"><div class="badges"><span class="badge-pill">Opgeleid rouw- en verliesbegeleider (Land van Rouw)</span><span class="badge-pill">Registeropleiding Loopbaancoach</span><span class="badge-pill">20+ jaar ervaring in HR &amp; mensgericht werk</span><span class="badge-pill">Werkt online en op locatie · regio Gemert-Bakel &amp; Laarbeek</span></div></div>
     </section>
 
     <section class="section-pad">
@@ -309,6 +343,13 @@ table.leads tr:last-child td { border-bottom: none; }
 
     <section class="section-pad">
       <div class="container">
+        <h2 class="center">Wat mensen ervaren</h2>
+        <div class="testimonials"><figure class="testimonial"><blockquote>“Eindelijk iemand die echt luistert, zonder te oordelen of te haasten. Ik voelde me gezien.”</blockquote><figcaption>— Cliënt, persoonlijke begeleiding</figcaption></figure><figure class="testimonial"><blockquote>“Petra hielp me rust en richting te vinden op een moment dat alles onduidelijk was.”</blockquote><figcaption>— Cliënt, loopbaanvraag</figcaption></figure><figure class="testimonial"><blockquote>“Een veilige plek om mijn verdriet er te laten zijn. Dat heeft me enorm geholpen.”</blockquote><figcaption>— Cliënt, rouwbegeleiding</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="container">
         <div class="card coach-card">
           <div class="coach-photo">P</div>
           <div style="flex:1;min-width:240px;">
@@ -319,6 +360,13 @@ table.leads tr:last-child td { border-bottom: none; }
             <a class="muted" href="https://ob-audire.nl" target="_blank" rel="noopener">ob-audire.nl ↗</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="container" style="max-width:640px;">
+        <h2 class="center">Veelgestelde vragen</h2>
+        <div class="faq"><details class="faq-item"><summary>Is dit therapie of een medische behandeling?</summary><div class="faq-a">Nee. Ob-Audire biedt begeleiding: een veilige, ondersteunende ruimte. Het is geen therapie of medische behandeling, en vervangt die ook niet.</div></details><details class="faq-item"><summary>Wat kost het kennismakingsgesprek?</summary><div class="faq-a">Het eerste kennismakingsgesprek van ongeveer 30 minuten is gratis en vrijblijvend. Je zit nergens aan vast.</div></details><details class="faq-item"><summary>Is mijn informatie vertrouwelijk?</summary><div class="faq-a">Ja. Wat je deelt is vertrouwelijk en wordt alleen door Petra gezien. Je gegevens worden verwerkt volgens de AVG en je kunt altijd om verwijdering vragen.</div></details><details class="faq-item"><summary>Hoe verloopt een gesprek?</summary><div class="faq-a">Rustig en zonder druk. Je hoeft niets voor te bereiden. We gaan in jouw tempo, met jouw verhaal als kompas.</div></details><details class="faq-item"><summary>Online of op locatie?</summary><div class="faq-a">Allebei kan. Petra werkt online en op locatie in de regio Gemert-Bakel &amp; Laarbeek.</div></details></div>
       </div>
     </section>
 
@@ -401,7 +449,7 @@ table.leads tr:last-child td { border-bottom: none; }
         
     <div class="card" style="margin-bottom:18px;">
       <h3 style="margin-top:0;">Liever direct contact?</h3>
-      <p class="muted" style="margin-bottom:8px;">Je bent van harte welkom om te bellen of te mailen.</p>
+      <p class="muted" style="margin-bottom:8px;">Je bent van harte welkom om te bellen, te mailen of te appen.</p>
       <p style="margin:0;">
         📞 <a href="tel:0612345678">06 - 12 34 56 78</a><br>
         ✉️ <a href="mailto:info@ob-audire.nl">info@ob-audire.nl</a><br>
@@ -559,9 +607,9 @@ table.leads tr:last-child td { border-bottom: none; }
             </td>
             <td><span class="badge badge-new">nieuw</span></td>
             <td style="max-width:280px;"><span class="muted" style="font-size:.86rem;">Aanleiding: dat je een verlies met je meedraagt. Zwaarte 8/10 (zwaar). Herkent: verdriet of gemis, onrust of piekeren, spanning in je lichaam. Eerder gesproken: nee. Verlangt naar: gehoord.</span></td>
-            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:13</td>
+            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:21</td>
             <td style="font-size:.86rem;">—</td>
-            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:13</td>
+            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:21</td>
             <td>
               <form method="POST" action="/admin/leads/example/status" style="margin:0 0 6px;">
                 <select name="status" onchange="this.form.submit()" style="font-size:.82rem;padding:6px 8px;">
@@ -581,9 +629,9 @@ table.leads tr:last-child td { border-bottom: none; }
             </td>
             <td><span class="badge badge-contacted">benaderd</span></td>
             <td style="max-width:280px;"><span class="muted" style="font-size:.86rem;">Aanleiding: dat je richting zoekt in je loopbaan. Zwaarte 5/10 (merkbaar). Herkent: het gevoel vast te lopen, moeite met keuzes maken. Eerder gesproken: naasten. Verlangt naar: richting.</span></td>
-            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:13</td>
+            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:21</td>
             <td style="font-size:.86rem;">—</td>
-            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:13</td>
+            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:21</td>
             <td>
               <form method="POST" action="/admin/leads/b/status" style="margin:0 0 6px;">
                 <select name="status" onchange="this.form.submit()" style="font-size:.82rem;padding:6px 8px;">
@@ -603,9 +651,9 @@ table.leads tr:last-child td { border-bottom: none; }
             </td>
             <td><span class="badge badge-booked">gepland</span></td>
             <td style="max-width:280px;"><span class="muted" style="font-size:.86rem;">Aanleiding: dat je leeft met kanker, of dat je partner ziek is. Zwaarte 7/10 (zwaar). Herkent: een behoefte aan stilte en ruimte, spanning in je lichaam. Eerder gesproken: professional. Verlangt naar: rust.</span></td>
-            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:13</td>
+            <td style="font-size:.82rem;">welkom ✓<br>opvolging @ 01 jul, 23:21</td>
             <td style="font-size:.86rem;">aanvraag · doordeweeks-avond</td>
-            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:13</td>
+            <td style="white-space:nowrap;font-size:.84rem;">29 jun, 23:21</td>
             <td>
               <form method="POST" action="/admin/leads/c/status" style="margin:0 0 6px;">
                 <select name="status" onchange="this.form.submit()" style="font-size:.82rem;padding:6px 8px;">

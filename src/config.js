@@ -57,6 +57,9 @@ export const config = {
 
   calendlyUrl: (env.CALENDLY_URL || '').trim(),
 
+  // Optionele, privacyvriendelijke analytics (Plausible). Leeg = uit.
+  plausibleDomain: (env.PLAUSIBLE_DOMAIN || '').trim(),
+
   email: {
     resendApiKey: (env.RESEND_API_KEY || '').trim(),
     from: env.EMAIL_FROM || 'Ob-Audire <noreply@ob-audire.nl>',
