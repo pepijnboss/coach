@@ -41,6 +41,9 @@ export function resultPage({ lead }) {
           <h2 style="margin-top:0;">Een zachte uitnodiging</h2>
           <p class="muted">${esc(result.invitation || 'Je bent van harte welkom voor een vrijblijvend kennismakingsgesprek.')}</p>
           <a class="btn btn-primary" href="${esc(bookingUrl)}">${esc(result.ctaLabel || C.cta.book)}</a>
+          <div style="margin-top:12px;">
+            <a class="btn btn-secondary" href="${esc(C.externalSite.url)}" target="_blank" rel="noopener">${esc(C.cta.toSite)} ↗</a>
+          </div>
         </div>
 
         ${atelierBlock}

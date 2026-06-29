@@ -27,9 +27,8 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
           <a class="brand" href="${R.home}">Ob<span>-Audire</span></a>
           <nav class="nav">
             <a href="${R.home}#hoe">Hoe het werkt</a>
-            <a href="${R.about}">Wie ben ik</a>
-            <a href="${R.aanbod}">Aanbod</a>
-            <a href="${R.privacy}">Privacy</a>
+            <a href="${R.about}">Over Petra</a>
+            <a href="${content.externalSite.url}" target="_blank" rel="noopener">${esc(content.externalSite.label)} ↗</a>
             <a class="btn btn-primary nav-cta" href="${R.quiz}">${esc(content.cta.primary)}</a>
           </nav>
         </div>
@@ -47,8 +46,8 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
             <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Ontdek</strong>
             <a href="${R.quiz}">Doe de check-in</a>
             <a href="${R.booking}">Plan een gesprek</a>
-            <a href="${R.about}">Wie ben ik</a>
-            <a href="${R.aanbod}">Aanbod</a>
+            <a href="${R.about}">Over Petra</a>
+            <a href="${content.externalSite.url}" target="_blank" rel="noopener">Website Ob-Audire ↗</a>
           </div>
           <div>
             <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Contact</strong>

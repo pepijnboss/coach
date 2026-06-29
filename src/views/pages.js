@@ -1,4 +1,8 @@
-// Publieke pagina's (server-gerenderde HTML), Ob-Audire — in het Nederlands.
+// Publieke pagina's (server-gerenderde HTML), Ob-Audire lead-funnel.
+//
+// Dit is GEEN kopie van de site van Petra. Het is een gerichte lead-pagina die
+// bezoekers warm maakt via een korte check-in, hun gegevens vastlegt, en ze
+// daarna doorverwijst naar de praktijk van Petra (ob-audire.nl) + een gesprek.
 
 import content from '../content.js';
 import { layout } from './layout.js';
@@ -7,21 +11,26 @@ import { esc } from '../util.js';
 
 const R = content.routes;
 const C = content;
+const SITE = C.externalSite;
 const coachInitial = C.brand.coach.charAt(0).toUpperCase();
+
+function extLink(label, opts = {}) {
+  const cls = opts.btn ? `class="btn ${opts.btn}"` : 'class="muted"';
+  return `<a ${cls} href="${esc(SITE.url)}" target="_blank" rel="noopener">${esc(label)} ↗</a>`;
+}
 
 // ── Landingspagina ──────────────────────────────────────────────────────────
 export function landingPage() {
   const L = C.landing;
   const steps = L.steps
-    .map(
-      (s) => `
+    .map((s) => `
       <div class="feature">
         <div class="ico">${s.icon}</div>
         <h3>${esc(s.title)}</h3>
         <p>${esc(s.body)}</p>
-      </div>`
-    )
+      </div>`)
     .join('');
+  const focus = C.about.teaserFocus.map((f) => `<li>${esc(f)}</li>`).join('');
 
   const body = `
     <section class="hero">
@@ -31,7 +40,7 @@ export function landingPage() {
         <p class="lede">${esc(L.heroLede)}</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
-          <a class="btn btn-secondary" href="${R.booking}">${esc(C.cta.secondary)}</a>
+          ${extLink(C.cta.visitSite, { btn: 'btn-secondary' })}
         </div>
         <p class="muted" style="margin-top:18px;font-size:.9rem;">${esc(L.heroNote)}</p>
       </div>
@@ -40,16 +49,9 @@ export function landingPage() {
     <section class="section-pad">
       <div class="container">
         <div class="card center">
-          <p style="font-family:var(--serif);font-size:1.25rem;color:var(--sage-dark);max-width:48ch;margin:0 auto 0;font-style:italic;">“${esc(C.brand.mole)}”</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-pad" id="wat">
-      <div class="container">
-        <div class="card center">
-          <h2 style="margin-top:0;">${esc(L.introTitle)}</h2>
-          <p class="muted" style="max-width:58ch;margin:0 auto;">${esc(L.introBody)}</p>
+          <span class="eyebrow" style="margin-bottom:12px;">${esc(L.referralTitle)}</span>
+          <p class="muted" style="max-width:58ch;margin:0 auto 18px;">${esc(L.referralBody)}</p>
+          ${extLink(C.cta.visitSite, { btn: 'btn-secondary' })}
         </div>
       </div>
     </section>
@@ -66,12 +68,22 @@ export function landingPage() {
 
     <section class="section-pad">
       <div class="container">
+        <div class="card center">
+          <p style="font-family:var(--serif);font-size:1.25rem;color:var(--sage-dark);max-width:48ch;margin:0 auto;font-style:italic;">“${esc(C.brand.mole)}”</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="container">
         <div class="card coach-card">
           <div class="coach-photo">${esc(coachInitial)}</div>
           <div style="flex:1;min-width:240px;">
-            <h2 style="margin-top:0;">${esc(L.coachTeaserTitle)}</h2>
-            <p class="muted">${esc(L.coachTeaserBody)}</p>
-            <a href="${R.about}" class="btn btn-secondary" style="padding:10px 20px;">Maak kennis met ${esc(C.brand.coach.split(' ')[0])}</a>
+            <h2 style="margin-top:0;">Je wordt verbonden met Petra Mollet</h2>
+            <p class="muted">${esc(C.about.teaser[0])}</p>
+            <ul class="muted" style="margin:0 0 16px;">${focus}</ul>
+            <a href="${R.about}" class="btn btn-secondary" style="padding:10px 20px;">Over Petra</a>
+            ${extLink(SITE.label, {})}
           </div>
         </div>
       </div>
@@ -118,25 +130,15 @@ export function quizPage() {
   return layout({ title: Q.title, body, minimal: true, scripts: ['/quiz.js'] });
 }
 
-// ── Wie ben ik (about) ──────────────────────────────────────────────────────
+// ── Over Petra (teaser die doorlinkt naar ob-audire.nl) ─────────────────────
 export function aboutPage() {
   const A = C.about;
-  const intro = A.intro.map((p) => `<p${p === A.intro[1] ? ' class="muted"' : ''}>${esc(p)}</p>`).join('');
-  const strengths = A.strengths
-    .map((s) => `<div class="feature"><h3 style="margin-top:0;">${esc(s.title)}</h3><p>${esc(s.body)}</p></div>`)
-    .join('');
-  const pillars = A.pillars
-    .map((p) => `<li><strong>${esc(p.title)}</strong><br><span class="muted">${esc(p.body)}</span></li>`)
-    .join('');
-  const extra = A.extraTraining.map((t) => `<li class="muted">${esc(t)}</li>`).join('');
-  const experience = A.experience.map((e) => `<li class="muted">${esc(e)}</li>`).join('');
-  const expect = A.expect
-    .map((e) => `<li><strong>${esc(e.title)}.</strong> ${esc(e.body)}</li>`)
-    .join('');
+  const teaser = A.teaser.map((p) => `<p${p === A.teaser[1] ? ' class="muted"' : ''}>${esc(p)}</p>`).join('');
+  const focus = A.teaserFocus.map((f) => `<li>${esc(f)}</li>`).join('');
 
   const body = `
     <section class="section-pad">
-      <div class="container">
+      <div class="container" style="max-width:680px;">
         <span class="eyebrow">${esc(A.eyebrow)}</span>
         <h1>${esc(A.title)}</h1>
         <div class="card coach-card" style="margin:18px 0 28px;">
@@ -146,22 +148,16 @@ export function aboutPage() {
           </div>
         </div>
 
-        ${intro}
+        ${teaser}
 
-        <h2>${esc(A.strengthsTitle)}</h2>
-        <div class="feature-grid" style="grid-template-columns:1fr;">${strengths}</div>
+        <h2>Waar Petra je bij begeleidt</h2>
+        <ul>${focus}</ul>
 
-        <h2>${esc(A.pillarsTitle)}</h2>
-        <ul class="steps-list" style="list-style:none;">${pillars}</ul>
-
-        <h3>${esc(A.extraTrainingTitle)}</h3>
-        <ul>${extra}</ul>
-
-        <h2>${esc(A.experienceTitle)}</h2>
-        <ul>${experience}</ul>
-
-        <h2>${esc(A.expectTitle)}</h2>
-        <ol class="steps-list">${expect}</ol>
+        <div class="result-invite">
+          <h2 style="margin-top:0;">Het volledige verhaal lees je bij Petra zelf</h2>
+          <p class="muted">Haar werkwijze, de vijf krachten waarmee ze werkt, haar opleidingen en het volledige aanbod (waaronder het (K)ankeratelier) vind je op haar eigen website.</p>
+          ${extLink('Bezoek ' + SITE.label, { btn: 'btn-primary' })}
+        </div>
 
         <div class="notice notice-info">
           Begeleiding bij Ob-Audire is ondersteunend en niet-medisch. Het vervangt geen therapie of medische
@@ -175,16 +171,14 @@ export function aboutPage() {
       </div>
     </section>
   `;
-  return layout({ title: 'Wie ben ik', body });
+  return layout({ title: 'Over Petra', body });
 }
 
-// ── Aanbod (services) ───────────────────────────────────────────────────────
+// ── Aanbod (korte teaser; details op ob-audire.nl) ──────────────────────────
 export function aanbodPage() {
   const A = C.aanbod;
   const services = A.services
-    .map(
-      (s) => `<div class="feature"><div class="ico">${s.icon}</div><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></div>`
-    )
+    .map((s) => `<div class="feature"><div class="ico">${s.icon}</div><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></div>`)
     .join('');
   const atelierFor = A.atelier.forWho.map((w) => `<li>${esc(w)}</li>`).join('');
 
@@ -198,22 +192,19 @@ export function aanbodPage() {
 
         <hr class="divider">
 
-        <div class="card">
+        <div class="card" id="atelier">
           <span class="eyebrow" style="margin-bottom:14px;">${esc(A.atelier.subtitle)}</span>
           <h2 style="margin-top:0;">${esc(A.atelier.title)}</h2>
           <p>${esc(A.atelier.intro)}</p>
-          <h3>Wat kun je verwachten?</h3>
-          <p class="muted">${esc(A.atelier.expect)}</p>
           <h3>Voor wie?</h3>
           <ul>${atelierFor}</ul>
-          <h3>Kosten</h3>
           <p class="muted">${esc(A.atelier.price)}</p>
-          <div class="notice notice-info">${esc(A.atelier.signup)}</div>
-          <a class="btn btn-primary" href="${R.booking}">${esc(C.cta.secondary)}</a>
+          <p>${extLink('Lees meer over het atelier op ' + SITE.label, {})}</p>
         </div>
 
         <div class="center" style="margin-top:30px;">
-          <a class="btn btn-secondary" href="${R.quiz}">${esc(C.cta.primary)}</a>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
+          <a class="btn btn-secondary" href="${R.booking}">${esc(C.cta.secondary)}</a>
         </div>
       </div>
     </section>
@@ -224,9 +215,7 @@ export function aanbodPage() {
 // ── Privacy / AVG ───────────────────────────────────────────────────────────
 export function privacyPage() {
   const P = C.privacy;
-  const sections = P.sections
-    .map((s) => `<h2>${esc(s.h)}</h2><p class="muted">${esc(s.p)}</p>`)
-    .join('');
+  const sections = P.sections.map((s) => `<h2>${esc(s.h)}</h2><p class="muted">${esc(s.p)}</p>`).join('');
   const body = `
     <section class="section-pad">
       <div class="container">

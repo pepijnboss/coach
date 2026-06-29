@@ -29,15 +29,15 @@ try {
   // 1. Publieke pagina's
   let r = await get('/');
   ok('Landing toont hero', r.status === 200 && r.text.includes(content.landing.heroTitle));
-  ok('Landing heeft beide CTAs', r.text.includes(content.cta.primary) && r.text.includes(content.cta.secondary));
+  ok('Landing heeft check-in CTA + verwijst naar externe site', r.text.includes(content.cta.primary) && r.text.includes(content.externalSite.url));
+  ok('Landing legt door-verwijzing uit', r.text.includes(content.landing.referralTitle));
   ok('Landing toont mol-motief', r.text.includes('zoals de mol'));
 
   r = await get('/check-in');
   ok('Check-in levert quizdata', r.text.includes('ob-audire-checkin-v1') && r.text.includes('/quiz.js'));
 
   r = await get('/wie-ben-ik');
-  ok('Wie ben ik toont Petra', r.text.includes('Petra Mollet') && r.text.includes('Wat je kunt verwachten'));
-  ok('Wie ben ik toont opleidingen', r.text.includes('Land van Rouw') && r.text.includes('Fontys'));
+  ok('Over Petra toont Petra + link naar haar site', r.text.includes('Petra Mollet') && r.text.includes(content.externalSite.url));
 
   r = await get('/aanbod');
   ok('Aanbod toont (K)ankeratelier + prijs', r.text.includes('(K)ankeratelier') && r.text.includes('45'));
@@ -79,6 +79,7 @@ try {
   r = await get(lead.redirect);
   ok('Resultaatpagina toont persoonlijke inhoud', r.status === 200 && r.text.includes('result-body') && /Veel om te dragen|Iets dat merkbaar meeweegt|Een zacht moment/.test(r.text));
   ok('Resultaat toont boek-CTA', r.text.includes(content.cta.book) && r.text.includes(`/afspraak?lead=${leadId}`));
+  ok('Resultaat verwijst door naar ob-audire.nl', r.text.includes(content.externalSite.url));
   ok('Resultaat toont het e-mailadres', r.text.includes('test.persoon@example.com'));
 
   // 5. Welkomstmail + melding aan coach, opvolging gepland

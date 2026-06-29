@@ -34,12 +34,20 @@ export const content = {
     website: 'https://ob-audire.nl',
   },
 
+  // De externe site van Petra waar we leads naartoe doorverwijzen.
+  externalSite: {
+    url: 'https://ob-audire.nl',
+    label: 'ob-audire.nl',
+  },
+
   // The single goal of the funnel.
   cta: {
     primary: 'Doe de korte check-in',
     secondary: 'Plan een kennismakingsgesprek',
     book: 'Plan een vrijblijvend kennismakingsgesprek',
     bookShort: 'Kennismaken',
+    visitSite: 'Bekijk de praktijk van Petra',
+    toSite: 'Ga naar ob-audire.nl',
   },
 
   // ── Navigation (route paths are Dutch) ────────────────────────────────────
@@ -53,17 +61,22 @@ export const content = {
     result: '/resultaat', // + /:id
   },
 
-  // ── Landing page ──────────────────────────────────────────────────────────
+  // ── Landing page (lead-funnel die doorverwijst naar Ob-Audire) ─────────────
   landing: {
-    eyebrow: 'Welkom in mijn wereld',
-    heroTitle: 'Ruimte om te luisteren naar wat onder de oppervlakte speelt',
+    eyebrow: 'Een zachte eerste stap',
+    heroTitle: 'Een luisterend oor, wanneer jij er klaar voor bent',
     heroLede:
-      'Sta je op een kruispunt in je leven of loopbaan, draag je een verlies met je mee, of verlang je naar meer verbinding met jezelf? Bij Ob-Audire vind je een veilige ruimte om te onderzoeken, te voelen en te groeien — in jouw tempo.',
+      'Sta je op een kruispunt, draag je een verlies, of verlang je naar meer verbinding met jezelf? Doe de korte check-in. Je ontvangt een persoonlijke spiegeling — en we brengen je in contact met Petra Mollet van Ob-Audire.',
     heroNote: 'Vrijblijvend · Vertrouwelijk · In jouw tempo · Ongeveer 2 minuten',
 
-    introTitle: 'Wat is Ob-Audire?',
+    // Maakt expliciet dat dit een opstap is naar Petra's praktijk.
+    referralTitle: 'Wat is deze pagina?',
+    referralBody:
+      'Dit is een warme eerste stap naar Ob-Audire, de praktijk van Petra Mollet. In twee minuten help je jezelf op weg met een korte check-in. Daarna verbinden we je met Petra — voor een vrijblijvend kennismakingsgesprek of om rustig verder te lezen op haar website.',
+
+    introTitle: 'Over Ob-Audire',
     introBody:
-      'Ob-Audire — van het Latijnse audire, luisteren — is de praktijk van Petra Mollet. Geen standaardtraject, maar een afgestemde reis met jouw verhaal als kompas. Petra combineert haar ervaring als HR-adviseur en loopbaancoach met opleiding tot rouw- en verliesbegeleider, en werkt intuïtief, verdiepend en creatief.',
+      'Ob-Audire — van het Latijnse audire, luisteren — is de praktijk van Petra Mollet. Geen standaardtraject, maar een afgestemde reis met jouw verhaal als kompas. Petra combineert haar ervaring als HR-adviseur en loopbaancoach met opleiding tot rouw- en verliesbegeleider.',
 
     howTitle: 'Hoe het werkt',
     steps: [
@@ -94,9 +107,19 @@ export const content = {
 
   // ── Wie ben ik / About ─────────────────────────────────────────────────────
   about: {
-    eyebrow: 'Wie ben ik',
+    eyebrow: 'Over Petra',
     title: 'Petra Mollet',
     role: 'HR-adviseur & begeleider van persoonlijke ontwikkelingsprocessen',
+    // Korte teaser voor de lead-pagina; het volledige verhaal staat op ob-audire.nl.
+    teaser: [
+      'Petra Mollet begeleidt mensen die op een kruispunt staan in hun leven of loopbaan, en die verlangen naar meer verbinding met zichzelf. Haar werkwijze is intuïtief, verdiepend en creatief.',
+      'Ze combineert haar ervaring als HR-adviseur en loopbaancoach met haar opleiding tot rouw- en verliesbegeleider. Geen standaardtraject, maar een afgestemde reis — met jouw verhaal als kompas.',
+    ],
+    teaserFocus: [
+      'Persoonlijke ontwikkeling & verbinding met jezelf',
+      'Loopbaanbegeleiding bij keuzes en verandering',
+      'Rouw, verlies en ondersteuning bij transitie',
+    ],
     intro: [
       'Ik ben Petra Mollet, HR-adviseur en begeleider van persoonlijke ontwikkelingsprocessen. Vanuit mijn eigen innerlijke reis heb ik geleerd hoe belangrijk het is om ruimte te maken voor de binnenwereld — voor de vragen, emoties en beelden die ons richting geven, ook als ze niet direct zichtbaar zijn.',
       'Mijn werkwijze is intuïtief, verdiepend en creatief. Ik werk met mensen die op een kruispunt staan in hun leven of loopbaan, en die verlangen naar meer verbinding met zichzelf. Daarbij combineer ik mijn professionele ervaring in HR met mijn vermogen om te luisteren naar wat onder de oppervlakte speelt. Ik help je om patronen te herkennen, betekenis te geven aan wat je ervaart, en keuzes te maken die passen bij wie je werkelijk bent.',

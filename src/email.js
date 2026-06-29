@@ -110,6 +110,7 @@ export function renderWelcome(lead) {
     ${summary ? `<p style="background:#f1eadd;border-left:3px solid #7c8a5a;padding:12px 16px;border-radius:8px;font-size:14px;color:#6e645a;"><em>Wat je met ons deelde:</em><br>${esc(summary)}</p>` : ''}
     <p>Wanneer je er klaar voor bent, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek met ${esc(content.brand.coach)}. Er is niets om voor te bereiden — gewoon een rustige plek om gehoord te worden.</p>
     ${button(url, 'Plan je kennismakingsgesprek')}
+    <p>Liever eerst rustig rondkijken? Bekijk de praktijk van Petra op <a href="${esc(content.externalSite.url)}">${esc(content.externalSite.label)}</a>.</p>
     <p>Geen druk en geen verplichting. Ik ben er, wanneer jij wilt.</p>
     <p>Warme groet,<br>${esc(content.brand.coach)}<br><span style="color:#938979;">${esc(content.brand.name)}</span></p>
   `);
