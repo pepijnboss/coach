@@ -39,6 +39,15 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { showError('email'); bad = true; }
     if (bad) return;
 
+    // Static preview (GitHub Pages): no API available — show the calm
+    // confirmation state directly so the flow can be experienced.
+    if (window.RK_PREVIEW) {
+      form.style.display = 'none';
+      if (done) done.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     var btn = document.getElementById('bk-submit');
     btn.disabled = true;
     btn.textContent = 'Sending…';

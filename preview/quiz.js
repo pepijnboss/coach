@@ -214,6 +214,10 @@
     if (!consent) { document.getElementById('err-consent').style.display = 'block'; document.getElementById('field-consent') && null; bad = true; }
     if (bad) return;
 
+    // In the static preview (GitHub Pages) there is no server/API — simply
+    // glide to the example result so the flow can be experienced end to end.
+    if (window.RK_PREVIEW) { window.location.href = 'result.html'; return; }
+
     var btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = 'One moment…';

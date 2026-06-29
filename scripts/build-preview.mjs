@@ -55,8 +55,10 @@ function rewrite(html) {
   // Rewrite href="..." and src="..." attribute values.
   let out = html.replace(/\b(href|src)="([^"]*)"/g, (m, attr, val) => `${attr}="${rewriteValue(val)}"`);
   // Add a small banner so it's obvious this is a static preview.
-  const banner = `<div style="background:#7c9885;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Static preview — the interactive quiz submit, emails and admin need the live server (run <code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>`;
-  out = out.replace(/(<body[^>]*>)/, `$1${banner}`);
+  const banner = `<div style="background:#7c9885;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Static preview &mdash; click through the quiz to see the flow. The real emails, lead storage and live admin need the server (<code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>`;
+  // RK_PREVIEW makes the quiz + booking flow work without a backend.
+  const flag = `<script>window.RK_PREVIEW=true;</script>`;
+  out = out.replace(/(<body[^>]*>)/, `$1${flag}${banner}`);
   return out;
 }
 
