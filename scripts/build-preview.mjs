@@ -1,18 +1,17 @@
-// Build a STATIC preview of the site into /preview so it can be viewed by
-// simply opening the .html files in a browser — no server required.
+// Bouw een STATISCHE preview van de site in /preview, zodat de pagina's in een
+// browser te openen zijn zonder server. Routes worden herschreven naar lokale
+// .html-bestanden en absolute asset-paden naar relatieve. De definitieve
+// verzending van de check-in vereist de live server; alle pagina's zien er
+// verder exact zo uit als live.
 //
-// It renders the real view functions, then rewrites server routes to local
-// .html files and absolute asset paths to relative ones. The quiz's final
-// submit needs the live server, but every page looks exactly as it will live.
-//
-// Usage: npm run preview:build   (or: node scripts/build-preview.mjs)
+// Gebruik: npm run preview:build
 
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { landingPage, quizPage, aboutPage, privacyPage } from '../src/views/pages.js';
+import { landingPage, quizPage, aboutPage, aanbodPage, privacyPage } from '../src/views/pages.js';
 import { bookingPage } from '../src/views/booking.js';
 import { resultPage } from '../src/views/result.js';
 import { adminLoginPage, adminDashboardPage } from '../src/views/admin.js';
@@ -22,41 +21,35 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'preview');
 
-// Map server routes -> static file names.
+// Route -> statisch bestand.
 const routeMap = {
   '/': 'index.html',
-  '/quiz': 'quiz.html',
-  '/about': 'about.html',
+  '/check-in': 'check-in.html',
+  '/wie-ben-ik': 'wie-ben-ik.html',
+  '/aanbod': 'aanbod.html',
   '/privacy': 'privacy.html',
-  '/booking': 'booking.html',
+  '/afspraak': 'afspraak.html',
 };
-
 const assetSet = new Set(['/styles.css', '/quiz.js', '/booking.js']);
 
 function rewriteValue(val) {
-  if (!val.startsWith('/')) return val; // external, mailto, data:, anchors handled below
-  // split off query/hash
-  const [pathPart, rest = ''] = val.split(/(?=[?#])/, 2).length === 2 ? [val.slice(0, val.search(/[?#]/)), val.slice(val.search(/[?#]/))] : [val, ''];
+  if (!val.startsWith('/')) return val; // extern, mailto, tel, data:, ankers
+  const hashIdx = val.search(/[?#]/);
+  const pathPart = hashIdx === -1 ? val : val.slice(0, hashIdx);
+  const rest = hashIdx === -1 ? '' : val.slice(hashIdx);
   if (assetSet.has(pathPart)) return pathPart.slice(1) + rest;
-  if (pathPart.startsWith('/result/')) return 'result.html' + (rest.startsWith('#') ? rest : '');
-  if (pathPart === '/booking') return 'booking.html';
+  if (pathPart.startsWith('/resultaat/')) return 'resultaat.html' + (rest.startsWith('#') ? rest : '');
   if (routeMap[pathPart]) {
     const file = routeMap[pathPart];
-    return pathPart === '/' && rest.startsWith('#') ? 'index.html' + rest : file + (rest.startsWith('#') ? rest : '');
+    return (pathPart === '/' ? 'index.html' : file) + (rest.startsWith('#') ? rest : '');
   }
   if (pathPart === '/') return 'index.html' + rest;
-  // /#how style anchors
-  if (val.startsWith('/#')) return 'index.html' + val.slice(1);
-  // admin etc — leave pointing to a note
   return pathPart.slice(1) + rest;
 }
 
 function rewrite(html) {
-  // Rewrite href="..." and src="..." attribute values.
   let out = html.replace(/\b(href|src)="([^"]*)"/g, (m, attr, val) => `${attr}="${rewriteValue(val)}"`);
-  // Add a small banner so it's obvious this is a static preview.
-  const banner = `<div style="background:#7c9885;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Static preview &mdash; click through the quiz to see the flow. The real emails, lead storage and live admin need the server (<code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>`;
-  // RK_PREVIEW makes the quiz + booking flow work without a backend.
+  const banner = `<div style="background:#7c8a5a;color:#fff;font-family:Arial,sans-serif;font-size:.85rem;text-align:center;padding:8px 14px;">Statische preview &mdash; klik door de check-in om de flow te ervaren. Echte e-mails, opslag en het live dashboard vragen de server (<code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:4px;">node server.js</code>).</div>`;
   const flag = `<script>window.RK_PREVIEW=true;</script>`;
   out = out.replace(/(<body[^>]*>)/, `$1${flag}${banner}`);
   return out;
@@ -66,36 +59,29 @@ async function main() {
   await fsp.rm(OUT, { recursive: true, force: true });
   await fsp.mkdir(OUT, { recursive: true });
 
-  // Example lead for the result + admin previews.
-  const answers = { recency: 'months', kind: 'death', intensity: 8, struggles: ['sleep', 'sadness', 'isolation'], talkedBefore: 'no', supported: 'no' };
+  const answers = { intent: 'rouw', recency: 'maanden', intensity: 8, struggles: ['verdriet', 'onrust', 'lichaam'], talkedBefore: 'nee', longing: 'gehoord' };
   const exampleLead = {
-    id: 'example',
-    name: 'Marieke Jansen',
-    email: 'marieke@example.com',
-    phone: '+31 6 12345678',
-    createdAt: new Date().toISOString(),
-    status: 'new',
-    assignedCoachId: 'coach-anna',
-    booking: null,
-    answers,
-    result: generateResult(answers),
+    id: 'example', name: 'Marieke Jansen', email: 'marieke@example.com', phone: '06 12345678',
+    createdAt: new Date().toISOString(), status: 'new', assignedCoachId: 'coach-petra', booking: null,
+    answers, result: generateResult(answers),
     emails: { welcomeSentAt: new Date().toISOString(), followupScheduledFor: new Date(Date.now() + 48 * 3600e3).toISOString(), followupSentAt: null },
   };
 
   const adminStats = { total: 3, new: 1, contacted: 1, booked: 1, last7Days: 3 };
   const adminLeads = [
     exampleLead,
-    { ...exampleLead, id: 'b', name: 'Tom de Boer', email: 'tom@example.com', phone: null, status: 'contacted', result: generateResult({ recency: 'year', kind: 'divorce', intensity: 5, struggles: ['meaning', 'focus'], talkedBefore: 'friends', supported: 'somewhat' }) },
-    { ...exampleLead, id: 'c', name: 'Sofie Willems', email: 'sofie@example.com', status: 'booked', booking: { type: 'internal-request', preference: 'weekday-evening' }, result: generateResult({ recency: 'recent', kind: 'trauma', intensity: 9, struggles: ['numbness', 'anger'], talkedBefore: 'professional', supported: 'yes' }) },
+    { ...exampleLead, id: 'b', name: 'Tom de Boer', email: 'tom@example.com', phone: null, status: 'contacted', result: generateResult({ intent: 'loopbaan', recency: 'jaar', intensity: 5, struggles: ['vastlopen', 'keuzes'], talkedBefore: 'naasten', longing: 'richting' }) },
+    { ...exampleLead, id: 'c', name: 'Sofie Willems', email: 'sofie@example.com', status: 'booked', booking: { type: 'internal-request', preference: 'doordeweeks-avond' }, result: generateResult({ intent: 'kanker', recency: 'recent', intensity: 7, struggles: ['stilte', 'lichaam'], talkedBefore: 'professional', longing: 'rust' }) },
   ];
 
   const pages = {
     'index.html': landingPage(),
-    'quiz.html': quizPage(),
-    'about.html': aboutPage(),
+    'check-in.html': quizPage(),
+    'wie-ben-ik.html': aboutPage(),
+    'aanbod.html': aanbodPage(),
     'privacy.html': privacyPage(),
-    'booking.html': bookingPage({ lead: exampleLead }),
-    'result.html': resultPage({ lead: exampleLead }),
+    'afspraak.html': bookingPage({ lead: exampleLead }),
+    'resultaat.html': resultPage({ lead: exampleLead }),
     'admin-login.html': adminLoginPage({}),
     'admin-dashboard.html': adminDashboardPage({ leads: adminLeads, stats: adminStats }),
   };
@@ -104,28 +90,21 @@ async function main() {
     await fsp.writeFile(path.join(OUT, file), rewrite(html), 'utf8');
   }
 
-  // Copy client assets so the preview is fully styled.
   for (const asset of ['styles.css', 'quiz.js', 'booking.js']) {
     await fsp.copyFile(path.join(ROOT, 'public', asset), path.join(OUT, asset));
   }
 
-  // A tiny index of all preview pages.
-  const list = Object.keys(pages)
-    .map((f) => `<li><a href="${f}">${f}</a></li>`)
-    .join('');
-  const indexNote = `<!doctype html><meta charset="utf-8"><title>RouwKompas preview</title>
-  <body style="font-family:Arial;max-width:640px;margin:40px auto;padding:0 20px;color:#3a3633;">
-  <h1 style="font-family:Georgia;color:#5f7a69;">RouwKompas — preview pages</h1>
-  <p>Open <a href="index.html"><b>index.html</b></a> to start, or jump to any page:</p>
+  const list = Object.keys(pages).map((f) => `<li><a href="${f}">${f}</a></li>`).join('');
+  const indexNote = `<!doctype html><meta charset="utf-8"><title>Ob-Audire preview</title>
+  <body style="font-family:Arial;max-width:640px;margin:40px auto;padding:0 20px;color:#3a322a;">
+  <h1 style="font-family:Georgia;color:#5d6a40;">Ob-Audire — previewpagina's</h1>
+  <p>Open <a href="index.html"><b>index.html</b></a> om te starten, of spring naar een pagina:</p>
   <ul style="line-height:2;">${list}</ul>
-  <p style="color:#8a847c;font-size:.9rem;">These are static snapshots. For the working quiz, emails and live admin, run <code>node server.js</code>.</p></body>`;
+  <p style="color:#938979;font-size:.9rem;">Dit zijn statische momentopnames. Voor de werkende check-in, e-mails en het live dashboard: <code>node server.js</code>.</p></body>`;
   await fsp.writeFile(path.join(OUT, 'pages.html'), indexNote, 'utf8');
 
-  console.log(`Preview built into ${OUT}`);
-  console.log('Pages:', Object.keys(pages).join(', '), '+ pages.html');
+  console.log(`Preview gebouwd in ${OUT}`);
+  console.log('Pagina\'s:', Object.keys(pages).join(', '), '+ pages.html');
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+main().catch((e) => { console.error(e); process.exit(1); });

@@ -1,200 +1,211 @@
-// Intake questionnaire definition + personalised result generation.
+// Intake-check-in + persoonlijke spiegeling voor Ob-Audire.
 //
-// IMPORTANT TONE RULES (enforced by the copy below):
-//  - No medical claims, no diagnosis language.
-//  - Warm, calm, validating. Never salesy or alarmist.
-//  - The result gently explains how grief coaching *may* help and invites
-//    (never pressures) the person to book a free conversation.
+// TOON (afgedwongen in de teksten hieronder):
+//  - Geen medische claims, geen diagnose-taal.
+//  - Warm, zacht, bevestigend. Nooit pusherig of alarmerend.
+//  - De uitkomst legt mild uit hoe begeleiding kan helpen en nodigt (zonder
+//    druk) uit tot een vrijblijvend kennismakingsgesprek.
+
+import content from './content.js';
 
 export const QUIZ = {
-  id: 'rouwkompas-intake-v1',
+  id: 'ob-audire-checkin-v1',
   steps: [
     {
-      id: 'recency',
+      id: 'intent',
       type: 'single',
-      question: 'When did your loss happen?',
-      help: 'There is no right or wrong timing for grief.',
+      question: 'Wat brengt je hier?',
+      help: 'Kies wat het dichtst bij komt. Er is geen goed of fout.',
       options: [
-        { value: 'recent', label: 'Within the last few weeks' },
-        { value: 'months', label: 'A few months ago' },
-        { value: 'year', label: 'About a year ago' },
-        { value: 'long', label: 'More than a year ago' },
-        { value: 'ongoing', label: 'It is ongoing / hard to say' },
+        { value: 'kruispunt', label: 'Ik sta op een kruispunt in mijn leven' },
+        { value: 'loopbaan', label: 'Ik zoek richting in mijn loopbaan' },
+        { value: 'rouw', label: 'Ik draag een verlies of rouw met me mee' },
+        { value: 'verbinding', label: 'Ik verlang naar meer verbinding met mezelf' },
+        { value: 'kanker', label: 'Ik leef met kanker, of mijn partner is ziek' },
+        { value: 'anders', label: 'Iets anders' },
       ],
     },
     {
-      id: 'kind',
+      id: 'recency',
       type: 'single',
-      question: 'What kind of loss are you carrying?',
-      help: 'Loss takes many forms. Choose what fits best.',
+      question: 'Hoe lang speelt dit al?',
+      help: 'Er is geen juiste timing voor wat je voelt.',
       options: [
-        { value: 'death', label: 'The death of someone I love' },
-        { value: 'divorce', label: 'A divorce or the end of a relationship' },
-        { value: 'trauma', label: 'A trauma or sudden life change' },
-        { value: 'health', label: 'A loss of health or independence' },
-        { value: 'other', label: 'Something else' },
+        { value: 'recent', label: 'Sinds kort' },
+        { value: 'maanden', label: 'Een aantal maanden' },
+        { value: 'jaar', label: 'Ongeveer een jaar' },
+        { value: 'langer', label: 'Langer dan een jaar' },
+        { value: 'wisselend', label: 'Het komt en gaat' },
       ],
     },
     {
       id: 'intensity',
       type: 'scale',
-      question: 'How intense does your emotional distress feel right now?',
-      help: 'Drag to the number that feels closest. 1 is gentle, 10 is overwhelming.',
+      question: 'Hoe zwaar weegt het op dit moment?',
+      help: 'Schuif naar het getal dat het dichtst voelt. 1 is licht, 10 is overweldigend.',
       min: 1,
       max: 10,
-      minLabel: 'Gentle',
-      maxLabel: 'Overwhelming',
+      minLabel: 'Licht',
+      maxLabel: 'Overweldigend',
     },
     {
       id: 'struggles',
       type: 'multi',
-      question: 'What do you struggle with most at the moment?',
-      help: 'Choose as many as feel true for you.',
+      question: 'Wat herken je het meest?',
+      help: 'Kies zoveel als voor jou waar is.',
       options: [
-        { value: 'sleep', label: 'Sleep' },
-        { value: 'sadness', label: 'Waves of sadness' },
-        { value: 'isolation', label: 'Feeling alone or isolated' },
-        { value: 'guilt', label: 'Guilt or regret' },
-        { value: 'anger', label: 'Anger or frustration' },
-        { value: 'meaning', label: 'Finding meaning again' },
-        { value: 'focus', label: 'Concentration or daily tasks' },
-        { value: 'numbness', label: 'Feeling numb or disconnected' },
+        { value: 'vastlopen', label: 'Vastlopen of niet weten welke kant op' },
+        { value: 'kwijt', label: 'Het gevoel mezelf kwijt te zijn' },
+        { value: 'verdriet', label: 'Verdriet of gemis' },
+        { value: 'onrust', label: 'Onrust of piekeren' },
+        { value: 'lichaam', label: 'Spanning in mijn lichaam' },
+        { value: 'stilte', label: 'Behoefte aan stilte en ruimte' },
+        { value: 'stappen', label: 'Verlangen naar nieuwe stappen' },
+        { value: 'keuzes', label: 'Moeite met keuzes maken' },
       ],
     },
     {
       id: 'talkedBefore',
       type: 'single',
-      question: 'Have you talked to someone about it before?',
-      help: 'There is no wrong answer here.',
+      question: 'Heb je hier eerder met iemand over gesproken?',
+      help: 'Welk antwoord je ook geeft, je bent hier welkom.',
       options: [
-        { value: 'no', label: 'No, not really' },
-        { value: 'friends', label: 'A little, with friends or family' },
-        { value: 'professional', label: 'Yes, with a professional' },
+        { value: 'nee', label: 'Nee, niet echt' },
+        { value: 'naasten', label: 'Een beetje, met naasten' },
+        { value: 'professional', label: 'Ja, met een professional' },
       ],
     },
     {
-      id: 'supported',
+      id: 'longing',
       type: 'single',
-      question: 'Do you feel supported right now?',
-      help: 'However you answer, you are welcome here.',
+      question: 'Waar verlang je het meest naar?',
+      help: 'Volg wat zich als eerste aandient.',
       options: [
-        { value: 'yes', label: 'Mostly, yes' },
-        { value: 'somewhat', label: 'Somewhat' },
-        { value: 'no', label: 'Not really' },
+        { value: 'gehoord', label: 'Gehoord worden' },
+        { value: 'helderheid', label: 'Helderheid' },
+        { value: 'rust', label: 'Rust' },
+        { value: 'richting', label: 'Richting' },
+        { value: 'stappen', label: 'Nieuwe stappen zetten' },
+        { value: 'voelen', label: 'Ruimte om te voelen' },
       ],
     },
   ],
 };
 
-const KIND_LABEL = {
-  death: 'the death of someone you love',
-  divorce: 'the end of a relationship',
-  trauma: 'a sudden and difficult change',
-  health: 'a loss of health or independence',
-  other: 'a loss that matters deeply to you',
+const INTENT_PHRASE = {
+  kruispunt: 'dat je op een kruispunt staat in je leven',
+  loopbaan: 'dat je richting zoekt in je loopbaan',
+  rouw: 'dat je een verlies met je meedraagt',
+  verbinding: 'dat je verlangt naar meer verbinding met jezelf',
+  kanker: 'dat je leeft met kanker, of dat je partner ziek is',
+  anders: 'dat er iets is dat je diep bezighoudt',
 };
 
 const STRUGGLE_LABEL = {
-  sleep: 'rest and sleep',
-  sadness: 'waves of sadness',
-  isolation: 'feeling alone',
-  guilt: 'guilt or regret',
-  anger: 'anger or frustration',
-  meaning: 'finding meaning again',
-  focus: 'focus in daily life',
-  numbness: 'feeling numb',
+  vastlopen: 'het gevoel vast te lopen',
+  kwijt: 'het gevoel jezelf kwijt te zijn',
+  verdriet: 'verdriet of gemis',
+  onrust: 'onrust of piekeren',
+  lichaam: 'spanning in je lichaam',
+  stilte: 'een behoefte aan stilte en ruimte',
+  stappen: 'een verlangen naar nieuwe stappen',
+  keuzes: 'moeite met keuzes maken',
 };
 
-function listToSentence(items) {
-  if (!items.length) return '';
-  if (items.length === 1) return items[0];
-  if (items.length === 2) return `${items[0]} and ${items[1]}`;
-  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
-}
+const LONGING_PARA = {
+  gehoord:
+    'Je gaf aan dat je vooral verlangt om gehoord te worden. Dat is precies waar Ob-Audire voor staat: aandachtig luisteren, zodat er ruimte ontstaat voor wat er werkelijk in je leeft.',
+  helderheid:
+    'Je verlangt naar helderheid. Samen kunnen we patronen herkennen en betekenis geven aan wat je ervaart, zodat het beeld langzaam scherper wordt.',
+  rust:
+    'Je verlangt naar rust. In een veilige ruimte mag het dagelijkse "moeten" even wegvallen — je mag landen en vertragen.',
+  richting:
+    'Je verlangt naar richting. Met jouw verhaal als kompas zoeken we naar keuzes die passen bij wie je werkelijk bent.',
+  stappen:
+    'Je verlangt naar nieuwe stappen. We maken samen de vertaalslag van innerlijke beweging naar concrete, haalbare stappen.',
+  voelen:
+    'Je verlangt naar ruimte om te voelen. Via aandacht voor het lichaam en wat zich aandient, ontstaat ruimte voor inzicht en beweging.',
+};
 
 /**
- * Generate a warm, personalised, non-clinical result from quiz answers.
- * Returns a structured object so the UI can render it consistently.
- *
- * @param {object} answers  { recency, kind, intensity, struggles[], talkedBefore, supported }
+ * Genereer een warme, persoonlijke, niet-klinische spiegeling uit de antwoorden.
+ * @param {object} answers  { intent, recency, intensity, struggles[], talkedBefore, longing }
  */
 export function generateResult(answers = {}) {
   const intensity = Math.max(1, Math.min(10, parseInt(answers.intensity, 10) || 5));
   const struggles = Array.isArray(answers.struggles) ? answers.struggles : [];
-  const kind = answers.kind || 'other';
-  const supported = answers.supported || 'somewhat';
-  const talked = answers.talkedBefore || 'no';
+  const intent = answers.intent || 'anders';
+  const longing = answers.longing || 'gehoord';
+  const talked = answers.talkedBefore || 'nee';
 
-  // A gentle "band" — never framed as a clinical severity score.
   let band;
-  if (intensity <= 3) band = 'tender';
-  else if (intensity <= 6) band = 'heavy';
-  else band = 'overwhelming';
+  if (intensity <= 3) band = 'licht';
+  else if (intensity <= 6) band = 'merkbaar';
+  else band = 'zwaar';
 
-  const kindPhrase = KIND_LABEL[kind] || KIND_LABEL.other;
+  const intentPhrase = INTENT_PHRASE[intent] || INTENT_PHRASE.anders;
   const struggleNames = struggles.map((s) => STRUGGLE_LABEL[s]).filter(Boolean);
 
-  // ── Headline ──
   const headline = {
-    tender: 'Thank you for pausing to check in with yourself.',
-    heavy: 'What you are carrying sounds genuinely heavy.',
-    overwhelming: 'It takes real courage to reach out when things feel this much.',
+    licht: 'Fijn dat je even hebt stilgestaan bij jezelf.',
+    merkbaar: 'Wat je met je meedraagt, mag er zijn.',
+    zwaar: 'Het vraagt moed om stil te staan bij wat zo zwaar weegt.',
   }[band];
 
-  // ── Opening paragraph (acknowledgement) ──
+  // ── Opening ──
   const opening =
-    `You shared that you are living with ${kindPhrase}. ` +
-    (band === 'overwhelming'
-      ? 'Right now it sounds like the feelings are close to the surface and hard to hold alone. That is an understandable response to loss — not a weakness.'
-      : band === 'heavy'
-        ? 'Grief like this rarely moves in a straight line, and it makes sense that some days feel much harder than others.'
-        : 'Even when grief feels quieter, it deserves care and attention — including yours.');
+    `Je deelde ${intentPhrase}. ` +
+    (band === 'zwaar'
+      ? 'Op dit moment lijken de gevoelens dicht aan de oppervlakte te liggen en moeilijk alleen te dragen. Dat is een begrijpelijke reactie — geen teken van zwakte.'
+      : band === 'merkbaar'
+        ? 'Zulke processen verlopen zelden in een rechte lijn; het is logisch dat sommige dagen zwaarder voelen dan andere.'
+        : 'Ook als iets zachter aanwezig is, verdient het aandacht en zorg — ook die van jou.');
 
-  // ── Struggles paragraph ──
+  // ── Worstelingen ──
   let strugglePara = '';
   if (struggleNames.length) {
+    const list =
+      struggleNames.length === 1
+        ? struggleNames[0]
+        : `${struggleNames.slice(0, -1).join(', ')} en ${struggleNames[struggleNames.length - 1]}`;
     strugglePara =
-      `You mentioned that ${listToSentence(struggleNames)} ${struggleNames.length === 1 ? 'is' : 'are'} weighing on you most. ` +
-      'These are some of the most common ways grief shows up in the body and mind, and you are far from alone in feeling them.';
+      `Je herkent vooral ${list}. ` +
+      'Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.';
   }
 
-  // ── Support paragraph ──
-  let supportPara = '';
-  if (supported === 'no') {
-    supportPara =
-      'You also said you do not feel very supported right now. Having even one steady, understanding person to talk to can make a real difference — and that is exactly what a free conversation is for.';
-  } else if (supported === 'somewhat') {
-    supportPara =
-      'You have some support around you, which is good. Sometimes, though, it helps to talk with someone outside your circle who can simply listen without needing anything from you.';
-  } else {
-    supportPara =
-      'It is good that you feel some support around you. A conversation with a grief coach can sit alongside that, offering space that is just for you.';
-  }
+  // ── Verlangen ──
+  const longingPara = LONGING_PARA[longing] || LONGING_PARA.gehoord;
 
-  // ── How coaching may help (NO medical claims) ──
-  const coachingPara =
+  // ── Aanpak (geen medische claims) ──
+  const approachPara =
     talked === 'professional'
-      ? 'You have spoken with a professional before. Grief coaching is a little different — it is not therapy or treatment, but a supportive, practical companionship through loss, at your own pace.'
-      : 'Grief coaching is not therapy or medical treatment. It is a calm, supportive space to be heard, to make sense of what you feel, and to find small, gentle steps forward — entirely at your own pace.';
+      ? 'Je hebt eerder met een professional gesproken. De begeleiding van Petra is net iets anders: geen behandeling, maar een afgestemde, betrokken reis — intuïtief, verdiepend en creatief, in jouw tempo.'
+      : 'De begeleiding van Petra is geen behandeling of standaardtraject, maar een afgestemde reis: een veilige ruimte om te onderzoeken, te voelen en te groeien — intuïtief, verdiepend en creatief, in jouw tempo.';
 
-  // ── Invitation (gentle CTA copy) ──
+  // ── Eventuele atelier-routing ──
+  let atelierPara = '';
+  if (intent === 'kanker') {
+    atelierPara =
+      'Omdat je leeft met kanker of partner bent van iemand die ziek is, mag je ook weten dat er het (K)ankeratelier is: een kleine, creatieve ochtend waar je in rust iets met je handen kunt doen. Niets hoeft, alles mag.';
+  }
+
   const invitation =
-    'If it feels right, you are warmly invited to a free, no-obligation 30-minute conversation. ' +
-    'There is nothing to prepare and nothing to prove — just a chance to talk and see if it helps.';
+    'Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. ' +
+    'Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.';
 
-  // A short, scannable summary for the lead record + admin view.
   const summary =
-    `Loss: ${kindPhrase}. Distress ${intensity}/10 (${band}). ` +
-    `Struggles: ${struggleNames.join(', ') || 'not specified'}. ` +
-    `Talked before: ${talked}. Feels supported: ${supported}.`;
+    `Aanleiding: ${intentPhrase}. Zwaarte ${intensity}/10 (${band}). ` +
+    `Herkent: ${struggleNames.join(', ') || 'niet gespecificeerd'}. ` +
+    `Eerder gesproken: ${talked}. Verlangt naar: ${longing}.`;
 
   return {
     band,
     intensity,
     headline,
-    paragraphs: [opening, strugglePara, supportPara, coachingPara].filter(Boolean),
+    paragraphs: [opening, strugglePara, longingPara, approachPara, atelierPara].filter(Boolean),
     invitation,
     summary,
-    ctaLabel: 'Book a free 30-minute conversation',
+    ctaLabel: content.cta.book,
+    isAtelier: intent === 'kanker',
   };
 }

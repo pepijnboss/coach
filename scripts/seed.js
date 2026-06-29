@@ -1,5 +1,5 @@
-// Seed a few example leads so the admin dashboard is not empty in a demo.
-// Usage: npm run seed
+// Voeg een paar voorbeeld-aanvragen toe zodat het dashboard niet leeg is.
+// Gebruik: npm run seed
 
 import { createLead, updateLead } from '../src/leads.js';
 import { generateResult } from '../src/quiz.js';
@@ -8,22 +8,22 @@ const samples = [
   {
     name: 'Marieke Jansen',
     email: 'marieke@example.com',
-    phone: '+31 6 12345678',
-    answers: { recency: 'months', kind: 'death', intensity: 8, struggles: ['sleep', 'sadness', 'isolation'], talkedBefore: 'no', supported: 'no' },
+    phone: '06 12345678',
+    answers: { intent: 'rouw', recency: 'maanden', intensity: 8, struggles: ['verdriet', 'onrust', 'lichaam'], talkedBefore: 'nee', longing: 'gehoord' },
     status: 'new',
   },
   {
     name: 'Tom de Boer',
     email: 'tom@example.com',
     phone: '',
-    answers: { recency: 'year', kind: 'divorce', intensity: 5, struggles: ['meaning', 'focus'], talkedBefore: 'friends', supported: 'somewhat' },
+    answers: { intent: 'loopbaan', recency: 'jaar', intensity: 5, struggles: ['vastlopen', 'keuzes'], talkedBefore: 'naasten', longing: 'richting' },
     status: 'contacted',
   },
   {
     name: 'Sofie Willems',
     email: 'sofie@example.com',
-    phone: '+32 470 00 00 00',
-    answers: { recency: 'recent', kind: 'trauma', intensity: 9, struggles: ['numbness', 'anger', 'sleep'], talkedBefore: 'professional', supported: 'yes' },
+    phone: '06 87654321',
+    answers: { intent: 'kanker', recency: 'recent', intensity: 7, struggles: ['stilte', 'lichaam'], talkedBefore: 'professional', longing: 'rust' },
     status: 'booked',
   },
 ];
@@ -42,12 +42,12 @@ const run = async () => {
     });
     const patch = { status: s.status };
     if (s.status === 'booked') {
-      patch.booking = { type: 'internal-request', preference: 'weekday-evening', requestedAt: new Date().toISOString() };
+      patch.booking = { type: 'internal-request', preference: 'doordeweeks-avond', requestedAt: new Date().toISOString() };
     }
     await updateLead(lead.id, patch);
     console.log(`seeded: ${s.name} (${s.status})`);
   }
-  console.log('\nDone. Start the server and open /admin to view them.');
+  console.log('\nKlaar. Start de server en open /admin om ze te bekijken.');
 };
 
 run();

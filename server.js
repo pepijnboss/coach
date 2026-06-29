@@ -1,4 +1,4 @@
-// RouwKompas — application entry point.
+// Ob-Audire — application entry point.
 //
 // A single Node.js HTTP server (no framework, no dependencies) that serves the
 // public funnel, the JSON API, and the coach admin dashboard, and runs the
@@ -6,9 +6,9 @@
 
 import http from 'node:http';
 import config from './src/config.js';
-import { serveStatic, sendHtml, sendJson, notFound } from './src/http.js';
+import { serveStatic, sendHtml, sendJson, notFound, redirect } from './src/http.js';
 import { layout } from './src/views/layout.js';
-import { landingPage, quizPage, aboutPage, privacyPage } from './src/views/pages.js';
+import { landingPage, quizPage, aboutPage, aanbodPage, privacyPage } from './src/views/pages.js';
 import { bookingPage } from './src/views/booking.js';
 import { resultPage } from './src/views/result.js';
 import { handleCreateLead, handleBookingRequest } from './src/api.js';
@@ -19,26 +19,26 @@ import { startScheduler } from './src/automation.js';
 // ── 404 page ──────────────────────────────────────────────────────────────
 function render404() {
   return layout({
-    title: 'Page not found',
+    title: 'Pagina niet gevonden',
     minimal: true,
     body: `<section class="section-pad"><div class="container center" style="max-width:520px;">
-      <span class="eyebrow">Page not found</span>
-      <h1>This page has wandered off</h1>
-      <p class="muted">The page you were looking for is not here. Let us guide you back.</p>
-      <a class="btn btn-primary" href="/">Return home</a>
-      <a class="btn btn-secondary" href="/quiz">Start the check-in</a>
+      <span class="eyebrow">Pagina niet gevonden</span>
+      <h1>Deze pagina is verdwaald</h1>
+      <p class="muted">De pagina die je zocht is hier niet. Laat ons je terugbrengen.</p>
+      <a class="btn btn-primary" href="/">Naar de startpagina</a>
+      <a class="btn btn-secondary" href="/check-in">Doe de check-in</a>
     </div></section>`,
   });
 }
 
 function render500() {
   return layout({
-    title: 'Something went wrong',
+    title: 'Er ging iets mis',
     minimal: true,
     body: `<section class="section-pad"><div class="container center" style="max-width:520px;">
-      <h1>Something went wrong on our side</h1>
-      <p class="muted">Please try again in a moment. If it keeps happening, email ${config.supportEmail}.</p>
-      <a class="btn btn-primary" href="/">Return home</a>
+      <h1>Er ging iets mis aan onze kant</h1>
+      <p class="muted">Probeer het zo nog eens. Blijft het misgaan, mail dan ${config.supportEmail}.</p>
+      <a class="btn btn-primary" href="/">Naar de startpagina</a>
     </div></section>`,
   });
 }
@@ -55,24 +55,30 @@ async function route(req, res, url) {
     if (served) return;
   }
 
-  // ── Public pages ──
+  // ── Publieke pagina's ──
   if (m('GET') && pathname === '/') return sendHtml(res, landingPage());
-  if (m('GET') && pathname === '/quiz') return sendHtml(res, quizPage());
-  if (m('GET') && pathname === '/about') return sendHtml(res, aboutPage());
+  if (m('GET') && pathname === '/check-in') return sendHtml(res, quizPage());
+  if (m('GET') && pathname === '/wie-ben-ik') return sendHtml(res, aboutPage());
+  if (m('GET') && pathname === '/aanbod') return sendHtml(res, aanbodPage());
   if (m('GET') && pathname === '/privacy') return sendHtml(res, privacyPage());
 
-  if (m('GET') && pathname === '/booking') {
+  if (m('GET') && pathname === '/afspraak') {
     const leadId = url.searchParams.get('lead');
     const lead = leadId ? await getLead(leadId) : null;
     return sendHtml(res, bookingPage({ lead }));
   }
 
-  if (m('GET') && pathname.startsWith('/result/')) {
-    const id = decodeURIComponent(pathname.slice('/result/'.length));
+  if (m('GET') && pathname.startsWith('/resultaat/')) {
+    const id = decodeURIComponent(pathname.slice('/resultaat/'.length));
     const lead = await getLead(id);
     if (!lead) return notFound(res, render404());
     return sendHtml(res, resultPage({ lead }));
   }
+
+  // Redirects van oude Engelse paden (voor het geval ze ergens gedeeld zijn)
+  const legacy = { '/quiz': '/check-in', '/about': '/wie-ben-ik', '/booking': '/afspraak' };
+  if (m('GET') && legacy[pathname]) return redirect(res, legacy[pathname], 301);
+  if (m('GET') && pathname.startsWith('/result/')) return redirect(res, '/resultaat/' + pathname.slice('/result/'.length), 301);
 
   // ── Public API ──
   if (m('POST') && pathname === '/api/lead') return handleCreateLead(req, res);
@@ -80,7 +86,7 @@ async function route(req, res, url) {
   if (m('GET') && pathname === '/api/health') {
     return sendJson(res, {
       ok: true,
-      service: 'rouwkompas',
+      service: 'ob-audire',
       time: new Date().toISOString(),
       email: config.email.resendApiKey ? 'resend' : 'outbox',
       booking: config.calendlyUrl ? 'calendly' : 'internal',

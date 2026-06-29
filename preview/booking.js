@@ -1,4 +1,4 @@
-/* RouwKompas — internal booking request form handler.
+/* Ob-Audire — intern afspraakformulier.
    Used only when no Calendly URL is configured. Submits to /api/booking-request
    and shows a calm confirmation state. */
 
@@ -39,8 +39,8 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { showError('email'); bad = true; }
     if (bad) return;
 
-    // Static preview (GitHub Pages): no API available — show the calm
-    // confirmation state directly so the flow can be experienced.
+    // Statische preview (GitHub Pages / los bestand): geen API beschikbaar —
+    // toon direct de rustige bevestiging zodat de flow ervaarbaar is.
     if (window.RK_PREVIEW) {
       form.style.display = 'none';
       if (done) done.style.display = 'block';
@@ -50,7 +50,7 @@
 
     var btn = document.getElementById('bk-submit');
     btn.disabled = true;
-    btn.textContent = 'Sending…';
+    btn.textContent = 'Versturen…';
 
     fetch('/api/booking-request', {
       method: 'POST',
@@ -65,14 +65,14 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           btn.disabled = false;
-          btn.textContent = 'Request my free conversation';
-          showError('email', (res.data && res.data.errors && res.data.errors.form) || 'Please check your details.');
+          btn.textContent = 'Vraag mijn kennismakingsgesprek aan';
+          showError('email', (res.data && res.data.errors && res.data.errors.form) || 'Controleer je gegevens.');
         }
       })
       .catch(function () {
         btn.disabled = false;
-        btn.textContent = 'Request my free conversation';
-        showError('email', 'We could not reach the server. Please try again.');
+        btn.textContent = 'Vraag mijn kennismakingsgesprek aan';
+        showError('email', 'We konden de server niet bereiken. Probeer het opnieuw.');
       });
   });
 })();

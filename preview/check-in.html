@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inloggen · Ob-Audire</title>
+  <title>Een zachte check-in · Ob-Audire</title>
   <meta name="description" content="Begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie — met aandachtig luisteren als kompas.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Inloggen · Ob-Audire">
+  <meta property="og:title" content="Een zachte check-in · Ob-Audire">
   <meta property="og:description" content="Begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie — met aandachtig luisteren als kompas.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="nl_NL">
@@ -17,24 +17,24 @@
   <header class="site-header"><div class="container"><a class="brand" href="index.html">Ob<span>-Audire</span></a><a href="index.html" class="muted" style="text-decoration:none;font-size:.9rem;">Sluiten</a></div></header>
   <main>
     <section class="section-pad">
-      <div class="container" style="max-width:420px;">
-        <span class="eyebrow">Toegang</span>
-        <h1>Inloggen</h1>
-        <p class="muted">Dit gedeelte is voor Petra Mollet om binnengekomen aanvragen te bekijken.</p>
-        
-        <form method="POST" action="/admin/login" class="card">
-          <div class="field">
-            <label for="u">Gebruikersnaam</label>
-            <input type="text" id="u" name="username" autocomplete="username" required>
+      <div class="container">
+        <div class="quiz-wrap">
+          <noscript>
+            <div class="notice notice-warn">Voor deze check-in is JavaScript nodig. Je kunt ook direct
+              <a href="afspraak.html">een kennismakingsgesprek plannen</a>.</div>
+          </noscript>
+          <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+          <div id="quizRoot" aria-live="polite">
+            <div class="step center">
+              <h1 class="q-title">Een zachte check-in</h1>
+              <p class="q-help">Zes korte vragen. Ongeveer twee minuten. Wat je ook voelt, het mag er zijn.</p>
+              <button class="btn btn-primary" id="startBtn">Begin</button>
+            </div>
           </div>
-          <div class="field">
-            <label for="p">Wachtwoord</label>
-            <input type="password" id="p" name="password" autocomplete="current-password" required>
-          </div>
-          <button class="btn btn-primary btn-block" type="submit">Inloggen</button>
-        </form>
+        </div>
       </div>
     </section>
+    <script id="quizData" type="application/json">{"id":"ob-audire-checkin-v1","steps":[{"id":"intent","type":"single","question":"Wat brengt je hier?","help":"Kies wat het dichtst bij komt. Er is geen goed of fout.","options":[{"value":"kruispunt","label":"Ik sta op een kruispunt in mijn leven"},{"value":"loopbaan","label":"Ik zoek richting in mijn loopbaan"},{"value":"rouw","label":"Ik draag een verlies of rouw met me mee"},{"value":"verbinding","label":"Ik verlang naar meer verbinding met mezelf"},{"value":"kanker","label":"Ik leef met kanker, of mijn partner is ziek"},{"value":"anders","label":"Iets anders"}]},{"id":"recency","type":"single","question":"Hoe lang speelt dit al?","help":"Er is geen juiste timing voor wat je voelt.","options":[{"value":"recent","label":"Sinds kort"},{"value":"maanden","label":"Een aantal maanden"},{"value":"jaar","label":"Ongeveer een jaar"},{"value":"langer","label":"Langer dan een jaar"},{"value":"wisselend","label":"Het komt en gaat"}]},{"id":"intensity","type":"scale","question":"Hoe zwaar weegt het op dit moment?","help":"Schuif naar het getal dat het dichtst voelt. 1 is licht, 10 is overweldigend.","min":1,"max":10,"minLabel":"Licht","maxLabel":"Overweldigend"},{"id":"struggles","type":"multi","question":"Wat herken je het meest?","help":"Kies zoveel als voor jou waar is.","options":[{"value":"vastlopen","label":"Vastlopen of niet weten welke kant op"},{"value":"kwijt","label":"Het gevoel mezelf kwijt te zijn"},{"value":"verdriet","label":"Verdriet of gemis"},{"value":"onrust","label":"Onrust of piekeren"},{"value":"lichaam","label":"Spanning in mijn lichaam"},{"value":"stilte","label":"Behoefte aan stilte en ruimte"},{"value":"stappen","label":"Verlangen naar nieuwe stappen"},{"value":"keuzes","label":"Moeite met keuzes maken"}]},{"id":"talkedBefore","type":"single","question":"Heb je hier eerder met iemand over gesproken?","help":"Welk antwoord je ook geeft, je bent hier welkom.","options":[{"value":"nee","label":"Nee, niet echt"},{"value":"naasten","label":"Een beetje, met naasten"},{"value":"professional","label":"Ja, met een professional"}]},{"id":"longing","type":"single","question":"Waar verlang je het meest naar?","help":"Volg wat zich als eerste aandient.","options":[{"value":"gehoord","label":"Gehoord worden"},{"value":"helderheid","label":"Helderheid"},{"value":"rust","label":"Rust"},{"value":"richting","label":"Richting"},{"value":"stappen","label":"Nieuwe stappen zetten"},{"value":"voelen","label":"Ruimte om te voelen"}]}]}</script>
   </main>
   
     <footer class="site-footer">
@@ -64,6 +64,6 @@
         <p class="legal">© 2026 Ob-Audire · Petra Mollet. Regio Gemert-Bakel &amp; Laarbeek (Noord-Brabant). Begeleiding is geen medische, psychologische of psychiatrische behandeling. Je gegevens worden verwerkt volgens de AVG — zie de <a href="privacy.html" style="display:inline;">privacyverklaring</a>.</p>
       </div>
     </footer>
-  
+  <script src="quiz.js" defer></script>
 </body>
 </html>

@@ -55,7 +55,7 @@ export async function handleCreateLead(req, res) {
     console.error('[api] automation error:', err);
   }
 
-  return sendJson(res, { ok: true, leadId: lead.id, redirect: `/result/${lead.id}` }, 201);
+  return sendJson(res, { ok: true, leadId: lead.id, redirect: `/resultaat/${lead.id}` }, 201);
 }
 
 // POST /api/booking-request — internal booking fallback (no Calendly configured)

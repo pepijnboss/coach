@@ -46,9 +46,9 @@ export const config = {
   nodeEnv: env.NODE_ENV || 'development',
   publicBaseUrl: (env.PUBLIC_BASE_URL || `http://localhost:${env.PORT || 3000}`).replace(/\/$/, ''),
 
-  siteName: env.SITE_NAME || 'RouwKompas',
-  coachName: env.COACH_NAME || 'Anna de Vries',
-  supportEmail: env.SUPPORT_EMAIL || 'anna@rouwkompas.nl',
+  siteName: env.SITE_NAME || 'Ob-Audire',
+  coachName: env.COACH_NAME || 'Petra Mollet',
+  supportEmail: env.SUPPORT_EMAIL || 'info@ob-audire.nl',
 
   admin: {
     user: env.ADMIN_USER || 'admin',
@@ -59,7 +59,7 @@ export const config = {
 
   email: {
     resendApiKey: (env.RESEND_API_KEY || '').trim(),
-    from: env.EMAIL_FROM || 'RouwKompas <noreply@rouwkompas.nl>',
+    from: env.EMAIL_FROM || 'Ob-Audire <noreply@ob-audire.nl>',
     coachNotification: (env.COACH_NOTIFICATION_EMAIL || '').trim(),
     followupDelayHours: parseFloat(env.FOLLOWUP_DELAY_HOURS || '48'),
   },

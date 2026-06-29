@@ -1,7 +1,6 @@
-/* RouwKompas — client-side intake quiz engine.
-   Renders the multi-step questionnaire, captures the lead, and submits to the
-   API. Vanilla JS, no dependencies. Progressive: the page works as a calm
-   single-question-at-a-time flow. */
+/* Ob-Audire — client-side check-in.
+   Toont de meerstaps-vragenlijst, legt de lead vast en stuurt naar de API.
+   Vanilla JS, geen dependencies. */
 
 (function () {
   'use strict';
@@ -38,7 +37,7 @@
     setProgress();
     var step = QUIZ.steps[state.index];
     var html = '<div class="step">';
-    html += '<div class="step-count">Question ' + (state.index + 1) + ' of ' + totalSteps + '</div>';
+    html += '<div class="step-count">Vraag ' + (state.index + 1) + ' van ' + totalSteps + '</div>';
     html += '<h1 class="q-title">' + esc(step.question) + '</h1>';
     if (step.help) html += '<p class="q-help">' + esc(step.help) + '</p>';
 
@@ -64,14 +63,13 @@
         '<div class="scale"><output id="scaleOut">' + val + '</output>' +
         '<input type="range" id="scaleInput" min="' + step.min + '" max="' + step.max + '" value="' + val + '">' +
         '<div class="scale-labels"><span>' + esc(step.minLabel || step.min) + '</span><span>' + esc(step.maxLabel || step.max) + '</span></div></div>';
-      // ensure default recorded
       state.answers[step.id] = val;
     }
 
     html += '<div class="quiz-nav">';
-    html += '<button type="button" class="link-btn" data-action="back">' + (state.index === 0 ? 'Cancel' : '← Back') + '</button>';
+    html += '<button type="button" class="link-btn" data-action="back">' + (state.index === 0 ? 'Annuleren' : '← Terug') + '</button>';
     var lastQuestion = state.index === totalSteps - 1;
-    html += '<button type="button" class="btn btn-primary" data-action="next" id="nextBtn">' + (lastQuestion ? 'See my reflection' : 'Continue') + '</button>';
+    html += '<button type="button" class="btn btn-primary" data-action="next" id="nextBtn">' + (lastQuestion ? 'Bekijk mijn spiegeling' : 'Verder') + '</button>';
     html += '</div></div>';
 
     root.innerHTML = html;
@@ -105,8 +103,7 @@
           root.querySelectorAll('.option').forEach(function (b) { b.classList.remove('selected'); });
           btn.classList.add('selected');
           updateNextState(step);
-          // gentle auto-advance for single-choice
-          setTimeout(next, 220);
+          setTimeout(next, 220); // zachte auto-advance bij enkelvoudige keuze
         }
       });
     });
@@ -146,25 +143,25 @@
     renderStep();
   }
 
-  // ── Lead capture ──
+  // ── Contactgegevens vastleggen ──
   function renderCapture() {
     state.index = totalSteps;
     setProgress();
     root.innerHTML =
       '<div class="step">' +
-      '<div class="step-count">Almost there</div>' +
-      '<h1 class="q-title">Where can we send your reflection?</h1>' +
-      '<p class="q-help">We will show your personal reflection and email you a copy with a booking link. Your details stay private and are only seen by your coach.</p>' +
+      '<div class="step-count">Bijna klaar</div>' +
+      '<h1 class="q-title">Waar mogen we je spiegeling naartoe sturen?</h1>' +
+      '<p class="q-help">We tonen je persoonlijke spiegeling en mailen je een kopie met een link om te plannen. Je gegevens blijven privé en worden alleen door je begeleider gezien.</p>' +
       '<form id="captureForm" novalidate>' +
-      field('name', 'Your name', 'text', 'name', true) +
-      field('email', 'Email', 'email', 'email', true) +
-      field('phone', 'Phone number <span class="hint">(optional)</span>', 'tel', 'tel', false) +
+      field('name', 'Je naam', 'text', 'name', true) +
+      field('email', 'E-mailadres', 'email', 'email', true) +
+      field('phone', 'Telefoonnummer <span class="hint">(optioneel)</span>', 'tel', 'tel', false) +
       '<div class="field"><label class="checkbox"><input type="checkbox" id="consent" name="consent">' +
-      '<span>I agree that ' + esc((window.RK_SITE || 'RouwKompas')) + ' may store these details and contact me about a free conversation. I can ask for them to be deleted at any time. <a href="/privacy" target="_blank">Privacy</a>.</span></label>' +
-      '<div class="err" id="err-consent">Please tick the box so we may contact you.</div></div>' +
+      '<span>Ik geef Ob-Audire toestemming om deze gegevens te bewaren en contact met me op te nemen over een kennismakingsgesprek. Ik kan altijd om verwijdering vragen. <a href="/privacy" target="_blank">Privacy</a>.</span></label>' +
+      '<div class="err" id="err-consent">Vink dit aan zodat we contact met je mogen opnemen.</div></div>' +
       '<div class="notice notice-warn" id="formError" style="display:none;"></div>' +
-      '<button type="submit" class="btn btn-primary btn-block" id="submitBtn">Show my reflection</button>' +
-      '<button type="button" class="link-btn" data-action="back" style="display:block;margin:10px auto 0;">← Back</button>' +
+      '<button type="submit" class="btn btn-primary btn-block" id="submitBtn">Toon mijn spiegeling</button>' +
+      '<button type="button" class="link-btn" data-action="back" style="display:block;margin:10px auto 0;">← Terug</button>' +
       '</form></div>';
 
     document.querySelector('[data-action=back]').addEventListener('click', function () {
@@ -209,13 +206,12 @@
     var consent = document.getElementById('consent').checked;
 
     var bad = false;
-    if (name.length < 2) { showFieldError('name', 'Please share the name we can address you by.'); bad = true; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('email', 'Please enter a valid email address.'); bad = true; }
-    if (!consent) { document.getElementById('err-consent').style.display = 'block'; document.getElementById('field-consent') && null; bad = true; }
+    if (name.length < 2) { showFieldError('name', 'Laat ons weten hoe we je mogen noemen.'); bad = true; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('email', 'Vul een geldig e-mailadres in.'); bad = true; }
+    if (!consent) { document.getElementById('err-consent').style.display = 'block'; bad = true; }
     if (bad) return;
 
-    // In the static preview (GitHub Pages) there is no server/API — simply
-    // glide to the example result so the flow can be experienced end to end.
+    // Statische preview (GitHub Pages / los bestand): geen server/API.
     if (window.RK_PREVIEW) {
       if (typeof window.RK_onComplete === 'function') { window.RK_onComplete(); return; }
       window.location.href = 'result.html';
@@ -224,7 +220,7 @@
 
     var btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.textContent = 'One moment…';
+    btn.textContent = 'Een moment…';
 
     fetch('/api/lead', {
       method: 'POST',
@@ -238,7 +234,7 @@
           return;
         }
         btn.disabled = false;
-        btn.textContent = 'Show my reflection';
+        btn.textContent = 'Toon mijn spiegeling';
         if (res.data && res.data.errors) {
           Object.keys(res.data.errors).forEach(function (k) {
             if (k === 'consent') { document.getElementById('err-consent').style.display = 'block'; }
@@ -246,15 +242,15 @@
           });
         } else {
           var fe = document.getElementById('formError');
-          fe.textContent = 'Something went wrong sending your details. Please try again.';
+          fe.textContent = 'Er ging iets mis bij het versturen. Probeer het opnieuw.';
           fe.style.display = 'block';
         }
       })
       .catch(function () {
         btn.disabled = false;
-        btn.textContent = 'Show my reflection';
+        btn.textContent = 'Toon mijn spiegeling';
         var fe = document.getElementById('formError');
-        fe.textContent = 'We could not reach the server. Please check your connection and try again.';
+        fe.textContent = 'We konden de server niet bereiken. Controleer je verbinding en probeer opnieuw.';
         fe.style.display = 'block';
       });
   }

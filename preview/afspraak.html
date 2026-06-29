@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Privacy &amp; AVG · Ob-Audire</title>
+  <title>Plan een kennismakingsgesprek · Ob-Audire</title>
   <meta name="description" content="Begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie — met aandachtig luisteren als kompas.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Privacy &amp; AVG · Ob-Audire">
+  <meta property="og:title" content="Plan een kennismakingsgesprek · Ob-Audire">
   <meta property="og:description" content="Begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie — met aandachtig luisteren als kompas.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="nl_NL">
@@ -28,16 +28,60 @@
       </header>
   <main>
     <section class="section-pad">
-      <div class="container">
-        <span class="eyebrow">Jouw privacy telt</span>
-        <h1>Privacy &amp; AVG</h1>
-        <p class="muted">Laatst bijgewerkt: 2026-06-29</p>
-        <p>Contact opnemen over wat je bezighoudt vraagt vertrouwen. Bij Ob-Audire ga ik zorgvuldig met je gegevens om, volgens de Algemene Verordening Gegevensbescherming (AVG).</p>
-        <h2>Wat ik verzamel</h2><p class="muted">Alleen wat jij deelt: je naam, e-mailadres, een optioneel telefoonnummer en de antwoorden uit de check-in, zodat ik je een passend en zorgzaam antwoord kan geven.</p><h2>Waarom (grondslag)</h2><p class="muted">Ik verwerk je gegevens op basis van jouw toestemming, gegeven bij het versturen van de check-in, uitsluitend om contact met je op te nemen, een kennismakingsgesprek aan te bieden en een zachte herinnering te sturen. Ik verkoop je gegevens niet en gebruik ze niet voor advertenties.</p><h2>Wie het ziet</h2><p class="muted">Je gegevens worden alleen gezien door Petra Mollet. Ze worden nooit gedeeld met derden voor marketing.</p><h2>Hoe lang</h2><p class="muted">Ik bewaar je gegevens niet langer dan nodig om je te kunnen begeleiden, en verwijder ze daarna. Je kunt altijd vragen om verwijdering.</p><h2>Jouw rechten</h2><p class="muted">Je hebt recht op inzage, correctie en verwijdering van je gegevens, en je mag je toestemming intrekken. Mail daarvoor naar het adres hieronder; ik handel je verzoek snel af.</p>
-        <p class="muted">Vragen of een verzoek? Mail naar <a href="mailto:info@ob-audire.nl">info@ob-audire.nl</a>.</p>
-        <div class="crisis-line">
-          Ob-Audire is begeleiding, geen medische of crisisdienst. Bel in een noodsituatie 112 of de hulplijn 113.
+      <div class="container" style="max-width:680px;">
+        <span class="eyebrow">Een vrijblijvend kennismakingsgesprek</span>
+        <h1>Plan je kennismaking</h1>
+        <p class="muted">Wanneer je er klaar voor bent, Marieke, kies je een moment dat jou past. Vrijblijvend, en je kunt het altijd wijzigen.</p>
+        <div class="notice notice-info">Dit gesprek is vrijblijvend en vertrouwelijk. Het is ondersteunende begeleiding, geen medische behandeling.</div>
+        
+    <div class="card" style="margin-bottom:18px;">
+      <h3 style="margin-top:0;">Liever direct contact?</h3>
+      <p class="muted" style="margin-bottom:8px;">Je bent van harte welkom om te bellen of te mailen.</p>
+      <p style="margin:0;">
+        📞 <a href="tel:0612345678">06 - 12 34 56 78</a><br>
+        ✉️ <a href="mailto:info@ob-audire.nl">info@ob-audire.nl</a><br>
+        <span class="muted" style="font-size:.9rem;">Regio Gemert-Bakel &amp; Laarbeek (Noord-Brabant) · Online en op locatie</span>
+      </p>
+    </div>
+        
+      <form id="bookingForm" class="card" novalidate>
+        <input type="hidden" name="leadId" value="example">
+        <div class="field">
+          <label for="bk-name">Je naam</label>
+          <input type="text" id="bk-name" name="name" value="Marieke Jansen" autocomplete="name" required>
+          <div class="err">Laat ons weten hoe we je mogen noemen.</div>
         </div>
+        <div class="field">
+          <label for="bk-email">E-mailadres</label>
+          <input type="email" id="bk-email" name="email" value="marieke@example.com" autocomplete="email" required>
+          <div class="err">Vul een geldig e-mailadres in.</div>
+        </div>
+        <div class="field">
+          <label for="bk-pref">Welke momenten passen je meestal het best? <span class="hint">(optioneel)</span></label>
+          <select id="bk-pref" name="preference">
+            <option value="">Geen voorkeur</option>
+            <option value="doordeweeks-ochtend">Doordeweeks, ochtend</option>
+            <option value="doordeweeks-middag">Doordeweeks, middag</option>
+            <option value="doordeweeks-avond">Doordeweeks, avond</option>
+            <option value="weekend">In het weekend</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bk-note">Iets dat je Petra vooraf wilt laten weten? <span class="hint">(optioneel)</span></label>
+          <textarea id="bk-note" name="note" rows="3" placeholder="Alleen als je daar behoefte aan hebt."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="bk-submit">Vraag mijn kennismakingsgesprek aan</button>
+        <p class="muted" style="font-size:.85rem;margin:14px 0 0;text-align:center;">
+          Petra reageert persoonlijk om een moment af te stemmen. Geen betaling, geen verplichting.
+        </p>
+      </form>
+      <div id="bookingDone" class="card center" style="display:none;">
+        <div style="font-size:2.4rem;">🌿</div>
+        <h2 style="margin-top:8px;">Dankjewel — je aanvraag is binnen.</h2>
+        <p class="muted">Petra Mollet reageert persoonlijk op je e-mail om snel een moment af te stemmen dat bij jou past. Je hoeft nu verder niets te doen.</p>
+        <a class="btn btn-secondary" href="index.html">Terug naar de startpagina</a>
+      </div>
+    
       </div>
     </section>
   </main>
@@ -69,6 +113,6 @@
         <p class="legal">© 2026 Ob-Audire · Petra Mollet. Regio Gemert-Bakel &amp; Laarbeek (Noord-Brabant). Begeleiding is geen medische, psychologische of psychiatrische behandeling. Je gegevens worden verwerkt volgens de AVG — zie de <a href="privacy.html" style="display:inline;">privacyverklaring</a>.</p>
       </div>
     </footer>
-  
+  <script src="booking.js" defer></script>
 </body>
 </html>

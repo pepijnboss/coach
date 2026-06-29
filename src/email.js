@@ -1,20 +1,21 @@
-// Email service.
+// E-mailservice (Ob-Audire).
 //
-// Sends transactional + follow-up emails. Two delivery modes:
-//   1. Resend HTTP API  — used automatically when RESEND_API_KEY is set.
-//   2. Outbox (default) — appends rendered emails to data/outbox.json and logs
-//      them. This keeps the full automation flow demonstrable with no network
-//      and no third-party account, while remaining trivially swappable.
+// Twee bezorgmodi:
+//   1. Resend HTTP API  — automatisch gebruikt als RESEND_API_KEY is ingesteld.
+//   2. Outbox (default) — schrijft gerenderde e-mails naar data/outbox.json en
+//      logt ze, zodat de volledige automatiseringsflow offline te tonen is.
 //
-// Templates are warm, calm, and non-clinical — matching the platform tone.
+// Sjablonen zijn warm, rustig en niet-klinisch — in Petra's toon.
 
 import config from './config.js';
+import content from './content.js';
 import { JsonCollection } from './db.js';
 import { uid, now, esc } from './util.js';
 
 const outbox = new JsonCollection('outbox', { items: [] });
+const R = content.routes;
 
-// ── Delivery ────────────────────────────────────────────────────────────────
+// ── Bezorging ────────────────────────────────────────────────────────────────
 async function deliver({ to, subject, html, text, meta }) {
   const record = {
     id: uid('mail_'),
@@ -36,16 +37,10 @@ async function deliver({ to, subject, html, text, meta }) {
           Authorization: `Bearer ${config.email.resendApiKey}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          from: config.email.from,
-          to: [to],
-          subject,
-          html,
-          text,
-        }),
+        body: JSON.stringify({ from: config.email.from, to: [to], subject, html, text }),
       });
       record.status = res.ok ? 'sent' : 'error';
-      if (!res.ok) record.error = `Resend responded ${res.status}`;
+      if (!res.ok) record.error = `Resend antwoordde ${res.status}`;
     } catch (err) {
       record.status = 'error';
       record.error = String(err?.message || err);
@@ -54,17 +49,12 @@ async function deliver({ to, subject, html, text, meta }) {
     record.status = 'sent';
   }
 
-  // Always persist to the outbox for auditability (and as the only sink in
-  // demo mode). Errors are recorded but never crash the request flow.
   await outbox.update((doc) => {
     doc.items.push(record);
   });
 
-  if (record.status !== 'sent') {
-    console.warn(`[email] delivery problem to ${to}: ${record.error}`);
-  } else {
-    console.log(`[email] ${record.via} -> ${to}: "${subject}"`);
-  }
+  if (record.status !== 'sent') console.warn(`[email] bezorgprobleem naar ${to}: ${record.error}`);
+  else console.log(`[email] ${record.via} -> ${to}: "${subject}"`);
   return record;
 }
 
@@ -73,23 +63,24 @@ export async function listOutbox() {
   return doc.items.slice().sort((a, b) => (a.sentAt < b.sentAt ? 1 : -1));
 }
 
-// ── Shared layout ─────────────────────────────────────────────────────────
+// ── Gedeelde lay-out ─────────────────────────────────────────────────────────
 function wrap(bodyHtml) {
-  return `<!doctype html><html><body style="margin:0;background:#f4efe7;padding:24px 0;font-family:Georgia,'Times New Roman',serif;color:#3a3633;">
+  return `<!doctype html><html lang="nl"><body style="margin:0;background:#f4efe4;padding:24px 0;font-family:Georgia,'Times New Roman',serif;color:#3a322a;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-    <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fbf8f2;border-radius:14px;overflow:hidden;border:1px solid #e7ded0;">
+    <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fcf8f1;border-radius:14px;overflow:hidden;border:1px solid #e6dcc9;">
       <tr><td style="padding:28px 36px 8px;">
-        <div style="font-size:18px;letter-spacing:.5px;color:#7c9885;font-weight:bold;">${esc(config.siteName)}</div>
+        <div style="font-size:18px;letter-spacing:.5px;color:#5d6a40;font-weight:bold;">${esc(content.brand.name)}</div>
+        <div style="font-size:13px;color:#938979;font-style:italic;">${esc(content.brand.tagline)}</div>
       </td></tr>
       <tr><td style="padding:8px 36px 32px;font-size:16px;line-height:1.7;">
         ${bodyHtml}
       </td></tr>
-      <tr><td style="padding:20px 36px;background:#f1eadd;border-top:1px solid #e7ded0;font-size:12px;line-height:1.6;color:#8a847c;font-family:Arial,sans-serif;">
-        You receive this because you asked for support via ${esc(config.siteName)}.
-        ${esc(config.siteName)} offers grief coaching, which is not medical or psychological treatment.
-        If you are in crisis or thinking about harming yourself, please contact your local emergency number or a crisis line right away.
+      <tr><td style="padding:20px 36px;background:#f1eadd;border-top:1px solid #e6dcc9;font-size:12px;line-height:1.6;color:#938979;font-family:Arial,sans-serif;">
+        Je ontvangt deze e-mail omdat je via ${esc(content.brand.name)} om begeleiding hebt gevraagd.
+        ${esc(content.brand.name)} biedt begeleiding, geen medische of psychologische behandeling.
+        Verkeer je in acute nood of denk je aan zelfdoding? Bel dan direct 112 of de hulplijn 113 (0800-0113).
         <br><br>
-        Your privacy matters. You can ask us to delete your data at any time by replying to this email.
+        Je privacy telt. Je kunt altijd om verwijdering van je gegevens vragen door op deze e-mail te antwoorden.
       </td></tr>
     </table>
   </td></tr></table>
@@ -98,99 +89,103 @@ function wrap(bodyHtml) {
 
 function button(href, label) {
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0;"><tr>
-    <td style="background:#7c9885;border-radius:10px;">
+    <td style="background:#7c8a5a;border-radius:10px;">
       <a href="${esc(href)}" style="display:inline-block;padding:14px 26px;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">${esc(label)}</a>
     </td></tr></table>`;
 }
 
-// ── Template: Email 1 — immediate welcome ───────────────────────────────────
+function bookingUrl(lead) {
+  return `${config.publicBaseUrl}${R.booking}?lead=${encodeURIComponent(lead.id)}`;
+}
+
+// ── Sjabloon: e-mail 1 — direct welkom ──────────────────────────────────────
 export function renderWelcome(lead) {
-  const bookingUrl = `${config.publicBaseUrl}/booking?lead=${encodeURIComponent(lead.id)}`;
-  const firstName = (lead.name || '').split(' ')[0] || 'there';
+  const url = bookingUrl(lead);
+  const firstName = (lead.name || '').split(' ')[0] || 'jij';
   const summary = lead.result?.summary || '';
 
   const html = wrap(`
-    <p style="margin-top:0;">Dear ${esc(firstName)},</p>
-    <p>Thank you for taking a quiet moment to check in with yourself today. That is a gentle and brave thing to do.</p>
-    ${summary ? `<p style="background:#f1eadd;border-left:3px solid #7c9885;padding:12px 16px;border-radius:8px;font-size:14px;color:#5b554d;"><em>What you shared with us:</em><br>${esc(summary)}</p>` : ''}
-    <p>Whenever you feel ready, you are warmly invited to a free, 30-minute conversation with ${esc(config.coachName)}. There is nothing to prepare — just a calm space to be heard.</p>
-    ${button(bookingUrl, 'Book your free conversation')}
-    <p>There is no pressure and no obligation. We are simply here when you need us.</p>
-    <p>Warmly,<br>${esc(config.coachName)}<br><span style="color:#8a847c;">${esc(config.siteName)}</span></p>
+    <p style="margin-top:0;">Lieve ${esc(firstName)},</p>
+    <p>Dank je wel dat je vandaag even stil hebt gestaan bij jezelf. Dat is een zachte en moedige stap.</p>
+    ${summary ? `<p style="background:#f1eadd;border-left:3px solid #7c8a5a;padding:12px 16px;border-radius:8px;font-size:14px;color:#6e645a;"><em>Wat je met ons deelde:</em><br>${esc(summary)}</p>` : ''}
+    <p>Wanneer je er klaar voor bent, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek met ${esc(content.brand.coach)}. Er is niets om voor te bereiden — gewoon een rustige plek om gehoord te worden.</p>
+    ${button(url, 'Plan je kennismakingsgesprek')}
+    <p>Geen druk en geen verplichting. Ik ben er, wanneer jij wilt.</p>
+    <p>Warme groet,<br>${esc(content.brand.coach)}<br><span style="color:#938979;">${esc(content.brand.name)}</span></p>
   `);
 
-  const text = `Dear ${firstName},
+  const text = `Lieve ${firstName},
 
-Thank you for taking a quiet moment to check in with yourself today.
+Dank je wel dat je vandaag even stil hebt gestaan bij jezelf.
 
-${summary ? `What you shared with us: ${summary}\n\n` : ''}Whenever you feel ready, you are warmly invited to a free 30-minute conversation with ${config.coachName}.
+${summary ? `Wat je met ons deelde: ${summary}\n\n` : ''}Wanneer je er klaar voor bent, ben je welkom voor een vrijblijvend kennismakingsgesprek met ${content.brand.coach}.
 
-Book here: ${bookingUrl}
+Plan hier: ${url}
 
-There is no pressure and no obligation.
+Geen druk en geen verplichting.
 
-Warmly,
-${config.coachName}
-${config.siteName}`;
+Warme groet,
+${content.brand.coach}
+${content.brand.name}`;
 
-  return { subject: `A gentle hello from ${config.siteName}`, html, text };
+  return { subject: content.emails.welcomeSubject, html, text };
 }
 
-// ── Template: Email 2 — 48h follow-up ───────────────────────────────────────
+// ── Sjabloon: e-mail 2 — opvolging na 48 uur ────────────────────────────────
 export function renderFollowup(lead) {
-  const bookingUrl = `${config.publicBaseUrl}/booking?lead=${encodeURIComponent(lead.id)}`;
-  const firstName = (lead.name || '').split(' ')[0] || 'there';
+  const url = bookingUrl(lead);
+  const firstName = (lead.name || '').split(' ')[0] || 'jij';
 
   const html = wrap(`
-    <p style="margin-top:0;">Dear ${esc(firstName)},</p>
-    <p>I wanted to gently check in. Grief has its own rhythm, and there is no timeline you need to keep up with.</p>
-    <p>If it would help to talk, a grief coaching conversation is simply space that belongs to you — to put feelings into words, to feel less alone, and to find small, manageable steps when you are ready for them. It is not therapy or treatment, and you stay in charge of the pace throughout.</p>
-    <p>The first 30-minute conversation is always free.</p>
-    ${button(bookingUrl, 'Find a time that suits you')}
-    <p>And if now is not the right moment, that is completely okay. This invitation stays open.</p>
-    <p>Take good care of yourself,<br>${esc(config.coachName)}<br><span style="color:#8a847c;">${esc(config.siteName)}</span></p>
+    <p style="margin-top:0;">Lieve ${esc(firstName)},</p>
+    <p>Ik wilde even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme; er is geen tijdpad waar je je aan hoeft te houden.</p>
+    <p>Als het zou helpen om te praten: een gesprek is simpelweg ruimte die van jou is — om gevoelens woorden te geven, je minder alleen te voelen, en kleine, haalbare stappen te vinden wanneer jij daar klaar voor bent. Het is geen therapie of behandeling, en jij houdt de regie over het tempo.</p>
+    <p>Het eerste kennismakingsgesprek is altijd vrijblijvend.</p>
+    ${button(url, 'Vind een moment dat jou past')}
+    <p>En is het nu niet het juiste moment, dan is dat helemaal goed. Deze uitnodiging blijft staan.</p>
+    <p>Zorg goed voor jezelf,<br>${esc(content.brand.coach)}<br><span style="color:#938979;">${esc(content.brand.name)}</span></p>
   `);
 
-  const text = `Dear ${firstName},
+  const text = `Lieve ${firstName},
 
-I wanted to gently check in. Grief has its own rhythm, and there is no timeline you need to keep up with.
+Ik wilde even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme.
 
-If it would help to talk, a grief coaching conversation is space that belongs to you. It is not therapy or treatment, and you stay in charge of the pace.
+Een gesprek is ruimte die van jou is. Het is geen therapie of behandeling, en jij houdt de regie over het tempo.
 
-The first 30-minute conversation is always free.
+Het eerste kennismakingsgesprek is altijd vrijblijvend.
 
-Find a time: ${bookingUrl}
+Vind een moment: ${url}
 
-And if now is not the right moment, that is completely okay. This invitation stays open.
+Is het nu niet het juiste moment, dan is dat helemaal goed. Deze uitnodiging blijft staan.
 
-Take good care of yourself,
-${config.coachName}
-${config.siteName}`;
+Zorg goed voor jezelf,
+${content.brand.coach}
+${content.brand.name}`;
 
-  return { subject: 'Still here for you, whenever you are ready', html, text };
+  return { subject: content.emails.followupSubject, html, text };
 }
 
-// ── Template: coach notification (internal) ─────────────────────────────────
+// ── Sjabloon: melding aan de begeleider (intern) ────────────────────────────
 export function renderCoachNotification(lead) {
   const adminUrl = `${config.publicBaseUrl}/admin`;
   const html = wrap(`
-    <p style="margin-top:0;"><strong>New lead from the intake quiz.</strong></p>
+    <p style="margin-top:0;"><strong>Nieuwe aanvraag via de check-in.</strong></p>
     <p>
-      <strong>Name:</strong> ${esc(lead.name)}<br>
-      <strong>Email:</strong> ${esc(lead.email)}<br>
-      <strong>Phone:</strong> ${esc(lead.phone || '—')}<br>
-      <strong>Received:</strong> ${esc(lead.createdAt)}
+      <strong>Naam:</strong> ${esc(lead.name)}<br>
+      <strong>E-mail:</strong> ${esc(lead.email)}<br>
+      <strong>Telefoon:</strong> ${esc(lead.phone || '—')}<br>
+      <strong>Binnengekomen:</strong> ${esc(lead.createdAt)}
     </p>
-    <p style="background:#f1eadd;border-radius:8px;padding:12px 16px;font-size:14px;">${esc(lead.result?.summary || 'No summary')}</p>
-    ${button(adminUrl, 'Open the leads dashboard')}
+    <p style="background:#f1eadd;border-radius:8px;padding:12px 16px;font-size:14px;">${esc(lead.result?.summary || 'Geen samenvatting')}</p>
+    ${button(adminUrl, 'Open het dashboard')}
   `);
-  const text = `New lead: ${lead.name} <${lead.email}> phone: ${lead.phone || '—'}
+  const text = `Nieuwe aanvraag: ${lead.name} <${lead.email}> tel: ${lead.phone || '—'}
 ${lead.result?.summary || ''}
 Dashboard: ${adminUrl}`;
-  return { subject: `New RouwKompas lead: ${lead.name}`, html, text };
+  return { subject: `Nieuwe aanvraag bij Ob-Audire: ${lead.name}`, html, text };
 }
 
-// ── High-level send helpers ─────────────────────────────────────────────────
+// ── High-level verzenders ────────────────────────────────────────────────────
 export async function sendWelcome(lead) {
   const { subject, html, text } = renderWelcome(lead);
   return deliver({ to: lead.email, subject, html, text, meta: { kind: 'welcome', leadId: lead.id } });

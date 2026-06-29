@@ -12,10 +12,10 @@ import { uid, now, clampString, isValidEmail, isValidPhone } from './util.js';
 
 const collection = new JsonCollection('leads', { items: [] });
 
-// The single coach all leads are routed to initially.
+// De enige begeleider waar alle leads nu naartoe gaan.
 export const DEFAULT_COACH = {
-  id: 'coach-anna',
-  name: 'Anna de Vries',
+  id: 'coach-petra',
+  name: 'Petra Mollet',
 };
 
 /**

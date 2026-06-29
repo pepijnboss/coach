@@ -1,135 +1,84 @@
-# RouwKompas
+# Ob-Audire — leadgeneratie voor Petra Mollet
 
-A warm, empathetic **lead-generation intake platform for grief coaching**. RouwKompas is not a generic website — it is a calm, conversion-focused funnel that guides people through loss toward booking a free, no-obligation conversation with a certified grief coach.
+Een warme, rustige website + intake-funnel voor **Ob-Audire**, de praktijk van **Petra Mollet** (begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie). Geen standaard website, maar een vriendelijke funnel die bezoekers begeleidt naar een **vrijblijvend kennismakingsgesprek**.
 
-> Grief coaching is supportive, **non-medical** care. RouwKompas makes no medical claims, uses no pressure selling, and contains no dark patterns. Emotional safety and GDPR-compliant data handling come first.
-
----
-
-## Why this stack
-
-The suggested stack was Next.js + Supabase + Resend + Calendly. This implementation delivers the same product as a **single, zero-dependency Node.js application** (built only on Node's standard library). That choice means:
-
-- **It runs anywhere with Node 20+, with no `npm install` step** — important in restricted/offline environments.
-- The architecture is cleanly layered so it maps directly onto the suggested stack: the storage layer (`src/db.js`) swaps to Supabase, email already calls the **Resend** HTTP API when a key is present, and booking embeds **Calendly** when a URL is configured.
-
-Everything below works out of the box with safe local defaults (file-based storage, an email "outbox", and an internal booking form), and upgrades to live services purely through environment variables.
+> *"Een plek waar woorden nog geboren mogen worden."* — De toon is zacht, niet-klinisch, zonder druk of verkooptrucs. Begeleiding is geen medische behandeling. Gegevens worden volgens de AVG verwerkt.
 
 ---
 
-## Features
+## Wat het is
 
-| Area | What it does |
-|------|--------------|
-| **Landing page** (`/`) | Hero "Find support after loss", explanation, primary CTA "Start the short check-in", secondary CTA "Book a free conversation". |
-| **Intake quiz** (`/quiz`) | A gentle, one-question-at-a-time questionnaire (loss recency, type, distress 1–10, struggles, prior support, current support) with progress bar and auto-advance. **This is the main conversion engine.** |
-| **Lead capture** | Name, email, optional phone — collected with explicit GDPR consent **before** the result is shown. |
-| **Personalized result** (`/result/:id`) | A warm, non-clinical reflection generated from the answers, ending in "Book a free 30-minute conversation". |
-| **Booking** (`/booking`) | Embeds **Calendly** when configured; otherwise a calm internal "request a time" form that records the request against the lead. |
-| **Trust section** (`/about`) | The real coach, their human approach, and "what to expect in a session". |
-| **Privacy** (`/privacy`) | Plain-language GDPR statement (lawful basis, retention, rights, erasure). |
-| **Email automation** | **Email 1** (immediate welcome + booking link) and **Email 2** (48h follow-up, reassurance + benefits + reminder), plus an internal coach notification. |
-| **Lead routing** | All leads route to a single coach now; every lead stores `assignedCoachId` so multi-coach routing is a data change, not a rewrite. |
-| **Admin dashboard** (`/admin`) | Password-protected. Stats, all leads, what each person shared, email/booking status, status updates, email outbox, and GDPR delete. |
+Een zelfstandige Node.js-applicatie (alleen de standaardbibliotheek, **geen `npm install` nodig**). Draait overal met Node 20+, en is opgebouwd zodat hij eenvoudig naar Next.js/Supabase/Resend/Calendly migreert.
+
+| Pagina | Route | Inhoud |
+|--------|-------|--------|
+| Startpagina | `/` | Hero, het mol-motief, uitleg, hoe-het-werkt, CTA's |
+| Check-in | `/check-in` | Zachte zes-stappen vragenlijst (de conversiemotor) |
+| Spiegeling | `/resultaat/:id` | Persoonlijke, niet-klinische weerspiegeling + boek-CTA |
+| Afspraak | `/afspraak` | Calendly-embed óf intern aanvraagformulier + direct contact |
+| Wie ben ik | `/wie-ben-ik` | Petra's verhaal, 5 krachten, opleidingen, werkervaring |
+| Aanbod | `/aanbod` | Begeleidingsvormen + het (K)ankeratelier |
+| Privacy | `/privacy` | AVG-verklaring |
+| Dashboard | `/admin` | Beveiligd: aanvragen, statistieken, status, AVG-verwijdering |
+
+**Funnel:** startpagina → check-in → contactgegevens (met AVG-toestemming) → persoonlijke spiegeling → kennismakingsgesprek. Daarna: automatische **welkomstmail (direct)** + **opvolgmail (na 48 uur)**, en een melding aan Petra. Alle leads gaan naar één begeleider (Petra), maar het datamodel is al klaar voor meerdere begeleiders.
 
 ---
 
-## Quick start
+## Snel starten
 
 ```bash
-# Node 20+ required. No dependencies to install.
-node server.js
-# or: npm start
+# Node 20+ vereist. Geen dependencies te installeren.
+node server.js          # of: npm start
 ```
-
-Then open:
 
 - Site: <http://localhost:3000>
-- Admin: <http://localhost:3000/admin> (default login `admin` / `change-me-please`)
+- Dashboard: <http://localhost:3000/admin> (login `petra` / `wijzig-mij-aub` — pas dit aan!)
 
-Optionally seed demo leads for the dashboard:
+Voorbeeld-aanvragen toevoegen: `npm run seed` · Testsuite: `node scripts/e2e.mjs` (34 checks).
 
-```bash
-npm run seed
-```
-
-Run the end-to-end test suite (starts the server in-process and drives the full funnel):
-
-```bash
-node scripts/e2e.mjs
-```
+### Snel even kijken zonder server
+- `npm run preview:build` → losse HTML-pagina's in `/preview/`
+- `npm run preview:single` → één bestand `preview/ob-audire-preview.html` dat je kunt downloaden en openen
 
 ---
 
-## Configuration
+## Aanpassen
 
-Copy `.env.example` to `.env` and fill in what you need. **The app runs fully without any of these set.**
+**Alle teksten staan op één plek: [`src/content.js`](src/content.js).** Naam, tagline, contactgegevens, paginateksten, het aanbod, de prijzen en de e-mailonderwerpen — alles bewerk je daar. De vragen van de check-in en de spiegeling staan in [`src/quiz.js`](src/quiz.js). Kleuren staan boven in [`public/styles.css`](public/styles.css).
 
-| Variable | Purpose | Default behaviour when empty |
-|----------|---------|------------------------------|
-| `PORT`, `PUBLIC_BASE_URL` | Server binding & links in emails | `3000` / `http://localhost:3000` |
-| `COACH_NAME`, `SUPPORT_EMAIL` | Branding | Demo coach |
-| `ADMIN_USER`, `ADMIN_PASSWORD` | Dashboard login | `admin` / `change-me-please` (**change in production**) |
-| `CALENDLY_URL` | Booking | Internal request form is shown instead |
-| `RESEND_API_KEY`, `EMAIL_FROM` | Live email via Resend | Emails written to `data/outbox.json` and logged |
-| `COACH_NOTIFICATION_EMAIL` | Notify coach of new leads | Disabled if empty |
-| `FOLLOWUP_DELAY_HOURS` | Timing of Email 2 | `48` |
-| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Future DB migration | File storage in `data/leads.json` |
+### Nog in te vullen (nu voorbeeldwaarden)
+- **E-mailadres en telefoonnummer** van Petra → in `src/content.js` onder `contact`.
+- Eventueel haar **echte merkkleuren** → `public/styles.css` (`:root`).
+
+### Live zetten via omgevingsvariabelen (zie `.env.example`)
+- `RESEND_API_KEY` → echte e-mails versturen (anders gaan ze naar `data/outbox.json`)
+- `CALENDLY_URL` → Calendly-agenda inbedden (anders het interne aanvraagformulier)
+- `ADMIN_USER` / `ADMIN_PASSWORD` → **wijzig dit voor productie**
 
 ---
 
-## Project structure
+## Projectstructuur
 
 ```
-rouwkompas/
-├── server.js                 # HTTP server + router + scheduler boot
-├── src/
-│   ├── config.js             # Env loading + typed config
-│   ├── http.js               # Request/response helpers, static serving, sessions
-│   ├── db.js                 # JSON document store (atomic writes, swappable)
-│   ├── util.js               # ids, escaping, validation, constant-time compare
-│   ├── leads.js              # Lead model + service (multi-coach ready)
-│   ├── quiz.js               # Questionnaire definition + result generation
-│   ├── email.js              # Templates + Resend/outbox delivery
-│   ├── automation.js         # Welcome + 48h follow-up orchestration & scheduler
-│   ├── api.js                # /api/lead, /api/booking-request
-│   ├── adminController.js    # Auth + dashboard actions
-│   └── views/                # Server-rendered HTML (layout, pages, booking, result, admin)
-├── public/                   # styles.css, quiz.js, booking.js (client)
-├── scripts/                  # seed.js, e2e.mjs
-└── data/                     # Runtime storage (gitignored)
+server.js              # HTTP-server + router + scheduler
+src/
+  content.js           # ⭐ ALLE teksten & branding (begin hier)
+  config.js            # Omgeving + configuratie
+  quiz.js              # Vragenlijst + spiegeling
+  leads.js             # Lead-model + opslag (klaar voor meerdere begeleiders)
+  email.js             # Sjablonen + Resend/outbox
+  automation.js        # Welkom + opvolging (48u) + scheduler
+  api.js, http.js, adminController.js, db.js, util.js
+  views/               # layout, pages, booking, result, admin
+public/                # styles.css, quiz.js, booking.js
+scripts/               # seed, e2e, build-preview, build-singlefile
 ```
 
----
+## Privacy (AVG)
 
-## How the funnel converts
+Toestemming wordt expliciet gevraagd; alleen noodzakelijke gegevens worden bewaard; bezoekers kunnen verwijdering vragen (dashboard heeft één-klik-verwijdering); runtime-data (`data/*.json`) staat in `.gitignore`. Site-breed staat een verwijzing naar hulplijnen (112 / 113) — Ob-Audire is nadrukkelijk geen crisis- of medische dienst.
 
-1. **Landing** → "Start the short check-in".
-2. **Quiz** → six gentle questions, one at a time, with a progress bar.
-3. **Lead capture** → name + email (+ optional phone) with GDPR consent, *before* results.
-4. **Result** → a personalised, non-clinical reflection with a single clear CTA.
-5. **Booking** → Calendly or internal request; the lead is marked `booked`.
-6. **Automation** → immediate welcome email + a 48h follow-up; the coach is notified and sees everything in `/admin`.
-
----
-
-## Data protection (GDPR)
-
-- Consent is collected explicitly and is the lawful basis for processing.
-- Only necessary data is stored; no third-party marketing.
-- People can request access or erasure; the dashboard supports one-click delete.
-- Runtime data (`data/*.json`) is gitignored so real lead data is never committed.
-- A crisis-line notice appears site-wide and in every email; RouwKompas is clearly **not** a medical or emergency service.
-
----
-
-## Migrating to the suggested cloud stack
-
-- **Database → Supabase/Postgres:** implement the same `read()/update()` contract in a new adapter and point `src/leads.js` at it.
-- **Email → Resend:** already wired — set `RESEND_API_KEY`.
-- **Booking → Calendly:** already wired — set `CALENDLY_URL`.
-- **Hosting:** runs as a standard Node web service (Render, Fly, Railway, a container, etc.). The 48h follow-up loop can move to a cron/queue in serverless deployments.
-
-## License
+## Licentie
 
 MIT

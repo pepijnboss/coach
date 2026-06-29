@@ -1,67 +1,65 @@
-// Public-facing page views (server-rendered HTML strings).
+// Publieke pagina's (server-gerenderde HTML), Ob-Audire — in het Nederlands.
 
-import config from '../config.js';
+import content from '../content.js';
 import { layout } from './layout.js';
 import { QUIZ } from '../quiz.js';
 import { esc } from '../util.js';
 
-const coachFirst = config.coachName.split(' ')[0];
-const coachInitial = config.coachName.charAt(0).toUpperCase();
+const R = content.routes;
+const C = content;
+const coachInitial = C.brand.coach.charAt(0).toUpperCase();
 
-// ── Landing page ────────────────────────────────────────────────────────────
+// ── Landingspagina ──────────────────────────────────────────────────────────
 export function landingPage() {
+  const L = C.landing;
+  const steps = L.steps
+    .map(
+      (s) => `
+      <div class="feature">
+        <div class="ico">${s.icon}</div>
+        <h3>${esc(s.title)}</h3>
+        <p>${esc(s.body)}</p>
+      </div>`
+    )
+    .join('');
+
   const body = `
     <section class="hero">
       <div class="container">
-        <span class="eyebrow">A gentle place to begin</span>
-        <h1>Find support after loss</h1>
-        <p class="lede">
-          Grief can feel heavy and lonely. RouwKompas is a calm, private space to understand
-          what you are feeling — and to take one small, supported step forward, at your own pace.
-        </p>
+        <span class="eyebrow">${esc(L.eyebrow)}</span>
+        <h1>${esc(L.heroTitle)}</h1>
+        <p class="lede">${esc(L.heroLede)}</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="/quiz">Start the short check-in</a>
-          <a class="btn btn-secondary" href="/booking">Book a free conversation</a>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
+          <a class="btn btn-secondary" href="${R.booking}">${esc(C.cta.secondary)}</a>
         </div>
-        <p class="muted" style="margin-top:18px;font-size:.9rem;">Free · Private · No obligation · Takes about 2 minutes</p>
+        <p class="muted" style="margin-top:18px;font-size:.9rem;">${esc(L.heroNote)}</p>
       </div>
     </section>
 
-    <section class="section-pad" id="what">
+    <section class="section-pad">
       <div class="container">
         <div class="card center">
-          <h2 style="margin-top:0;">What RouwKompas is</h2>
-          <p class="muted" style="max-width:56ch;margin:0 auto;">
-            RouwKompas pairs a short, gentle self check-in with the warmth of a real, certified grief coach.
-            It is not therapy and not medical treatment — it is human support: someone to listen, to help you
-            make sense of your feelings, and to walk beside you for a while.
-          </p>
+          <p style="font-family:var(--serif);font-size:1.25rem;color:var(--sage-dark);max-width:48ch;margin:0 auto 0;font-style:italic;">“${esc(C.brand.mole)}”</p>
         </div>
       </div>
     </section>
 
-    <section class="section-pad" id="how">
+    <section class="section-pad" id="wat">
       <div class="container">
-        <h2 class="center">How it works</h2>
-        <div class="feature-grid">
-          <div class="feature">
-            <div class="ico">🧭</div>
-            <h3>1. A short check-in</h3>
-            <p>Answer a few gentle questions about how you are feeling. There are no right or wrong answers.</p>
-          </div>
-          <div class="feature">
-            <div class="ico">💬</div>
-            <h3>2. A personal reflection</h3>
-            <p>Receive a warm, personal summary of what you shared — and how grief coaching may help.</p>
-          </div>
-          <div class="feature">
-            <div class="ico">🤝</div>
-            <h3>3. A free conversation</h3>
-            <p>If it feels right, book a free 30-minute conversation with ${esc(coachFirst)}. No pressure, ever.</p>
-          </div>
+        <div class="card center">
+          <h2 style="margin-top:0;">${esc(L.introTitle)}</h2>
+          <p class="muted" style="max-width:58ch;margin:0 auto;">${esc(L.introBody)}</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section-pad" id="hoe">
+      <div class="container">
+        <h2 class="center">${esc(L.howTitle)}</h2>
+        <div class="feature-grid">${steps}</div>
         <div class="center" style="margin-top:14px;">
-          <a class="btn btn-primary" href="/quiz">Start the short check-in</a>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
         </div>
       </div>
     </section>
@@ -71,12 +69,9 @@ export function landingPage() {
         <div class="card coach-card">
           <div class="coach-photo">${esc(coachInitial)}</div>
           <div style="flex:1;min-width:240px;">
-            <h2 style="margin-top:0;">You will be talking to a real person</h2>
-            <p class="muted">
-              ${esc(config.coachName)} is a certified grief coach who has supported many people through
-              loss, separation, and difficult change. Warm, patient, and never clinical.
-            </p>
-            <a href="/about" class="btn btn-secondary" style="padding:10px 20px;">Meet ${esc(coachFirst)}</a>
+            <h2 style="margin-top:0;">${esc(L.coachTeaserTitle)}</h2>
+            <p class="muted">${esc(L.coachTeaserBody)}</p>
+            <a href="${R.about}" class="btn btn-secondary" style="padding:10px 20px;">Maak kennis met ${esc(C.brand.coach.split(' ')[0])}</a>
           </div>
         </div>
       </div>
@@ -85,34 +80,34 @@ export function landingPage() {
     <section class="section-pad">
       <div class="container center">
         <div class="result-invite" style="max-width:560px;margin:0 auto;">
-          <h2 style="margin-top:0;">Whenever you are ready</h2>
-          <p class="muted">There is no timeline for grief. This space stays open for you.</p>
-          <a class="btn btn-primary" href="/quiz">Begin the check-in</a>
+          <h2 style="margin-top:0;">${esc(L.closingTitle)}</h2>
+          <p class="muted">${esc(L.closingBody)}</p>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
         </div>
       </div>
     </section>
   `;
-  return layout({ title: 'Find support after loss', body });
+  return layout({ title: C.brand.tagline, body });
 }
 
-// ── Quiz page ────────────────────────────────────────────────────────────────
+// ── Check-in (quiz) ─────────────────────────────────────────────────────────
 export function quizPage() {
-  // The quiz definition is injected for the client renderer.
   const data = JSON.stringify(QUIZ);
+  const Q = C.quizIntro;
   const body = `
     <section class="section-pad">
       <div class="container">
         <div class="quiz-wrap">
           <noscript>
-            <div class="notice notice-warn">This check-in needs JavaScript. You can still
-              <a href="/booking">book a free conversation</a> directly.</div>
+            <div class="notice notice-warn">Voor deze check-in is JavaScript nodig. Je kunt ook direct
+              <a href="${R.booking}">een kennismakingsgesprek plannen</a>.</div>
           </noscript>
           <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
           <div id="quizRoot" aria-live="polite">
             <div class="step center">
-              <h1 class="q-title">A gentle check-in</h1>
-              <p class="q-help">Six short questions. Around two minutes. Whatever you feel is okay here.</p>
-              <button class="btn btn-primary" id="startBtn">Begin</button>
+              <h1 class="q-title">${esc(Q.title)}</h1>
+              <p class="q-help">${esc(Q.lede)}</p>
+              <button class="btn btn-primary" id="startBtn">${esc(Q.start)}</button>
             </div>
           </div>
         </div>
@@ -120,106 +115,132 @@ export function quizPage() {
     </section>
     <script id="quizData" type="application/json">${data}</script>
   `;
-  return layout({ title: 'A gentle check-in', body, minimal: true, scripts: ['/quiz.js'] });
+  return layout({ title: Q.title, body, minimal: true, scripts: ['/quiz.js'] });
 }
 
-// ── About / trust page ───────────────────────────────────────────────────────
+// ── Wie ben ik (about) ──────────────────────────────────────────────────────
 export function aboutPage() {
+  const A = C.about;
+  const intro = A.intro.map((p) => `<p${p === A.intro[1] ? ' class="muted"' : ''}>${esc(p)}</p>`).join('');
+  const strengths = A.strengths
+    .map((s) => `<div class="feature"><h3 style="margin-top:0;">${esc(s.title)}</h3><p>${esc(s.body)}</p></div>`)
+    .join('');
+  const pillars = A.pillars
+    .map((p) => `<li><strong>${esc(p.title)}</strong><br><span class="muted">${esc(p.body)}</span></li>`)
+    .join('');
+  const extra = A.extraTraining.map((t) => `<li class="muted">${esc(t)}</li>`).join('');
+  const experience = A.experience.map((e) => `<li class="muted">${esc(e)}</li>`).join('');
+  const expect = A.expect
+    .map((e) => `<li><strong>${esc(e.title)}.</strong> ${esc(e.body)}</li>`)
+    .join('');
+
   const body = `
     <section class="section-pad">
       <div class="container">
-        <span class="eyebrow">About</span>
-        <h1>Meet ${esc(config.coachName)}</h1>
+        <span class="eyebrow">${esc(A.eyebrow)}</span>
+        <h1>${esc(A.title)}</h1>
         <div class="card coach-card" style="margin:18px 0 28px;">
           <div class="coach-photo">${esc(coachInitial)}</div>
           <div style="flex:1;min-width:240px;">
-            <p style="margin:0;"><strong>${esc(config.coachName)}</strong><br><span class="muted">Certified grief coach</span></p>
+            <p style="margin:0;"><strong>${esc(A.title)}</strong><br><span class="muted">${esc(A.role)}</span></p>
           </div>
         </div>
 
-        <p>
-          I came to this work the way many people do — through my own experience of loss. I learned how
-          isolating grief can feel, and how much difference it makes to have one steady person who simply
-          listens, without rushing you or trying to fix you.
-        </p>
-        <p class="muted">
-          For the past several years I have walked alongside people facing the death of a loved one, the end
-          of a relationship, and other life-changing losses. My approach is gentle and human. We move at
-          your pace, in your words.
-        </p>
+        ${intro}
 
-        <h2>My approach</h2>
-        <p class="muted">
-          Grief is not a problem to be solved or an illness to be cured — it is love with nowhere to go.
-          My role is not to diagnose or treat, but to offer a warm, steady presence: space to feel heard,
-          to make sense of what you are carrying, and to find small, kind steps forward when you are ready.
-        </p>
+        <h2>${esc(A.strengthsTitle)}</h2>
+        <div class="feature-grid" style="grid-template-columns:1fr;">${strengths}</div>
 
-        <h2>What to expect in a session</h2>
-        <ol class="steps-list">
-          <li><strong>A warm welcome.</strong> We start gently. There is nothing you need to prepare or prove.</li>
-          <li><strong>Space to be heard.</strong> You share as much or as little as you wish. I listen, fully.</li>
-          <li><strong>Gentle reflection.</strong> Together we make sense of what you are feeling — no labels, no judgement.</li>
-          <li><strong>A small next step.</strong> If it helps, we find one kind, manageable thing to carry you forward.</li>
-        </ol>
+        <h2>${esc(A.pillarsTitle)}</h2>
+        <ul class="steps-list" style="list-style:none;">${pillars}</ul>
+
+        <h3>${esc(A.extraTrainingTitle)}</h3>
+        <ul>${extra}</ul>
+
+        <h2>${esc(A.experienceTitle)}</h2>
+        <ul>${experience}</ul>
+
+        <h2>${esc(A.expectTitle)}</h2>
+        <ol class="steps-list">${expect}</ol>
 
         <div class="notice notice-info">
-          Grief coaching is supportive, non-medical care. It does not replace therapy, medical, or psychiatric
-          treatment. If you ever need urgent help, please reach out to a crisis line or emergency services.
+          Begeleiding bij Ob-Audire is ondersteunend en niet-medisch. Het vervangt geen therapie of medische
+          behandeling. Heb je acuut hulp nodig, neem dan contact op met je huisarts of een hulplijn.
         </div>
 
         <div class="center" style="margin-top:26px;">
-          <a class="btn btn-primary" href="/quiz">Start the short check-in</a>
-          <a class="btn btn-secondary" href="/booking">Book a free conversation</a>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
+          <a class="btn btn-secondary" href="${R.booking}">${esc(C.cta.secondary)}</a>
         </div>
       </div>
     </section>
   `;
-  return layout({ title: `About ${coachFirst}`, body });
+  return layout({ title: 'Wie ben ik', body });
 }
 
-// ── Privacy / GDPR page ──────────────────────────────────────────────────────
-export function privacyPage() {
+// ── Aanbod (services) ───────────────────────────────────────────────────────
+export function aanbodPage() {
+  const A = C.aanbod;
+  const services = A.services
+    .map(
+      (s) => `<div class="feature"><div class="ico">${s.icon}</div><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></div>`
+    )
+    .join('');
+  const atelierFor = A.atelier.forWho.map((w) => `<li>${esc(w)}</li>`).join('');
+
   const body = `
     <section class="section-pad">
       <div class="container">
-        <span class="eyebrow">Your privacy matters</span>
-        <h1>Privacy &amp; GDPR statement</h1>
-        <p class="muted">Last updated: ${esc(new Date().toISOString().slice(0, 10))}</p>
+        <span class="eyebrow">${esc(A.eyebrow)}</span>
+        <h1>${esc(A.title)}</h1>
+        <p class="muted" style="max-width:60ch;">${esc(A.intro)}</p>
+        <div class="feature-grid">${services}</div>
 
-        <p>
-          We know that reaching out about grief means trusting us with something tender. We treat your
-          information with care and in line with the EU General Data Protection Regulation (GDPR).
-        </p>
+        <hr class="divider">
 
-        <h2>What we collect</h2>
-        <p class="muted">Only what you choose to share: your name, email address, an optional phone number,
-          and the answers you give in the check-in so we can offer you a relevant, caring response.</p>
+        <div class="card">
+          <span class="eyebrow" style="margin-bottom:14px;">${esc(A.atelier.subtitle)}</span>
+          <h2 style="margin-top:0;">${esc(A.atelier.title)}</h2>
+          <p>${esc(A.atelier.intro)}</p>
+          <h3>Wat kun je verwachten?</h3>
+          <p class="muted">${esc(A.atelier.expect)}</p>
+          <h3>Voor wie?</h3>
+          <ul>${atelierFor}</ul>
+          <h3>Kosten</h3>
+          <p class="muted">${esc(A.atelier.price)}</p>
+          <div class="notice notice-info">${esc(A.atelier.signup)}</div>
+          <a class="btn btn-primary" href="${R.booking}">${esc(C.cta.secondary)}</a>
+        </div>
 
-        <h2>Why we collect it (lawful basis)</h2>
-        <p class="muted">We process your details on the basis of your <strong>consent</strong>, given when you
-          submit the check-in, solely to respond to you, offer a free conversation, and send a gentle follow-up.
-          We do not sell your data or use it for advertising.</p>
-
-        <h2>Who can see it</h2>
-        <p class="muted">Your information is shared only with ${esc(config.coachName)}, your grief coach.
-          It is never passed to third parties for marketing.</p>
-
-        <h2>How long we keep it</h2>
-        <p class="muted">We keep your details only as long as needed to support you, and then remove them.
-          You can ask us to delete everything at any time.</p>
-
-        <h2>Your rights</h2>
-        <p class="muted">You have the right to access, correct, or erase your data, to withdraw consent, and
-          to object to processing. To exercise any of these, simply email
-          <a href="mailto:${esc(config.supportEmail)}">${esc(config.supportEmail)}</a> and we will act promptly.</p>
-
-        <div class="crisis-line">
-          RouwKompas is grief coaching, not a medical or crisis service. In an emergency, contact your local
-          emergency number or a crisis helpline.
+        <div class="center" style="margin-top:30px;">
+          <a class="btn btn-secondary" href="${R.quiz}">${esc(C.cta.primary)}</a>
         </div>
       </div>
     </section>
   `;
-  return layout({ title: 'Privacy & GDPR', body });
+  return layout({ title: 'Aanbod', body });
+}
+
+// ── Privacy / AVG ───────────────────────────────────────────────────────────
+export function privacyPage() {
+  const P = C.privacy;
+  const sections = P.sections
+    .map((s) => `<h2>${esc(s.h)}</h2><p class="muted">${esc(s.p)}</p>`)
+    .join('');
+  const body = `
+    <section class="section-pad">
+      <div class="container">
+        <span class="eyebrow">${esc(P.eyebrow)}</span>
+        <h1>${esc(P.title)}</h1>
+        <p class="muted">Laatst bijgewerkt: ${esc(new Date().toISOString().slice(0, 10))}</p>
+        <p>${esc(P.intro)}</p>
+        ${sections}
+        <p class="muted">Vragen of een verzoek? Mail naar <a href="mailto:${esc(C.contact.email)}">${esc(C.contact.email)}</a>.</p>
+        <div class="crisis-line">
+          Ob-Audire is begeleiding, geen medische of crisisdienst. Bel in een noodsituatie 112 of de hulplijn 113.
+        </div>
+      </div>
+    </section>
+  `;
+  return layout({ title: 'Privacy & AVG', body });
 }
