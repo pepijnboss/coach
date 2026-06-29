@@ -1,0 +1,24 @@
+{
+  "name": "rouwkompas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RouwKompas - a warm, empathetic lead-generation intake platform for grief coaching.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "grief",
+    "coaching",
+    "lead-generation",
+    "intake",
+    "funnel"
+  ],
+  "license": "MIT"
+}
