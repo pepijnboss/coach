@@ -1,0 +1,346 @@
+<!doctype html><html lang="nl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Voorbeelden van spiegelingen · Ob-Audire</title>
+<style>/* ──────────────────────────────────────────────────────────────────────────
+   Ob-Audire design system
+   Warm, rustig, natuurlijk. Crème + aarde-tinten + mos-groen, klei-accent.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --beige: #f4efe4;
+  --beige-2: #ece3d3;
+  --card: #fcf8f1;
+  --line: #e6dcc9;
+  --ink: #3a322a;
+  --ink-soft: #6e645a;
+  --ink-faint: #938979;
+  --sage: #7c8a5a;        /* mos-groen (primair) */
+  --sage-dark: #5d6a40;
+  --sage-soft: #e8ebda;
+  --clay: #b9714e;        /* warme klei-accent */
+  --clay-soft: #f1e3d8;
+  --danger: #b4543a;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 40px rgba(58, 50, 42, 0.08);
+  --maxw: 720px;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--beige);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.25; color: var(--ink); }
+h1 { font-size: 2rem; margin: 0 0 0.5em; }
+h2 { font-size: 1.5rem; margin: 1.8em 0 0.6em; }
+h3 { font-size: 1.15rem; margin: 1.4em 0 0.4em; }
+p { margin: 0 0 1em; }
+a { color: var(--sage-dark); }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header / nav ── */
+.site-header {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(245, 240, 232, 0.9);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .container {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.brand { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--sage-dark); text-decoration: none; letter-spacing: .3px; }
+.brand span { color: var(--ink-soft); }
+.nav { display: flex; gap: 22px; align-items: center; }
+.nav a { color: var(--ink-soft); text-decoration: none; font-size: 0.95rem; }
+.nav a:hover { color: var(--ink); }
+.nav .nav-cta { display: none; }
+
+@media (max-width: 600px) {
+  .nav a:not(.nav-cta) { display: none; }
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block; cursor: pointer;
+  font-family: var(--sans); font-size: 1rem; font-weight: 600;
+  padding: 14px 28px; border-radius: var(--radius-sm);
+  text-decoration: none; border: 1px solid transparent;
+  transition: background .15s ease, transform .05s ease, border-color .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--sage); color: #fff; }
+.btn-primary:hover { background: var(--sage-dark); }
+.btn-secondary { background: transparent; color: var(--sage-dark); border-color: var(--sage); }
+.btn-secondary:hover { background: var(--sage-soft); }
+.btn-block { display: block; width: 100%; text-align: center; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ── Hero ── */
+.hero { padding: 72px 0 56px; text-align: center; }
+.hero h1 { font-size: 2.6rem; max-width: 14ch; margin-left: auto; margin-right: auto; }
+.hero .lede { font-size: 1.2rem; color: var(--ink-soft); max-width: 52ch; margin: 0 auto 2em; }
+.hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.eyebrow { display:inline-block; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--clay); background: var(--clay-soft); padding: 6px 14px; border-radius: 999px; margin-bottom: 22px; }
+
+@media (max-width: 600px) {
+  .hero { padding: 48px 0 36px; }
+  .hero h1 { font-size: 2rem; }
+  .hero .lede { font-size: 1.05rem; }
+}
+
+/* ── Sections / cards ── */
+section { padding: 8px 0; }
+.section-pad { padding: 44px 0; }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
+}
+.muted { color: var(--ink-soft); }
+.center { text-align: center; }
+.divider { height: 1px; background: var(--line); border: 0; margin: 40px 0; }
+
+.feature-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin: 24px 0; }
+@media (min-width: 640px) { .feature-grid { grid-template-columns: repeat(3, 1fr); } }
+.feature { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+.feature .ico { width: 40px; height: 40px; border-radius: 10px; background: var(--sage-soft); display:flex; align-items:center; justify-content:center; margin-bottom: 12px; font-size: 1.2rem; }
+.feature h3 { margin-top: 0; }
+.feature p { margin-bottom: 0; font-size: 0.96rem; color: var(--ink-soft); }
+
+/* ── Quiz ── */
+.quiz-wrap { max-width: 600px; margin: 32px auto; }
+.progress { height: 6px; background: var(--beige-2); border-radius: 999px; overflow: hidden; margin-bottom: 28px; }
+.progress > span { display: block; height: 100%; background: var(--sage); width: 0; transition: width .3s ease; }
+.step { animation: fade .35s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px);} to {opacity:1; transform:none;} }
+.step-count { font-size: .85rem; color: var(--ink-faint); letter-spacing: .04em; margin-bottom: 8px; }
+.q-title { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 6px; }
+.q-help { color: var(--ink-soft); margin-bottom: 22px; }
+
+.options { display: grid; gap: 12px; }
+.option {
+  display: flex; align-items: center; gap: 12px;
+  border: 1.5px solid var(--line); background: var(--card);
+  border-radius: var(--radius-sm); padding: 16px 18px; cursor: pointer;
+  transition: border-color .12s ease, background .12s ease;
+  font-size: 1.02rem;
+}
+.option:hover { border-color: var(--sage); }
+.option.selected { border-color: var(--sage); background: var(--sage-soft); }
+.option .dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--ink-faint); flex: none; position: relative; }
+.option.multi .dot { border-radius: 6px; }
+.option.selected .dot { border-color: var(--sage-dark); background: var(--sage-dark); }
+.option.selected .dot::after { content:""; position:absolute; inset: 4px; background:#fff; border-radius: inherit; }
+
+/* scale */
+.scale { text-align: center; }
+.scale output { display: block; font-family: var(--serif); font-size: 3rem; color: var(--sage-dark); margin: 6px 0; }
+.scale input[type=range] { width: 100%; accent-color: var(--sage); height: 30px; }
+.scale .scale-labels { display: flex; justify-content: space-between; color: var(--ink-faint); font-size: .85rem; }
+
+.quiz-nav { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+.link-btn { background: none; border: none; color: var(--ink-soft); cursor: pointer; font-size: .95rem; font-family: var(--sans); padding: 12px; }
+.link-btn:hover { color: var(--ink); }
+
+/* ── Forms ── */
+.field { margin-bottom: 18px; }
+.field label { display: block; font-size: .95rem; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.field .hint { font-weight: 400; color: var(--ink-faint); font-size: .85rem; }
+.field input[type=text], .field input[type=email], .field input[type=tel], .field input[type=password], .field textarea, .field select {
+  width: 100%; padding: 13px 14px; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); font-size: 1rem; font-family: var(--sans);
+  background: #fff; color: var(--ink);
+}
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px var(--sage-soft); }
+.field .err { color: var(--danger); font-size: .85rem; margin-top: 5px; display: none; }
+.field.invalid .err { display: block; }
+.field.invalid input { border-color: var(--danger); }
+.checkbox { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; color: var(--ink-soft); }
+.checkbox input { margin-top: 4px; }
+
+/* ── Result ── */
+.result-head { text-align: center; margin-bottom: 8px; }
+.result-band { display:inline-block; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color: var(--sage-dark); background: var(--sage-soft); padding: 5px 13px; border-radius: 999px; margin-bottom: 14px; }
+.result-body p { font-size: 1.06rem; }
+.result-invite { background: var(--sage-soft); border-radius: var(--radius); padding: 22px; margin: 26px 0; text-align: center; }
+
+/* ── Trust / about ── */
+.coach-card { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+.coach-photo { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg,var(--sage),var(--sage-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-family: var(--serif); font-size: 2rem; flex: none; }
+.steps-list { list-style: none; padding: 0; margin: 18px 0; counter-reset: s; }
+.steps-list li { position: relative; padding: 6px 0 18px 46px; }
+.steps-list li::before { counter-increment: s; content: counter(s); position:absolute; left:0; top:2px; width:30px; height:30px; border-radius:50%; background: var(--sage-soft); color: var(--sage-dark); display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+/* ── Alerts ── */
+.notice { padding: 14px 18px; border-radius: var(--radius-sm); margin: 16px 0; font-size: .95rem; }
+.notice-info { background: var(--sage-soft); color: var(--sage-dark); }
+.notice-warn { background: #f6ecdf; color: #8a6d3b; border: 1px solid #ecdcc2; }
+
+/* ── Footer ── */
+.site-footer { margin-top: 64px; border-top: 1px solid var(--line); background: var(--beige-2); }
+.site-footer .container { padding-top: 36px; padding-bottom: 36px; }
+.site-footer .cols { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 640px) { .site-footer .cols { grid-template-columns: 2fr 1fr 1fr; } }
+.site-footer a { color: var(--ink-soft); text-decoration: none; display: block; padding: 4px 0; }
+.site-footer a:hover { color: var(--ink); }
+.site-footer .legal { font-size: .82rem; color: var(--ink-faint); margin-top: 24px; }
+.crisis-line { background: #f6ecdf; border: 1px solid #ecdcc2; border-radius: var(--radius-sm); padding: 12px 16px; font-size: .85rem; color: #8a6d3b; margin-top: 18px; }
+
+/* ── Admin ── */
+.admin-bar { background: var(--ink); color: #fff; }
+.admin-bar .container { display:flex; justify-content: space-between; align-items:center; height: 56px; }
+.admin-bar a { color: #d8d2c8; }
+.stat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin: 22px 0; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(4,1fr); } }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; text-align:center; }
+.stat .num { font-family: var(--serif); font-size: 2rem; color: var(--sage-dark); }
+.stat .lbl { font-size: .82rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .06em; }
+table.leads { width: 100%; border-collapse: collapse; background: var(--card); border:1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+table.leads th, table.leads td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); font-size: .92rem; vertical-align: top; }
+table.leads th { background: var(--beige-2); font-size:.78rem; text-transform: uppercase; letter-spacing:.05em; color: var(--ink-faint); }
+table.leads tr:last-child td { border-bottom: none; }
+.badge { display:inline-block; font-size:.72rem; padding: 3px 9px; border-radius: 999px; font-weight:600; }
+.badge-new { background: var(--sage-soft); color: var(--sage-dark); }
+.badge-contacted { background: #e7e2f0; color: #6a5d8a; }
+.badge-booked { background: #dcebe0; color: #3f6e4c; }
+.table-scroll { overflow-x: auto; }
+
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+/* ── Free offer pill ── */
+.free-offer { display:inline-block; margin: 18px 0 0; font-size:.95rem; font-weight:600; color: var(--sage-dark); background: var(--sage-soft); padding: 8px 16px; border-radius: 999px; }
+
+/* ── Trust badges bar ── */
+.badges-bar { background: var(--beige-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.badge-pill { font-size: .85rem; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+.badge-pill::before { content: "✓ "; color: var(--sage-dark); font-weight: 700; }
+
+/* ── Testimonials ── */
+.testimonials { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 720px) { .testimonials { grid-template-columns: repeat(3, 1fr); } }
+.testimonial { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.testimonial blockquote { margin: 0 0 12px; font-family: var(--serif); font-size: 1.05rem; line-height: 1.6; color: var(--ink); }
+.testimonial figcaption { font-size: .85rem; color: var(--ink-faint); }
+
+/* ── FAQ ── */
+.faq { display: grid; gap: 10px; }
+.faq-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4px 18px; }
+.faq-item summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; position: relative; padding-right: 28px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-size: 1.3rem; color: var(--sage-dark); transition: transform .2s; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-a { padding: 0 0 16px; color: var(--ink-soft); }
+
+/* ── WhatsApp button ── */
+.btn-whatsapp { background: #25d366; color: #fff; }
+.btn-whatsapp:hover { background: #1da851; }
+
+.ex{max-width:640px;margin:0 auto 56px;padding-bottom:40px;border-bottom:1px solid var(--line);}
+.ex:last-child{border-bottom:none;}
+.ex-in{background:var(--beige-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px;}
+</style></head>
+<body>
+<div style="background:#7c8a5a;color:#fff;font-family:Arial;font-size:.85rem;text-align:center;padding:8px 14px;">Vijf verschillende antwoorden → vijf verschillende spiegelingen. Zo werkt het ook live op de site.</div>
+<section class="section-pad"><div class="container">
+  <div class="center" style="margin-bottom:30px;">
+    <span class="eyebrow">Bewijs</span>
+    <h1>De spiegeling verschilt per antwoord</h1>
+    <p class="muted" style="max-width:54ch;margin:0 auto;">Hieronder dezelfde check-in met vijf verschillende sets antwoorden. Elke spiegeling is anders van kop, inhoud en toon.</p>
+  </div>
+  
+  <article class="ex">
+    <div class="ex-in">
+      <span class="badge-pill" style="margin-bottom:8px;">Voorbeeld-antwoorden</span>
+      <p class="muted" style="font-size:.9rem;margin:0;">Wat brengt je hier? <b>Ik draag een verlies of rouw met me mee</b><br>Hoe zwaar weegt het op dit moment? <b>9/10</b><br>Wat herken je het meest? <b>Verdriet of gemis, Spanning in mijn lichaam, Behoefte aan stilte en ruimte</b><br>Heb je hier eerder met iemand over gesproken? <b>Nee, niet echt</b><br>Waar verlang je het meest naar? <b>Gehoord worden</b></p>
+    </div>
+    <div class="result-head" style="margin-top:18px;">
+      <span class="result-band">Veel om te dragen</span>
+      <h2 style="margin:6px 0 0;">Het vraagt moed om stil te staan bij wat zo zwaar weegt.</h2>
+    </div>
+    <div class="result-body card"><p>Je deelde dat je een verlies met je meedraagt. Op dit moment lijken de gevoelens dicht aan de oppervlakte te liggen en moeilijk alleen te dragen. Dat is een begrijpelijke reactie — geen teken van zwakte.</p><p>Je herkent vooral verdriet of gemis, spanning in je lichaam en een behoefte aan stilte en ruimte. Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.</p><p>Je gaf aan dat je vooral verlangt om gehoord te worden. Dat is precies waar Ob-Audire voor staat: aandachtig luisteren, zodat er ruimte ontstaat voor wat er werkelijk in je leeft.</p><p>De begeleiding van Petra is geen behandeling of standaardtraject, maar een afgestemde reis: een veilige ruimte om te onderzoeken, te voelen en te groeien — intuïtief, verdiepend en creatief, in jouw tempo.</p></div>
+    <div class="result-invite">
+      <p class="muted" style="margin:0 0 12px;">Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.</p>
+      <span class="btn btn-primary" style="cursor:default;">Plan een vrijblijvend kennismakingsgesprek</span>
+    </div>
+  </article>
+
+  <article class="ex">
+    <div class="ex-in">
+      <span class="badge-pill" style="margin-bottom:8px;">Voorbeeld-antwoorden</span>
+      <p class="muted" style="font-size:.9rem;margin:0;">Wat brengt je hier? <b>Ik zoek richting in mijn loopbaan</b><br>Hoe zwaar weegt het op dit moment? <b>3/10</b><br>Wat herken je het meest? <b>Moeite met keuzes maken, Vastlopen of niet weten welke kant op</b><br>Heb je hier eerder met iemand over gesproken? <b>Ja, met een professional</b><br>Waar verlang je het meest naar? <b>Richting</b></p>
+    </div>
+    <div class="result-head" style="margin-top:18px;">
+      <span class="result-band">Een zacht moment</span>
+      <h2 style="margin:6px 0 0;">Fijn dat je even hebt stilgestaan bij jezelf.</h2>
+    </div>
+    <div class="result-body card"><p>Je deelde dat je richting zoekt in je loopbaan. Ook als iets zachter aanwezig is, verdient het aandacht en zorg — ook die van jou.</p><p>Je herkent vooral moeite met keuzes maken en het gevoel vast te lopen. Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.</p><p>Je verlangt naar richting. Met jouw verhaal als kompas zoeken we naar keuzes die passen bij wie je werkelijk bent.</p><p>Je hebt eerder met een professional gesproken. De begeleiding van Petra is net iets anders: geen behandeling, maar een afgestemde, betrokken reis — intuïtief, verdiepend en creatief, in jouw tempo.</p></div>
+    <div class="result-invite">
+      <p class="muted" style="margin:0 0 12px;">Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.</p>
+      <span class="btn btn-primary" style="cursor:default;">Plan een vrijblijvend kennismakingsgesprek</span>
+    </div>
+  </article>
+
+  <article class="ex">
+    <div class="ex-in">
+      <span class="badge-pill" style="margin-bottom:8px;">Voorbeeld-antwoorden</span>
+      <p class="muted" style="font-size:.9rem;margin:0;">Wat brengt je hier? <b>Ik verlang naar meer verbinding met mezelf</b><br>Hoe zwaar weegt het op dit moment? <b>6/10</b><br>Wat herken je het meest? <b>Het gevoel mezelf kwijt te zijn, Onrust of piekeren</b><br>Heb je hier eerder met iemand over gesproken? <b>Een beetje, met naasten</b><br>Waar verlang je het meest naar? <b>Ruimte om te voelen</b></p>
+    </div>
+    <div class="result-head" style="margin-top:18px;">
+      <span class="result-band">Iets dat merkbaar meeweegt</span>
+      <h2 style="margin:6px 0 0;">Wat je met je meedraagt, mag er zijn.</h2>
+    </div>
+    <div class="result-body card"><p>Je deelde dat je verlangt naar meer verbinding met jezelf. Zulke processen verlopen zelden in een rechte lijn; het is logisch dat sommige dagen zwaarder voelen dan andere.</p><p>Je herkent vooral het gevoel jezelf kwijt te zijn en onrust of piekeren. Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.</p><p>Je verlangt naar ruimte om te voelen. Via aandacht voor het lichaam en wat zich aandient, ontstaat ruimte voor inzicht en beweging.</p><p>De begeleiding van Petra is geen behandeling of standaardtraject, maar een afgestemde reis: een veilige ruimte om te onderzoeken, te voelen en te groeien — intuïtief, verdiepend en creatief, in jouw tempo.</p></div>
+    <div class="result-invite">
+      <p class="muted" style="margin:0 0 12px;">Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.</p>
+      <span class="btn btn-primary" style="cursor:default;">Plan een vrijblijvend kennismakingsgesprek</span>
+    </div>
+  </article>
+
+  <article class="ex">
+    <div class="ex-in">
+      <span class="badge-pill" style="margin-bottom:8px;">Voorbeeld-antwoorden</span>
+      <p class="muted" style="font-size:.9rem;margin:0;">Wat brengt je hier? <b>Ik leef met kanker, of mijn partner is ziek</b><br>Hoe zwaar weegt het op dit moment? <b>7/10</b><br>Wat herken je het meest? <b>Behoefte aan stilte en ruimte, Spanning in mijn lichaam</b><br>Heb je hier eerder met iemand over gesproken? <b>Nee, niet echt</b><br>Waar verlang je het meest naar? <b>Rust</b></p>
+    </div>
+    <div class="result-head" style="margin-top:18px;">
+      <span class="result-band">Veel om te dragen</span>
+      <h2 style="margin:6px 0 0;">Het vraagt moed om stil te staan bij wat zo zwaar weegt.</h2>
+    </div>
+    <div class="result-body card"><p>Je deelde dat je leeft met kanker, of dat je partner ziek is. Op dit moment lijken de gevoelens dicht aan de oppervlakte te liggen en moeilijk alleen te dragen. Dat is een begrijpelijke reactie — geen teken van zwakte.</p><p>Je herkent vooral een behoefte aan stilte en ruimte en spanning in je lichaam. Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.</p><p>Je verlangt naar rust. In een veilige ruimte mag het dagelijkse &quot;moeten&quot; even wegvallen — je mag landen en vertragen.</p><p>De begeleiding van Petra is geen behandeling of standaardtraject, maar een afgestemde reis: een veilige ruimte om te onderzoeken, te voelen en te groeien — intuïtief, verdiepend en creatief, in jouw tempo.</p><p>Omdat je leeft met kanker of partner bent van iemand die ziek is, mag je ook weten dat er het (K)ankeratelier is: een kleine, creatieve ochtend waar je in rust iets met je handen kunt doen. Niets hoeft, alles mag.</p></div>
+    <div class="result-invite">
+      <p class="muted" style="margin:0 0 12px;">Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.</p>
+      <span class="btn btn-primary" style="cursor:default;">Plan een vrijblijvend kennismakingsgesprek</span>
+    </div>
+  </article>
+
+  <article class="ex">
+    <div class="ex-in">
+      <span class="badge-pill" style="margin-bottom:8px;">Voorbeeld-antwoorden</span>
+      <p class="muted" style="font-size:.9rem;margin:0;">Wat brengt je hier? <b>Ik sta op een kruispunt in mijn leven</b><br>Hoe zwaar weegt het op dit moment? <b>5/10</b><br>Wat herken je het meest? <b>Verlangen naar nieuwe stappen</b><br>Heb je hier eerder met iemand over gesproken? <b>Een beetje, met naasten</b><br>Waar verlang je het meest naar? <b>Nieuwe stappen zetten</b></p>
+    </div>
+    <div class="result-head" style="margin-top:18px;">
+      <span class="result-band">Iets dat merkbaar meeweegt</span>
+      <h2 style="margin:6px 0 0;">Wat je met je meedraagt, mag er zijn.</h2>
+    </div>
+    <div class="result-body card"><p>Je deelde dat je op een kruispunt staat in je leven. Zulke processen verlopen zelden in een rechte lijn; het is logisch dat sommige dagen zwaarder voelen dan andere.</p><p>Je herkent vooral een verlangen naar nieuwe stappen. Dit zijn veelvoorkomende manieren waarop innerlijke beweging zich laat voelen — in het hoofd én in het lichaam. Je bent hierin niet alleen.</p><p>Je verlangt naar nieuwe stappen. We maken samen de vertaalslag van innerlijke beweging naar concrete, haalbare stappen.</p><p>De begeleiding van Petra is geen behandeling of standaardtraject, maar een afgestemde reis: een veilige ruimte om te onderzoeken, te voelen en te groeien — intuïtief, verdiepend en creatief, in jouw tempo.</p></div>
+    <div class="result-invite">
+      <p class="muted" style="margin:0 0 12px;">Als het goed voelt, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden en niets om te bewijzen — gewoon een eerste kennismaking, om te voelen of het klikt.</p>
+      <span class="btn btn-primary" style="cursor:default;">Plan een vrijblijvend kennismakingsgesprek</span>
+    </div>
+  </article>
+</div></section>
+</body></html>

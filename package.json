@@ -13,6 +13,7 @@
     "seed": "node scripts/seed.js",
     "preview:build": "node scripts/build-preview.mjs",
     "preview:single": "node scripts/build-singlefile.mjs",
+    "preview:examples": "node scripts/build-examples.mjs",
     "test": "node scripts/e2e.mjs"
   },
   "keywords": [
