@@ -19,7 +19,7 @@ function adminLayout(inner) {
   const body = `
     <div class="admin-bar">
       <div class="container">
-        <a href="/admin" style="font-family:var(--serif);font-size:1.1rem;text-decoration:none;color:#fff;">Ob-Audire · Dashboard</a>
+        <a href="/admin" style="font-family:var(--serif);font-size:1.1rem;text-decoration:none;color:#fff;">CoachKompas · Dashboard</a>
         <a href="/admin/logout" style="font-size:.9rem;">Uitloggen</a>
       </div>
     </div>
@@ -34,7 +34,7 @@ export function adminLoginPage({ error } = {}) {
       <div class="container" style="max-width:420px;">
         <span class="eyebrow">Toegang</span>
         <h1>Inloggen</h1>
-        <p class="muted">Dit gedeelte is voor ${esc(C.brand.coach)} om binnengekomen aanvragen te bekijken.</p>
+        <p class="muted">Dit gedeelte is voor ${esc(C.practice.coach)} om binnengekomen aanvragen te bekijken.</p>
         ${error ? `<div class="notice notice-warn">${esc(error)}</div>` : ''}
         <form method="POST" action="/admin/login" class="card">
           <div class="field">
@@ -113,7 +113,7 @@ export function adminDashboardPage({ leads, stats }) {
 
   const inner = `
     <h1 style="margin-top:0;">Aanvragen</h1>
-    <p class="muted">Alle aanvragen komen bij <strong>${esc(C.brand.coach)}</strong> terecht. Nieuwe mensen verschijnen als <em>nieuw</em>; werk de status bij naarmate je contact opneemt.</p>
+    <p class="muted">Alle aanvragen komen bij <strong>${esc(C.practice.coach)}</strong> terecht. Nieuwe mensen verschijnen als <em>nieuw</em>; werk de status bij naarmate je contact opneemt.</p>
 
     <div class="stat-grid">
       <div class="stat"><div class="num">${stats.total}</div><div class="lbl">Totaal</div></div>

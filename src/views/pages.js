@@ -12,7 +12,7 @@ import { esc } from '../util.js';
 const R = content.routes;
 const C = content;
 const SITE = C.externalSite;
-const coachInitial = C.brand.coach.charAt(0).toUpperCase();
+const coachInitial = C.practice.coach.charAt(0).toUpperCase();
 
 function extLink(label, opts = {}) {
   const cls = opts.btn ? `class="btn ${opts.btn}"` : 'class="muted"';
@@ -39,16 +39,12 @@ export function landingPage() {
     .map((f) => `<details class="faq-item"><summary>${esc(f.q)}</summary><div class="faq-a">${esc(f.a)}</div></details>`)
     .join('');
 
-  // Structured data voor lokale vindbaarheid (Google).
+  // Structured data: CoachKompas als organisatie (lokale service-data staat op de SEO-pagina's).
   const jsonLd = `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
+    '@type': 'Organization',
     name: C.brand.name,
     description: C.brand.essence,
-    founder: { '@type': 'Person', name: C.brand.coach },
-    url: C.externalSite.url,
-    email: C.contact.email,
-    telephone: C.contact.phone,
     areaServed: C.contact.region,
     knowsAbout: ['rouwbegeleiding', 'verliesbegeleiding', 'loopbaanbegeleiding', 'persoonlijke ontwikkeling'],
   })}</script>`;
@@ -95,7 +91,7 @@ export function landingPage() {
     <section class="section-pad">
       <div class="container">
         <div class="card center">
-          <p style="font-family:var(--serif);font-size:1.25rem;color:var(--sage-dark);max-width:48ch;margin:0 auto;font-style:italic;">“${esc(C.brand.mole)}”</p>
+          <p style="font-family:var(--serif);font-size:1.25rem;color:var(--sage-dark);max-width:48ch;margin:0 auto;font-style:italic;">“${esc(C.practice.mole)}”</p>
         </div>
       </div>
     </section>
@@ -266,10 +262,61 @@ export function privacyPage() {
         ${sections}
         <p class="muted">Vragen of een verzoek? Mail naar <a href="mailto:${esc(C.contact.email)}">${esc(C.contact.email)}</a>.</p>
         <div class="crisis-line">
-          Ob-Audire is begeleiding, geen medische of crisisdienst. Bel in een noodsituatie 112 of de hulplijn 113.
+          CoachKompas is een aanmeldpunt en geen medische of crisisdienst. Bel in een noodsituatie 112 of de hulplijn 113.
         </div>
       </div>
     </section>
   `;
   return layout({ title: 'Privacy & AVG', body });
+}
+
+
+// ── Lokale SEO-pagina's (rouwbegeleiding/loopbaancoach + plaats) ────────────
+export const seoPages = C.seo.pages;
+
+export function seoPage(page) {
+  const intro = page.intro.map((p, i) => `<p${i === 0 ? '' : ' class="muted"'}>${esc(p)}</p>`).join('');
+  const bullets = page.bullets.map((b) => `<li>${esc(b)}</li>`).join('');
+
+  // Lokale structured data: helpt Google bij "{onderwerp} {plaats}".
+  const jsonLd = `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: `${C.practice.name} — ${page.topic}`,
+    description: page.metaDescription,
+    areaServed: page.location,
+    provider: { '@type': 'Person', name: C.practice.coach },
+    url: C.externalSite.url,
+  })}</script>`;
+
+  const body = `
+    <section class="section-pad">
+      <div class="container" style="max-width:680px;">
+        <span class="eyebrow">${esc(page.eyebrow)}</span>
+        <h1>${esc(page.h1)}</h1>
+        ${intro}
+        <ul>${bullets}</ul>
+
+        <div class="result-invite">
+          <h2 style="margin-top:0;">${esc(C.landing.freeOffer)}</h2>
+          <p class="muted">Doe de korte check-in voor een persoonlijke spiegeling, of plan direct een vrijblijvend gesprek.</p>
+          <a class="btn btn-primary" href="${R.quiz}">${esc(C.cta.primary)}</a>
+          <div style="margin-top:12px;"><a class="btn btn-secondary" href="${R.booking}">${esc(C.cta.secondary)}</a></div>
+        </div>
+
+        <div class="card coach-card">
+          <div class="coach-photo">${esc(coachInitial)}</div>
+          <div style="flex:1;min-width:240px;">
+            <p style="margin:0 0 10px;"><strong>${esc(C.practice.coach)}</strong> · ${esc(C.practice.name)}<br><span class="muted">${esc(C.about.role)}</span></p>
+            ${extLink('Bekijk de praktijk op ' + SITE.label, {})}
+          </div>
+        </div>
+
+        <div class="notice notice-info">
+          Begeleiding is ondersteunend en niet-medisch. CoachKompas brengt je in contact met ${esc(C.practice.coach)} (${esc(C.practice.name)}).
+        </div>
+      </div>
+    </section>
+  `;
+  return layout({ title: page.h1, description: page.metaDescription, body, head: jsonLd });
 }

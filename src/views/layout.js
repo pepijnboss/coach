@@ -27,10 +27,10 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
     : '';
 
   const header = minimal
-    ? `<header class="site-header"><div class="container"><a class="brand" href="${R.home}">Ob<span>-Audire</span></a><a href="${R.home}" class="muted" style="text-decoration:none;font-size:.9rem;">Sluiten</a></div></header>`
+    ? `<header class="site-header"><div class="container"><a class="brand" href="${R.home}">Coach<span>Kompas</span></a><a href="${R.home}" class="muted" style="text-decoration:none;font-size:.9rem;">Sluiten</a></div></header>`
     : `<header class="site-header">
         <div class="container">
-          <a class="brand" href="${R.home}">Ob<span>-Audire</span></a>
+          <a class="brand" href="${R.home}">Coach<span>Kompas</span></a>
           <nav class="nav">
             <a href="${R.home}#hoe">Hoe het werkt</a>
             <a href="${R.about}">Over Petra</a>
@@ -45,8 +45,8 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
       <div class="container">
         <div class="cols">
           <div>
-            <a class="brand" href="${R.home}" style="font-size:1.1rem;">Ob<span>-Audire</span></a>
-            <p class="muted" style="margin-top:10px;font-size:.92rem;max-width:36ch;">${esc(content.brand.tagline)}. Begeleiding bij persoonlijke ontwikkeling — geen medische of psychologische behandeling.</p>
+            <a class="brand" href="${R.home}" style="font-size:1.1rem;">Coach<span>Kompas</span></a>
+            <p class="muted" style="margin-top:10px;font-size:.92rem;max-width:36ch;">${esc(content.brand.tagline)}. CoachKompas verbindt je met begeleiding van ${esc(content.practice.coach)} (${esc(content.practice.name)}) — geen medische of psychologische behandeling.</p>
           </div>
           <div>
             <strong style="font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);">Ontdek</strong>
@@ -63,9 +63,9 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
           </div>
         </div>
         <div class="crisis-line">
-          Ob-Audire biedt begeleiding en is geen crisis- of hulpdienst. Verkeer je in acute nood of denk je aan zelfdoding? Bel dan 112, of de hulplijn 113 (113.nl, ook telefonisch via 0800-0113).
+          CoachKompas is een aanmeldpunt en is geen crisis- of hulpdienst. Verkeer je in acute nood of denk je aan zelfdoding? Bel dan 112, of de hulplijn 113 (113.nl, ook telefonisch via 0800-0113).
         </div>
-        <p class="legal">© ${year} ${esc(content.brand.name)} · ${esc(content.brand.coach)}. ${esc(content.contact.region)}. Begeleiding is geen medische, psychologische of psychiatrische behandeling. Je gegevens worden verwerkt volgens de AVG — zie de <a href="${R.privacy}" style="display:inline;">privacyverklaring</a>.</p>
+        <p class="legal">© ${year} ${esc(content.brand.name)} · verbindt je met ${esc(content.practice.coach)} (${esc(content.practice.name)}). ${esc(content.contact.region)}. Begeleiding is geen medische, psychologische of psychiatrische behandeling. Je gegevens worden verwerkt volgens de AVG — zie de <a href="${R.privacy}" style="display:inline;">privacyverklaring</a>.</p>
       </div>
     </footer>`;
 
@@ -83,7 +83,7 @@ export function layout({ title, body, description, bodyClass = '', scripts = [],
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="nl_NL">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c8a5a'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>Ob</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c8a5a'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>CK</text></svg>">
   <link rel="stylesheet" href="/styles.css">
   ${analytics}
   ${head}

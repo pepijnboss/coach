@@ -157,7 +157,7 @@
       field('email', 'E-mailadres', 'email', 'email', true) +
       field('phone', 'Telefoonnummer <span class="hint">(optioneel)</span>', 'tel', 'tel', false) +
       '<div class="field"><label class="checkbox"><input type="checkbox" id="consent" name="consent">' +
-      '<span>Ik geef Ob-Audire toestemming om deze gegevens te bewaren en contact met me op te nemen over een kennismakingsgesprek. Ik kan altijd om verwijdering vragen. <a href="/privacy" target="_blank">Privacy</a>.</span></label>' +
+      '<span>Ik geef CoachKompas toestemming om deze gegevens te bewaren en contact met me op te nemen over een kennismakingsgesprek met Petra Mollet. Ik kan altijd om verwijdering vragen. <a href="/privacy" target="_blank">Privacy</a>.</span></label>' +
       '<div class="err" id="err-consent">Vink dit aan zodat we contact met je mogen opnemen.</div></div>' +
       '<div class="notice notice-warn" id="formError" style="display:none;"></div>' +
       '<button type="submit" class="btn btn-primary btn-block" id="submitBtn">Toon mijn spiegeling</button>' +

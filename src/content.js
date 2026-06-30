@@ -1,38 +1,43 @@
 // ─────────────────────────────────────────────────────────────────────────
-// Central content configuration for Ob-Audire (Petra Mollet).
+// Central content configuration.
 //
-// This is the SINGLE SOURCE OF TRUTH for all site copy, branding and contact
-// details. Everything the visitor reads lives here, in Dutch, in Petra's tone.
-// To tweak wording, prices, contact details or links: edit this file only.
+// CoachKompas is the LEAD SITE (your own brand). It guides visitors through a
+// short check-in and refers them to the practice of Petra Mollet (Ob-Audire).
+// Single source of truth for all copy/branding. Edit here only.
 //
-// Brand essence: "Ob-Audire" — audire = luisteren. A safe, gentle place where
-// "woorden nog geboren mogen worden". The recurring image is de mol (the mole)
-// that carefully leaves her burrow — you may come out with your story too.
+//   brand     = the lead site (CoachKompas)
+//   practice  = the coach it refers to (Ob-Audire / Petra Mollet)
 // ─────────────────────────────────────────────────────────────────────────
 
 export const content = {
-  // ── Brand & contact ──────────────────────────────────────────────────────
+  // ── De LEAD-SITE = jouw eigen merk ─────────────────────────────────────────
   brand: {
+    name: 'CoachKompas',
+    tagline: 'Jouw kompas naar de juiste begeleiding',
+    essence:
+      'Doe de korte check-in en ontdek welke begeleiding bij je past. Een zachte eerste stap — CoachKompas verbindt je met Petra Mollet van Ob-Audire.',
+    // Jouw eigen afzender-/contactadres (placeholder — later invullen).
+    email: 'info@coachkompas.nl',
+  },
+
+  // ── De PRAKTIJK waar CoachKompas naar doorverwijst ─────────────────────────
+  practice: {
     name: 'Ob-Audire',
     coach: 'Petra Mollet',
-    // Shown under the logo / in the hero
-    tagline: 'Een plek waar woorden nog geboren mogen worden',
-    // One-line essence used in meta descriptions
-    essence:
-      'Begeleiding bij persoonlijke ontwikkeling, loopbaan, rouw en transitie — met aandachtig luisteren als kompas.',
-    // The signature metaphor
+    coachFirst: 'Petra',
+    // Het kenmerkende mol-motief van Petra's praktijk.
     mole:
       'Net zoals de mol voorzichtig haar hol verlaat, mag jij hier tevoorschijn komen met jouw verhaal. Niet alles hoeft al uitgesproken te zijn.',
   },
 
-  // NOTE: vul de echte gegevens hieronder in (nu nog voorbeeldwaarden).
+  // NOTE: dit zijn de contactgegevens van de PRAKTIJK (Petra) — nu nog voorbeeldwaarden.
   contact: {
     email: 'info@ob-audire.nl',
     phone: '06 - 12 34 56 78',
     // WhatsApp is een laagdrempelig leadkanaal in NL. Vul het nummer in
     // internationaal formaat in (bijv. 31612345678) om de knop te tonen; leeg = verborgen.
     whatsapp: '',
-    region: 'Regio Gemert-Bakel & Laarbeek (Noord-Brabant)',
+    region: 'Regio Gemert-Bakel, Laarbeek & Helmond (Noord-Brabant)',
     workArea: 'Online en op locatie',
     website: 'https://ob-audire.nl',
   },
@@ -247,13 +252,13 @@ export const content = {
     eyebrow: 'Jouw privacy telt',
     title: 'Privacy & AVG',
     intro:
-      'Contact opnemen over wat je bezighoudt vraagt vertrouwen. Bij Ob-Audire ga ik zorgvuldig met je gegevens om, volgens de Algemene Verordening Gegevensbescherming (AVG).',
+      'Contact opnemen over wat je bezighoudt vraagt vertrouwen. CoachKompas gaat zorgvuldig met je gegevens om, volgens de Algemene Verordening Gegevensbescherming (AVG).',
     sections: [
-      { h: 'Wat ik verzamel', p: 'Alleen wat jij deelt: je naam, e-mailadres, een optioneel telefoonnummer en de antwoorden uit de check-in, zodat ik je een passend en zorgzaam antwoord kan geven.' },
-      { h: 'Waarom (grondslag)', p: 'Ik verwerk je gegevens op basis van jouw toestemming, gegeven bij het versturen van de check-in, uitsluitend om contact met je op te nemen, een kennismakingsgesprek aan te bieden en een zachte herinnering te sturen. Ik verkoop je gegevens niet en gebruik ze niet voor advertenties.' },
-      { h: 'Wie het ziet', p: 'Je gegevens worden alleen gezien door Petra Mollet. Ze worden nooit gedeeld met derden voor marketing.' },
-      { h: 'Hoe lang', p: 'Ik bewaar je gegevens niet langer dan nodig om je te kunnen begeleiden, en verwijder ze daarna. Je kunt altijd vragen om verwijdering.' },
-      { h: 'Jouw rechten', p: 'Je hebt recht op inzage, correctie en verwijdering van je gegevens, en je mag je toestemming intrekken. Mail daarvoor naar het adres hieronder; ik handel je verzoek snel af.' },
+      { h: 'Wat we verzamelen', p: 'Alleen wat jij deelt: je naam, e-mailadres, een optioneel telefoonnummer en de antwoorden uit de check-in, zodat we je een passend en zorgzaam antwoord kunnen geven.' },
+      { h: 'Waarom (grondslag)', p: 'We verwerken je gegevens op basis van jouw toestemming, gegeven bij het versturen van de check-in, uitsluitend om je in contact te brengen met Petra Mollet, een kennismakingsgesprek aan te bieden en een zachte herinnering te sturen. We verkopen je gegevens niet en gebruiken ze niet voor advertenties.' },
+      { h: 'Wie het ziet', p: 'CoachKompas deelt je gegevens uitsluitend met Petra Mollet (Ob-Audire), de begeleider waarmee we je in contact brengen. Ze worden nooit gedeeld met andere derden voor marketing.' },
+      { h: 'Hoe lang', p: 'We bewaren je gegevens niet langer dan nodig om je te kunnen helpen, en verwijderen ze daarna. Je kunt altijd vragen om verwijdering.' },
+      { h: 'Jouw rechten', p: 'Je hebt recht op inzage, correctie en verwijdering van je gegevens, en je mag je toestemming intrekken. Mail daarvoor naar het adres hieronder; we handelen je verzoek snel af.' },
     ],
   },
 
@@ -282,7 +287,7 @@ export const content = {
   faq: {
     title: 'Veelgestelde vragen',
     items: [
-      { q: 'Is dit therapie of een medische behandeling?', a: 'Nee. Ob-Audire biedt begeleiding: een veilige, ondersteunende ruimte. Het is geen therapie of medische behandeling, en vervangt die ook niet.' },
+      { q: 'Is dit therapie of een medische behandeling?', a: 'Nee. Petra Mollet (Ob-Audire) biedt begeleiding: een veilige, ondersteunende ruimte. Het is geen therapie of medische behandeling, en vervangt die ook niet.' },
       { q: 'Wat kost het kennismakingsgesprek?', a: 'Het eerste kennismakingsgesprek van ongeveer 30 minuten is gratis en vrijblijvend. Je zit nergens aan vast.' },
       { q: 'Is mijn informatie vertrouwelijk?', a: 'Ja. Wat je deelt is vertrouwelijk en wordt alleen door Petra gezien. Je gegevens worden verwerkt volgens de AVG en je kunt altijd om verwijdering vragen.' },
       { q: 'Hoe verloopt een gesprek?', a: 'Rustig en zonder druk. Je hoeft niets voor te bereiden. We gaan in jouw tempo, met jouw verhaal als kompas.' },
@@ -293,9 +298,9 @@ export const content = {
 
   emails: {
     // Email 1 — direct
-    welcomeSubject: 'Welkom bij Ob-Audire — fijn dat je er bent',
+    welcomeSubject: 'Welkom bij CoachKompas — fijn dat je er bent',
     // Email 2 — na 48 uur
-    followupSubject: 'Ik blijf luisteren, wanneer jij er klaar voor bent',
+    followupSubject: 'We blijven luisteren, wanneer jij er klaar voor bent',
   },
 
   // ── Quiz intro (vragen staan in quiz.js) ──────────────────────────────────
@@ -303,6 +308,136 @@ export const content = {
     title: 'Een zachte check-in',
     lede: 'Zes korte vragen. Ongeveer twee minuten. Wat je ook voelt, het mag er zijn.',
     start: 'Begin',
+  },
+
+  // ── Lokale SEO-pagina's ────────────────────────────────────────────────────
+  // Elke pagina richt zich op één zoekwoord + plaats, met unieke tekst (geen
+  // duplicaat), en stuurt naar de check-in + kennismakingsgesprek met Petra.
+  // Voeg gerust meer plaatsen/onderwerpen toe — de routes ontstaan vanzelf.
+  seo: {
+    footerTitle: 'Begeleiding in jouw regio',
+    pages: [
+      {
+        slug: 'rouwbegeleiding-gemert-bakel',
+        topic: 'Rouwbegeleiding',
+        location: 'Gemert-Bakel',
+        eyebrow: 'Gemert-Bakel e.o.',
+        h1: 'Rouwbegeleiding in Gemert-Bakel',
+        metaTitle: 'Rouwbegeleiding in Gemert-Bakel | CoachKompas',
+        metaDescription:
+          'Zoek je rouwbegeleiding in Gemert-Bakel? Doe de korte check-in en plan een gratis kennismakingsgesprek met Petra Mollet van Ob-Audire. Online of op locatie.',
+        intro: [
+          'Het verlies van iemand of iets dat je dierbaar is, kan je wereld op zijn kop zetten. Zoek je in Gemert-Bakel een warme, niet-medische plek om je verdriet te delen en er woorden aan te geven? Bij Ob-Audire, de praktijk van rouw- en verliesbegeleider Petra Mollet, vind je een veilige ruimte — in jouw tempo.',
+          'Via CoachKompas zet je een zachte eerste stap: doe de korte check-in en ontvang een persoonlijke spiegeling. Daarna verbinden we je met Petra voor een vrijblijvend kennismakingsgesprek, online of op locatie in de regio.',
+        ],
+        bullets: [
+          'Begeleiding bij verlies, gemis en afscheid',
+          'Geen wachtlijst en geen medische verwijzing nodig',
+          'Online of op locatie in Gemert-Bakel en omgeving',
+          'Eerste kennismakingsgesprek (30 min) gratis en vrijblijvend',
+        ],
+      },
+      {
+        slug: 'rouwbegeleiding-helmond',
+        topic: 'Rouwbegeleiding',
+        location: 'Helmond',
+        eyebrow: 'Helmond e.o.',
+        h1: 'Rouwbegeleiding in Helmond',
+        metaTitle: 'Rouwbegeleiding in Helmond | CoachKompas',
+        metaDescription:
+          'Rouwbegeleiding in Helmond en omgeving. Een warme, niet-klinische plek voor je verdriet. Doe de check-in en plan een gratis kennismakingsgesprek met Petra Mollet.',
+        intro: [
+          'Rouw kent geen vast tijdpad. Of het verlies nu net gebeurde of al langer geleden is — soms helpt het om je verhaal te delen met iemand die echt luistert. In Helmond en omgeving begeleidt Petra Mollet (Ob-Audire) je daarbij, zacht en zonder oordeel.',
+          'CoachKompas helpt je op weg met een korte check-in en een persoonlijke spiegeling. Voelt het goed, dan breng je een vrijblijvend kennismakingsgesprek met Petra in gang.',
+        ],
+        bullets: [
+          'Voor verlies van een dierbare, scheiding of ingrijpende verandering',
+          'Ruimte om te vertragen, te voelen en gehoord te worden',
+          'Online of op locatie, goed bereikbaar vanuit Helmond',
+          'Vrijblijvend eerste gesprek van 30 minuten',
+        ],
+      },
+      {
+        slug: 'loopbaancoach-laarbeek',
+        topic: 'Loopbaancoaching',
+        location: 'Laarbeek',
+        eyebrow: 'Laarbeek e.o.',
+        h1: 'Loopbaancoach in Laarbeek',
+        metaTitle: 'Loopbaancoach in Laarbeek | CoachKompas',
+        metaDescription:
+          'Vastgelopen in je werk of toe aan een nieuwe richting? Loopbaancoaching in Laarbeek met Petra Mollet, registerloopbaancoach. Doe de check-in, gesprek is gratis.',
+        intro: [
+          'Sta je op een kruispunt in je loopbaan, twijfel je over een volgende stap, of voel je dat je werk niet meer past bij wie je bent? In Laarbeek begeleidt Petra Mollet je bij keuzes, verandering en richting. Met haar achtergrond als HR-adviseur én registerloopbaancoach kijkt ze verder dan je cv.',
+          'Begin met de korte check-in van CoachKompas. Je ontvangt een persoonlijke spiegeling en, als het past, een vrijblijvend kennismakingsgesprek met Petra.',
+        ],
+        bullets: [
+          'Bij twijfel, keuzes of een nieuwe stap in je werk',
+          'Inzicht in patronen, drijfveren en wat écht bij je past',
+          'Combinatie van HR-ervaring en loopbaancoaching',
+          'Gratis kennismakingsgesprek, online of in Laarbeek',
+        ],
+      },
+      {
+        slug: 'loopbaancoach-helmond',
+        topic: 'Loopbaancoaching',
+        location: 'Helmond',
+        eyebrow: 'Helmond e.o.',
+        h1: 'Loopbaancoach in Helmond',
+        metaTitle: 'Loopbaancoach in Helmond | CoachKompas',
+        metaDescription:
+          'Loopbaancoaching in Helmond met Petra Mollet, registerloopbaancoach. Vind richting bij een kruispunt in je werk. Doe de check-in; eerste gesprek gratis.',
+        intro: [
+          'Een nieuwe richting in je werk vinden vraagt rust en aandacht. In Helmond helpt Petra Mollet je om te ontdekken wat bij je past — niet met standaardtests, maar met een afgestemde, persoonlijke aanpak waarin jouw verhaal het kompas is.',
+          'Doe de korte check-in van CoachKompas voor een eerste spiegeling, en plan daarna desgewenst een gratis kennismakingsgesprek met Petra.',
+        ],
+        bullets: [
+          'Voor loopbaanvragen, heroriëntatie en werkstress',
+          'Persoonlijk en verdiepend, geen afvinklijstjes',
+          'Goed bereikbaar vanuit Helmond en omgeving',
+          'Vrijblijvend eerste gesprek van 30 minuten',
+        ],
+      },
+      {
+        slug: 'hulp-bij-verlies-en-verdriet',
+        topic: 'Hulp bij verlies en verdriet',
+        location: 'Gemert-Bakel, Laarbeek & Helmond',
+        eyebrow: 'Regio Zuidoost-Brabant',
+        h1: 'Hulp bij verlies en verdriet in de regio',
+        metaTitle: 'Hulp bij verlies en verdriet — Gemert-Bakel, Laarbeek, Helmond | CoachKompas',
+        metaDescription:
+          'Warme begeleiding bij verlies en verdriet in Gemert-Bakel, Laarbeek en Helmond. Niet-medisch, in jouw tempo. Doe de check-in en plan een gratis gesprek.',
+        intro: [
+          'Verdriet mag er zijn — en je hoeft het niet alleen te dragen. Of je nu een dierbare verloor, een relatie eindigde of je leven ingrijpend veranderde: in de regio Gemert-Bakel, Laarbeek en Helmond biedt Petra Mollet een veilige plek om te rouwen, te voelen en langzaam weer adem te vinden.',
+          'CoachKompas is je zachte eerste stap. Met een korte check-in ontdek je wat je nodig hebt, en we verbinden je met Petra voor een vrijblijvend kennismakingsgesprek.',
+        ],
+        bullets: [
+          'Bij rouw, gemis, scheiding of een ingrijpende verandering',
+          'Niet-medisch, zonder oordeel, in jouw tempo',
+          'Online of op locatie in Zuidoost-Brabant',
+          'Eerste gesprek (30 min) gratis en vrijblijvend',
+        ],
+      },
+      {
+        slug: 'kankeratelier-helmond-eo',
+        topic: '(K)ankeratelier',
+        location: 'Helmond e.o.',
+        eyebrow: 'Voor mensen met kanker & hun naasten',
+        h1: 'Het (K)ankeratelier — creatieve ochtend in de regio Helmond',
+        metaTitle: '(K)ankeratelier — creatieve ochtend bij kanker, regio Helmond | CoachKompas',
+        metaDescription:
+          'Het (K)ankeratelier van Ob-Audire: een rustige, creatieve ochtend voor mensen met kanker en hun partners. Regio Gemert-Bakel, Laarbeek en Helmond. Maak kennis.',
+        intro: [
+          'Leven met kanker — als patiënt of als partner — vraagt veel. Het (K)ankeratelier van Ob-Audire is een kleine, creatieve ochtend waar je even uit de stroom van het dagelijks leven mag stappen. In rust iets met je handen doen, zonder dat er iets moet. Niets hoeft, alles mag.',
+          'Wil je sfeer proeven of vragen stellen? Doe de korte check-in van CoachKompas of neem direct contact op voor een kennismaking met Petra.',
+        ],
+        bullets: [
+          'Voor volwassenen met kanker en hun partners',
+          'Kleine groep (max. 4), laatste vrijdag van de maand',
+          'Tekenen, collage, drukken, vilten en meer — op jouw tempo',
+          'In de regio Gemert-Bakel, Laarbeek en Helmond',
+        ],
+      },
+    ],
   },
 };
 

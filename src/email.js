@@ -77,7 +77,7 @@ function wrap(bodyHtml) {
       </td></tr>
       <tr><td style="padding:20px 36px;background:#f1eadd;border-top:1px solid #e6dcc9;font-size:12px;line-height:1.6;color:#938979;font-family:Arial,sans-serif;">
         Je ontvangt deze e-mail omdat je via ${esc(content.brand.name)} om begeleiding hebt gevraagd.
-        ${esc(content.brand.name)} biedt begeleiding, geen medische of psychologische behandeling.
+        ${esc(content.brand.name)} brengt je in contact met ${esc(content.practice.coach)} (${esc(content.practice.name)}) en biedt zelf geen medische of psychologische behandeling.
         Verkeer je in acute nood of denk je aan zelfdoding? Bel dan direct 112 of de hulplijn 113 (0800-0113).
         <br><br>
         Je privacy telt. Je kunt altijd om verwijdering van je gegevens vragen door op deze e-mail te antwoorden.
@@ -108,26 +108,26 @@ export function renderWelcome(lead) {
     <p style="margin-top:0;">Lieve ${esc(firstName)},</p>
     <p>Dank je wel dat je vandaag even stil hebt gestaan bij jezelf. Dat is een zachte en moedige stap.</p>
     ${summary ? `<p style="background:#f1eadd;border-left:3px solid #7c8a5a;padding:12px 16px;border-radius:8px;font-size:14px;color:#6e645a;"><em>Wat je met ons deelde:</em><br>${esc(summary)}</p>` : ''}
-    <p>Wanneer je er klaar voor bent, ben je van harte welkom voor een vrijblijvend kennismakingsgesprek met ${esc(content.brand.coach)}. Er is niets om voor te bereiden — gewoon een rustige plek om gehoord te worden.</p>
+    <p>Wanneer je er klaar voor bent, brengen we je graag in contact met ${esc(content.practice.coach)} (${esc(content.practice.name)}) voor een vrijblijvend kennismakingsgesprek. Er is niets om voor te bereiden — gewoon een rustige plek om gehoord te worden.</p>
     ${button(url, 'Plan je kennismakingsgesprek')}
     <p>Liever eerst rustig rondkijken? Bekijk de praktijk van Petra op <a href="${esc(content.externalSite.url)}">${esc(content.externalSite.label)}</a>.</p>
-    <p>Geen druk en geen verplichting. Ik ben er, wanneer jij wilt.</p>
-    <p>Warme groet,<br>${esc(content.brand.coach)}<br><span style="color:#938979;">${esc(content.brand.name)}</span></p>
+    <p>Geen druk en geen verplichting. We zijn er, wanneer jij wilt.</p>
+    <p>Warme groet,<br>Het team van ${esc(content.brand.name)}</p>
   `);
 
   const text = `Lieve ${firstName},
 
 Dank je wel dat je vandaag even stil hebt gestaan bij jezelf.
 
-${summary ? `Wat je met ons deelde: ${summary}\n\n` : ''}Wanneer je er klaar voor bent, ben je welkom voor een vrijblijvend kennismakingsgesprek met ${content.brand.coach}.
+${summary ? `Wat je met ons deelde: ${summary}\n\n` : ''}Wanneer je er klaar voor bent, brengen we je graag in contact met ${content.practice.coach} (${content.practice.name}) voor een vrijblijvend kennismakingsgesprek.
 
 Plan hier: ${url}
+Of bekijk de praktijk: ${content.externalSite.url}
 
 Geen druk en geen verplichting.
 
 Warme groet,
-${content.brand.coach}
-${content.brand.name}`;
+Het team van ${content.brand.name}`;
 
   return { subject: content.emails.welcomeSubject, html, text };
 }
@@ -139,19 +139,19 @@ export function renderFollowup(lead) {
 
   const html = wrap(`
     <p style="margin-top:0;">Lieve ${esc(firstName)},</p>
-    <p>Ik wilde even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme; er is geen tijdpad waar je je aan hoeft te houden.</p>
+    <p>We wilden even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme; er is geen tijdpad waar je je aan hoeft te houden.</p>
     <p>Als het zou helpen om te praten: een gesprek is simpelweg ruimte die van jou is — om gevoelens woorden te geven, je minder alleen te voelen, en kleine, haalbare stappen te vinden wanneer jij daar klaar voor bent. Het is geen therapie of behandeling, en jij houdt de regie over het tempo.</p>
     <p>Het eerste kennismakingsgesprek is altijd vrijblijvend.</p>
     ${button(url, 'Vind een moment dat jou past')}
     <p>En is het nu niet het juiste moment, dan is dat helemaal goed. Deze uitnodiging blijft staan.</p>
-    <p>Zorg goed voor jezelf,<br>${esc(content.brand.coach)}<br><span style="color:#938979;">${esc(content.brand.name)}</span></p>
+    <p>Zorg goed voor jezelf,<br>Het team van ${esc(content.brand.name)}</p>
   `);
 
   const text = `Lieve ${firstName},
 
-Ik wilde even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme.
+We wilden even zacht bij je inchecken. Innerlijke processen hebben hun eigen ritme.
 
-Een gesprek is ruimte die van jou is. Het is geen therapie of behandeling, en jij houdt de regie over het tempo.
+Een gesprek met ${content.practice.coach} (${content.practice.name}) is ruimte die van jou is. Het is geen therapie of behandeling, en jij houdt de regie over het tempo.
 
 Het eerste kennismakingsgesprek is altijd vrijblijvend.
 
@@ -160,8 +160,7 @@ Vind een moment: ${url}
 Is het nu niet het juiste moment, dan is dat helemaal goed. Deze uitnodiging blijft staan.
 
 Zorg goed voor jezelf,
-${content.brand.coach}
-${content.brand.name}`;
+Het team van ${content.brand.name}`;
 
   return { subject: content.emails.followupSubject, html, text };
 }
@@ -183,7 +182,7 @@ export function renderCoachNotification(lead) {
   const text = `Nieuwe aanvraag: ${lead.name} <${lead.email}> tel: ${lead.phone || '—'}
 ${lead.result?.summary || ''}
 Dashboard: ${adminUrl}`;
-  return { subject: `Nieuwe aanvraag bij Ob-Audire: ${lead.name}`, html, text };
+  return { subject: `Nieuwe aanvraag via CoachKompas: ${lead.name}`, html, text };
 }
 
 // ── High-level verzenders ────────────────────────────────────────────────────

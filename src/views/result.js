@@ -53,12 +53,12 @@ export function resultPage({ lead }) {
         </p>
 
         <div class="notice notice-info" style="margin-top:20px;">
-          Deze spiegeling is ondersteunend en niet-medisch. Ob-Audire stelt geen diagnose en biedt geen
+          Deze spiegeling is ondersteunend en niet-medisch. CoachKompas en Ob-Audire stellen geen diagnose en bieden geen
           behandeling. Verkeer je in nood, neem dan contact op met je huisarts of een hulplijn.
         </div>
 
         <p class="center" style="margin-top:24px;">
-          <a href="${R.about}" class="muted" style="font-size:.92rem;">Lees meer over ${esc(C.brand.coach.split(' ')[0])} →</a>
+          <a href="${R.about}" class="muted" style="font-size:.92rem;">Lees meer over ${esc(C.practice.coach.split(' ')[0])} →</a>
         </p>
       </div>
     </section>

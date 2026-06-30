@@ -11,7 +11,7 @@ import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { landingPage, quizPage, aboutPage, aanbodPage, privacyPage } from '../src/views/pages.js';
+import { landingPage, quizPage, aboutPage, aanbodPage, privacyPage, seoPage, seoPages } from '../src/views/pages.js';
 import { bookingPage } from '../src/views/booking.js';
 import { resultPage } from '../src/views/result.js';
 import { adminLoginPage, adminDashboardPage } from '../src/views/admin.js';
@@ -88,6 +88,12 @@ async function main() {
 
   for (const [file, html] of Object.entries(pages)) {
     await fsp.writeFile(path.join(OUT, file), rewrite(html), 'utf8');
+  }
+
+  // Lokale SEO-pagina's als losse previewbestanden.
+  for (const p of seoPages) {
+    await fsp.writeFile(path.join(OUT, `${p.slug}.html`), rewrite(seoPage(p)), 'utf8');
+    pages[`${p.slug}.html`] = true; // alleen voor de index-lijst hieronder
   }
 
   for (const asset of ['styles.css', 'quiz.js', 'booking.js']) {

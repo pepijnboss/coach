@@ -12,7 +12,7 @@ import { esc } from '../util.js';
 
 const C = content;
 const R = content.routes;
-const coachFirst = C.brand.coach.split(' ')[0];
+const coachFirst = C.practice.coach.split(' ')[0];
 
 export function bookingPage({ lead } = {}) {
   const firstName = lead?.name ? lead.name.split(' ')[0] : null;
@@ -82,7 +82,7 @@ export function bookingPage({ lead } = {}) {
       <div id="bookingDone" class="card center" style="display:none;">
         <div style="font-size:2.4rem;">🌿</div>
         <h2 style="margin-top:8px;">Dankjewel — je aanvraag is binnen.</h2>
-        <p class="muted">${esc(C.brand.coach)} reageert persoonlijk op je e-mail om snel een moment af te stemmen dat bij jou past. Je hoeft nu verder niets te doen.</p>
+        <p class="muted">${esc(C.practice.coach)} reageert persoonlijk op je e-mail om snel een moment af te stemmen dat bij jou past. Je hoeft nu verder niets te doen.</p>
         <a class="btn btn-secondary" href="${R.home}">Terug naar de startpagina</a>
       </div>
     `;
